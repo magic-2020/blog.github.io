@@ -14,7 +14,7 @@ timezone: Asia/Shanghai
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://github.com/magic-2020/blog.github.io 
-root: /blog.github.io
+root: /blog.github.io  
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -41,7 +41,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: false 
 relative_link: false
 future: true
 highlight:
@@ -103,3 +103,9 @@ deploy:
   name: tn
   email: tangnayx@163.com 
   branch: master 
+
+# hexo-admin authentification
+admin:
+  username: magic
+  password_hash: $2a$10$u/Zz85ZW.yHSs6cot9NH8edJ/9da3396RdRmibsl9v1OSOB82SRW6
+  secret: magicO_0:I can because i think i can.
