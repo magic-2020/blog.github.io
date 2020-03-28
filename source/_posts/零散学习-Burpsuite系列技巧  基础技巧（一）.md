@@ -1,152 +1,12 @@
 ---
-title: 零散学习
+title: 零散学习-Burpsuite系列技巧 | 基础技巧（一）
 date: 2020-03-23 21:11:55
 tags:
     杂
 typora-root-url: ./
 ---
 
-# 1、  医疗设备中的安全漏洞
-
-Aamir Lakhani认为：“来自这些泄露数据库的病患个人身份识别信息（PII）非常有价值，这些信息包括用户的姓名、家庭住址、信用卡信息和手机账户信息等等，这些都是网络犯罪分子严重的香饽饽。”
-
-Lakhani还专门指出了安全研究专家在Fujifilm FCR Capsula X/Carbon X设备中发现的一个关键安全漏洞（CVE-2019-10950），而这种设备主要用于X射线等诊断数据的成像显示。这个严重的安全漏洞将允许远程攻击者通过发送精心构建的恶意请求来绕过目标设备的安全限制，该漏洞是由不安全的Telnet服务中不正确的访问控制所造成的。这个漏洞将允许攻击者访问目标设备的底层操作系统，并允许攻击者修改X光的检查和诊断结果，并最终导致正在查看X光检查结果的医生对患者的健康问题作出错误的诊断。
-
-akhani表示，他们还在某款智能家庭血糖监测仪中发现了一个安全漏洞，这种监测仪可以帮助糖尿病患者测量自己的血糖水平。安全研究人员在对这款智能家庭血糖监测仪进行了仔细分析研究之后，发现这款设备与智能手机应用程序之间的通信是通过NFC实现的，但这种通信方式没有实现任何的身份认证机制，这也就意味着任何人都可以与目标设备进行配对，并查看设备与智能手机之间传输的数据，其中包括佩戴监测仪的事件、目标用户的血糖水平等等。不过研究人员目前已经将这个漏洞上报给了设备制造厂商，广大用户无需过多担心。
-
-# 2、  CVE-2020-0787：未公开RPC函数中的提权漏洞分析
-
-本文介绍了我在Background Intelligent Transfer Service（BITS，后台智能传输服务）中发现的一个任意文件移动漏洞，这是Windows 10中的一个特权文件操作滥用问题。
-
-太厉害了，逆向工程，通过逻辑的不合理性，进行大胆推测，再在不合理的基础上进行其他的关联操作，从而做到提权
-
-# 3、  任意用户密码重置的10种姿势
-
-````
-1） 验证码不失效
-2） 验证码直接返回
-3） 验证码未绑定用户
-4） 修改接收的手机或邮箱
-5） 本地验证绕过
-6） 跳过验证步骤
-7） 未校验用户字段的值
-8） 修改密码处ID可替换
-9） cookie值可替换
-10）修改信息时替换字段
-````
-
-# 4、  我遇到的实战渗透
-
-信息收集网站：感觉这网站  https://scan.top15.cn/web/ 
-
-# 5、  hexo+GitHub的blog搭建
-
-1、 环境准备：git、node.js、hexo、GitHub账号
-
-1） 安装git、node.js软件到本地，下载exe安装文件，然后安装就可以
-
-2） 查看git是否安装成功，在git bash（此后命令均在此输入）中输入 git –version
-
-3） 查看hexo是否安装成功，输入 hexo -v
-
-4） 注册github账号，并建立repository，注意一定要是公共的
-
-2、 hexo搭建
-
-1） 新建一个文件夹，并命令cd进入此文件夹
-
-2） 开始安装Hexo，输入：npm install hexo -g
-
-3） 检查hexo是否安装成功，输入：hexo -v
-
-4） 初始化该文件夹，输入：hexo init （此后想重新搭建，从这一步开始就可以）看到后面的“Start blogging with Hexo！”就说明初始化好了
-
-5） 输入npm install，安装所需要的组件
-
-6） 安装好后，执行以下命令：（1）hexo g #generate 生成静态文件 （2）hexo s #server 启动服务器。默认情况下，访问网址为： http://localhost:4000/
-
-3、 ssh配置 
-
-1） 在Git Bash输入以下指令（任意位置点击鼠标右键），检查是否已经存在了SSH keys。
-
-ls -al ~/.ssh
-
-2） 如果不存在就没有关系，如果存在的话，直接删除.ssh文件夹里面所有文件：
-
-![clip_image001-1584952379327](/blog.github.io/images/clip_image001-1584952379327.png)
-
-3） 输入以下指令（邮箱就是你注册Github时候的邮箱）后，回车（不停回车，不用输入任何东西）：
-
-`ssh-keygen -t rsa -C angelen10@163.com`
-
-4） 进入GitHub，在设置中的在Settings sidebar那里，点击SSH keys，然后新增ssh
-
-5） 在ssh中，粘贴C:\Users\user\.ssh下的id_rsa.pub文件中的所有内容
-
-6） 在bash中输入 `ssh -T git@github.com` 验证是否连接成功
-
-4、 _config.yml配置
-
-1）在文档的最后的配置
-
-````
-deploy:
- type: git
- repository: git@github.com:GitHub用户名/repository名称.git
- branch: master
-````
-
-2）文档中URL的配置
-
-url: 你的repository下的GitHub网址（是GitHub中repository的打开的网址，不是即将部署的你的博客的网址）
-
-root: /blog.github.io
-
-3）文档中site的配置
-
-````
-# Site
-title: 标题
-subtitle: 副标题
-description: 描述
-keywords: 
-author: 
-language: zh-CN
-timezone: Asia/Shanghai
-````
-
-4）文档中，每行结尾要有空格，冒号后面要有空格
-
-5、 同步GitHub
-
-1） 执行：npm install hexo-deployer-git –save 安装hexo-deployer-git插件
-
-2） hexo d -g 将文档部署到GitHub上
-
-3） 打开GitHub中的网址，可以看到部署成功的blog
-
-4） hexo g #generate 生成静态文件
- hexo s #server 启动服务器。在本地预览效果，默认情况下，访问网址为： http://localhost:4000/
- hexo d #deploy 部署网站同步到github。部署网站前，需要预先生成静态文件
- hexo clean #clean 清除缓存文件 (db.json) 和已生成的静态文件 (public)。
-
-6、 设置主题
-
-1） `git clone https://github.com/iissnan/hexo-theme-next themes/next`
-
-2） 打开站点配置文件 _config.yml，找到 theme 字段，并将其值更改为 next。
-
-theme: next
-
-主题配置：
-
-https://www.jianshu.com/p/208f2c4e3a16
-
-https://www.jianshu.com/p/f054333ac9e6
-
-https://www.jianshu.com/p/b520b49562b2
-
-# 6、Burpsuite系列技巧 | 基础技巧（一）
+# Burpsuite系列技巧 | 基础技巧（一）
 
 ```
 Author：CoolCat&key
@@ -185,7 +45,7 @@ search强大的功能是使用**正则**进行搜索查询自己想要的内容�
 (.user|pass|accessKeyId|accessKeySecret|secretToken|callback|admin|config|key|access|token?)
 ```
 
-[![search2](/blog.github.io/images/search2.png)](https://vulkey.oss-cn-hangzhou.aliyuncs.com/2020-02-13/search2.png)
+![search2](/blog.github.io/images/search2.png)
 
 擅用该功能，在SRC捡洞可能可能只是一个习惯而已。（**比如每次准备关Burp之前考虑全选site map中所有的站点，再拿正则去尝试一下。**）
 
@@ -465,26 +325,3 @@ This function sends common test payloads to random URL s and parameters at irreg
 右键选择`Scan defined insertion points`
 
 ![15784879702356](/blog.github.io/images/15784879702356.jpg)
-
- 
-
-# 7、git预览部署脚本
-
-1）预览脚本：
-
-````
-cp -r source/_posts/blog.github.io/images/*   source/images/
-hexo clean
-hexo s -d
-````
-
-2)部署脚本
-
-````
-cp -r source/_posts/blog.github.io/images/*   source/images/
-hexo clean
-hexo g -d
-````
-
-3)git 分支备份文件
-
