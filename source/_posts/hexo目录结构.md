@@ -1,5 +1,5 @@
 ---
-title: 简单认识Hexo的目录结构
+title: Hexo的目录结构
 date: 2020-03-23 17:11:55
 tags:
     环境搭建
