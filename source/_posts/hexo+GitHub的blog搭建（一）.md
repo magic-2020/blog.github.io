@@ -115,6 +115,32 @@ timezone: Asia/Shanghai
 
 `theme: next`
 
+3）设置语言为：`简体中文：zh-Hans`
+
+4）页面翻页显示出错：
+
+\themes\next\layout\_partials\pagination.swig中内容改为如下情况：
+
+`````
+{% if page.prev or page.next %}
+  <nav class="pagination">
+    {{
+      paginator({
+        prev_text: '<',
+        next_text: '>',
+        mid_size: 1
+      })
+    }}
+  </nav>
+{% endif %}
+`````
+
+5）主页点击进去后报错：
+
+将配置文件\themes\next\layout\_partials\_config.yml里菜单设置中的 ||之前所有的空格删掉
+
+![20200314090351328.PNG](/blog.github.io/images/20200314090351328.PNG)
+
 主题配置参考网站：
 
 https://www.jianshu.com/p/208f2c4e3a16

@@ -111,3 +111,45 @@ export XMODIFIERS="@im=fcitx"
 export XIM=fcitx
 export XIM_PROGRAM=fcitx
 ````
+
+# 卸载输入法
+
+````shell
+sudo apt-get  purge  sogoupinyin #卸载搜狗
+sudo apt-get purge  fcitx  #卸载fcitx
+sudo apt-get autoremove 
+````
+
+# 清理垃圾
+
+```shell
+sudo apt-get autoclean               # 清理旧版本的软件缓存
+sudo apt-get clean                      # 清理所有软件缓存
+sudo apt-get autoremove           # 删除系统不再使用的孤立软件
+```
+
+# dpkg：警告：无法找到软件包 XXXX 问题解决
+
+在apt-get install 安装一个新包时 先回去检查`/var/lib/dpkg/info/`目录下的已安装包的配置文件信息；如果发现有已经安装的应用 的配置文件信息不在info目录下 就会提示这个错误
+
+ 所以这个时候我们 可以通过：
+
+````shell
+sudo dpkg --configure -a
+````
+
+然后通过：
+
+````shell
+dpkg -l | grep ^ii | awk '{print $2}' | grep -v XXX | xargs sudo aptitude reinstall 
+````
+
+重新获取包内容配置信息 ，这样一步步重新安装下去 很快就可以解决这个问题了
+
+二.当然也还有第二种方法，那就是通过：
+
+````shell
+sudo apt-get --reinstall install  `dpkg --get-selections | grep '[[:space:]]install' | cut -f1`
+````
+
+来重新安装全部软件，会全部刷新info目录 不过这个方法就要多花点时间去等了
