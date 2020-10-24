@@ -2,7 +2,7 @@
 title: win7虚拟机安装
 date: 2020-03-25 21:11:55
 tags:
-	部署
+	- 部署
 typora-root-url: ./
 ---
 

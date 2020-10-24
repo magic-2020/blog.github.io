@@ -2,7 +2,7 @@
 title: 环境-工具-Hexo的目录结构
 date: 2020-03-23 17:11:55
 tags:
-    工具
+	- 工具
 typora-root-url: ./
 ---
 # 简单认识Hexo的目录结构

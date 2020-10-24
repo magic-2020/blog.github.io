@@ -2,8 +2,8 @@
 title: 自动化-使用python批量编辑Word
 date: 2020-09-25 21:11:55
 tags:
-	测试
-    自动化
+	- 测试
+	- 自动化
 typora-root-url: ./
 ---
 

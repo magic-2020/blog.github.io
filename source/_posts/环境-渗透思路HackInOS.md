@@ -2,8 +2,8 @@
 title: 渗透思路HackInOS
 date: 2020-04-14 21:11:55
 tags:
-	安全
-    部署
+	- 安全
+	- 部署
 typora-root-url: ./
 ---
 

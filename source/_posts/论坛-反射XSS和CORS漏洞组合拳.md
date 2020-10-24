@@ -2,8 +2,8 @@
 title: 反射XSS和CORS漏洞组合拳
 date: 2020-03-27 21:11:55
 tags:
-	安全
-    web渗透
+	- 安全
+	- web渗透
 typora-root-url: ./
 ---
 

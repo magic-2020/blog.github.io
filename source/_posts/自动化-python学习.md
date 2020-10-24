@@ -2,8 +2,8 @@
 title: 自动化-python学习
 date: 2020-03-25 21:11:55
 tags:
-	自动化
-	python
+	- 自动化
+	- python
 typora-root-url: ./
 ---
 

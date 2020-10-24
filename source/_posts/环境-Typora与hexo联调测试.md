@@ -2,7 +2,7 @@
 title: Typora与hexo联调测试
 date: 2020-03-21 20:11:55
 tags:
-    环境搭建
+	- 部署
 typora-root-url: ./
 ---
 

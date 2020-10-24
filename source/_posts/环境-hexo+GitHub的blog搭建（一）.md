@@ -2,7 +2,7 @@
 title: hexo+GitHub的blog搭建（一）
 date: 2020-03-22 21:11:55
 tags:
-    部署
+	- 部署
 typora-root-url: ./
 ---
 
@@ -148,3 +148,14 @@ https://www.jianshu.com/p/208f2c4e3a16
 https://www.jianshu.com/p/f054333ac9e6
 
 https://www.jianshu.com/p/b520b49562b2
+
+6）tags设置格式：
+
+````
+title: hexo+GitHub的blog搭建（一）
+date: 2020-03-22 21:11:55
+tags:
+	（tab）- 部署
+typora-root-url: ./
+````
+

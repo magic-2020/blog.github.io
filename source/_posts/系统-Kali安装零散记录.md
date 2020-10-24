@@ -1,39 +1,32 @@
 ---
-title: Kali安装零散记录
+title: Kali安装相关问题
 date: 2020-04-15 21:11:55
 tags:
-	安全
-    Kali
+	- 安全
+	- Kali
 typora-root-url: ./
 ---
 
-# 更新
+# 系统更新
 
-step01:
-
-查看配置文件，默认设置的是官方更新源
+**1、查看配置文件，默认设置的是官方更新源**
 
 root@kali:~# cat /etc/apt/sources.list
 deb http://http.kali.org/kali kali-rolling main non-free contrib
 
-step02:
+**2、更新系统**
 
-更新系统
+root@kali:~# apt-get update && apt -y full-upgrade（2019年的命令）
 
-root@kali:~# apt-get update && apt -y full-upgrade
+或者：apt-get update && apt-get upgrade && apt-get clean（2020年的命令）
 
 apt-get update //更新可用软件包列表
 
 apt full-upgrade //通过卸载|安装|升级等方式来更新系统
 
+**3、重启**
 
-step03:
-
-Then after running apt -y full-upgrade, you may require a reboot before checking:
-
-step04:
-
-验证
+**4、验证**
 
 root@kali:~# grep VERSION /etc/os-release
 VERSION="2018.3"
@@ -43,7 +36,7 @@ VERSION_ID="2018.3"
 
 root@kali:~# uname -a
 
-## 附其它更新源：
+# 附其它更新源：
 
 #中科大
 deb http://mirrors.ustc.edu.cn/kali kali-rolling main non-free contrib
@@ -84,6 +77,8 @@ deb-src http://http.kali.org/kali kali-rolling main non-free contrib
 ​	2）在命令行模式下输入字符v（小写），便可以进入按字符选择模式，通过h、i、j、k键移动光标选择要进行复制的字符串。
 
 ​	3）完成选择后按下y键进行复制，将鼠标移动到最后一行，按下p执行粘贴操作就完成了对选择的字符串部分完成了按字符复制与粘贴操作。
+
+4、进入root： sudo su
 
 
 
@@ -128,7 +123,7 @@ sudo apt-get clean                      # 清理所有软件缓存
 sudo apt-get autoremove           # 删除系统不再使用的孤立软件
 ```
 
-# dpkg：警告：无法找到软件包 XXXX 问题解决
+# dpkg：警告：无法找到软件包 XXXX 问题解决(不一定有效)
 
 在apt-get install 安装一个新包时 先回去检查`/var/lib/dpkg/info/`目录下的已安装包的配置文件信息；如果发现有已经安装的应用 的配置文件信息不在info目录下 就会提示这个错误
 
@@ -153,3 +148,61 @@ sudo apt-get --reinstall install  `dpkg --get-selections | grep '[[:space:]]inst
 ````
 
 来重新安装全部软件，会全部刷新info目录 不过这个方法就要多花点时间去等了
+
+# 最新的kali版本为kali2020的登录密码
+
+安装后很多用户还是直接使用之前的默认root账户
+
+账户：root 密码：toor
+
+但是最新的kali2020已经改变安全策略，默认的账户名和密码如下：
+
+账户名：kali
+
+密码：kali
+
+如果想切换为root账户模式，建议使用以下命令操作
+
+sudo su
+
+然后输入默认密码kali就切换到root账户了。
+
+![img](/blog.github.io/images/20200224113147596.png)
+
+# 解决kali linux出现正在设定软件包 无法操作的问题
+
+出现正在设定软件包什么鬼
+
+直接tab+enter即可
+
+![img](/blog.github.io/images/20180316183425080)
+
+# 设置语言
+
+1)默认语言选择
+
+dpkg-reconfigure locales　　　　 //命令注意：如果是root用户可直接执行dpkg-reconfigure locales命令，如果是kali用户则需先切换成root用户登陆再进行执行
+
+进入选择语言的图形化界面之后，（空格是选择，Tab是切换）
+使用空格键将zh_CN.GBK_GBK 和 zh-CN.UTF-8.UTF-8其两项勾选上，勾选后用Tab键把光标移动到在<0k>处按下空格
+
+![img](/blog.github.io/images/2038314-20200515165445349-606519698.png)
+
+在此处选择zh_CN.UTF-8字符编码，在<0k> 处按空格键进行确认 ，并完成相关配置操作
+
+![img](/blog.github.io/images/2038314-20200515165453644-20904254.png)
+
+ 
+
+(2)更新一下系统，并重新启动，界面字体转为中文
+
+# 安装ibus中文输入法
+
+Ctrl+alt+t 调出命令行，输入：apt install ibus ibus-pinyin
+必须安装：zenity
+接着输入：apt install zenity
+再输入：im-config
+安装完成后：ibus-setup
+如果输入法没有及时切换，先重启系统，然后在试，如果依旧不行，再根据提示进行文件配置
+
+super键基本上就在键盘左下方Ctrl键和Alt键中间，大都为Windows标志，又被称为Windows键

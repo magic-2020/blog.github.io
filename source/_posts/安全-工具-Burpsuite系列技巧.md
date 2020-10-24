@@ -2,8 +2,8 @@
 title: Burpsuite系列技巧
 date: 2020-03-23 21:11:55
 tags:
-    工具
-	burp
+	- 工具
+	- burp
 typora-root-url: ./
 ---
 
