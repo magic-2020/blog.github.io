@@ -7,6 +7,20 @@ tags:
 typora-root-url: ./
 ---
 
+# 代理工具
+
+https://github.com/FelisCatus/SwitchyOmega/releases
+
+1 下载，打开上述链接，拉到页面最下方，找到crx。
+
+2 下载完成后 
+
+chrom浏览器 - chrome://extensions/，打开开发者选项
+
+将crx拖过去就可以。 
+
+3 如果安装包不可用，将下载的文件的后缀名称由crx改为zip。然后再次拖进去即可。
+
 # Burpsuite系列技巧 | 基础技巧（一）
 
 ```

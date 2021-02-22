@@ -206,3 +206,22 @@ Ctrl+alt+t 调出命令行，输入：apt install ibus ibus-pinyin
 如果输入法没有及时切换，先重启系统，然后在试，如果依旧不行，再根据提示进行文件配置
 
 super键基本上就在键盘左下方Ctrl键和Alt键中间，大都为Windows标志，又被称为Windows键
+
+# kali最新的系统任务栏调节
+
+选择水平模式，不锁定面板，然后拖动任务栏到页面最下方，再锁定面板，kali系统的任务栏和win系统的位置即可一样都在页面下方
+
+![image-20210215213001984](/blog.github.io/images/image-20210215213001984.png)
+
+# 修改系统时间
+
+(1) 在终端输入命令tzselect
+(2) 然后再依次选择：Asia-->China-->Beijing Time--Yes（此处根据提示选择相应的数字）
+(3)2、修改配置文件
+在终端中依次输入以下命令,然后重启
+
+````
+echo "ZONE=Asia/Shanghai" >> /etc/sysconfig
+rm -f /etc/localtime # 链接到上海时区文件
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+````
