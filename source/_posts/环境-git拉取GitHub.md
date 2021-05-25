@@ -1,12 +1,12 @@
 ---
-title: hexo+GitHub的blog搭建（一）
+title: git拉取GitHub
 date: 2020-03-22 21:11:55
 tags:
 	- 部署
 typora-root-url: ./
 ---
 
-# hexo+GitHub的blog搭建
+# git拉取GitHub
 
 ## 1、 环境准备：git、node.js、hexo、GitHub账号
 
