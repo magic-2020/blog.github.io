@@ -100,7 +100,7 @@ theme: next
 deploy:
   type: git
   repository: git@github.com:magic-2020/blog.github.io.git
-  name: tn
+  name: magic
   email: tangnayx@163.com 
   branch: master 
 
