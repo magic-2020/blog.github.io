@@ -19,3 +19,5 @@ git pull --rebase origin github_blog
 git push -u origin github_blog
 
 hexo g -d
+
+git checkout dev
