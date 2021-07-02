@@ -1,9 +1,10 @@
 ---
 title: iPad视频剪辑（iMovie使用）
 date: 2020-03-25 21:11:55
+categories:
+- 兴趣
 tags:
-	- 兴趣
-	- 视频剪辑
+- 视频剪辑
 typora-root-url: ./
 ---
 
@@ -12,6 +13,8 @@ typora-root-url: ./
 1、iPad
 
 2、iPad可识别视频（wvm格式不识别）
+
+<!-- more -->
 
 注：可以使用qq音影转码为MP4格式
 

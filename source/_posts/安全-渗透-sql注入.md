@@ -1,16 +1,19 @@
 ---
 title: sql注入
 date: 2020-11-20 21:11:55
+categories:
+- 安全
 tags:
-	- web渗透
-	- 注入
-	- 安全
+- web渗透
+- 注入
 typora-root-url: ./
 ---
 
 # web框架
 
 ![image-20201130214815335](/blog.github.io/images/image-20201130214815335.png)
+
+<!-- more -->
 
 ![image-20201130214848420](/blog.github.io/images/image-20201130214848420.png)
 

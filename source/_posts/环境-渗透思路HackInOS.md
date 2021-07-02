@@ -1,15 +1,19 @@
 ---
 title: 渗透思路HackInOS
 date: 2020-04-14 21:11:55
+categories:
+- 安全
+- 环境
 tags:
-	- 安全
-	- 部署
+- 部署
 typora-root-url: ./
 ---
 
 # 渗透思路HackInOS
 
 来自： https://bbs.pediy.com/thread-252599.htm
+
+<!-- more -->
 
 ## 简介
 

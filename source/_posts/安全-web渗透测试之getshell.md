@@ -1,14 +1,17 @@
 ---
 title: web渗透测试之getshell
 date: 2020-03-25 21:11:55
+categories:
+- 安全
 tags:
-	- 安全
-	- web渗透
+- web渗透
 typora-root-url: ./
 ---
 # web渗透测试之getshell
 
 方法有些老，测试思路可以作为入门参考使用
+
+<!-- more -->
 
 ## web渗透测试概述
 

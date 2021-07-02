@@ -1,8 +1,10 @@
 ---
 title: git拉取GitHub
 date: 2021-05-25 21:11:55
+categories:
+- 环境
 tags:
-	- 部署
+- 部署
 typora-root-url: ./
 ---
 
@@ -13,6 +15,8 @@ typora-root-url: ./
 1） 安装git、node.js软件到本地，下载exe安装文件，然后安装就可以
 
 2） 查看git是否安装成功，在git bash（此后命令均在此输入）中输入 `git –version`
+
+<!-- more -->
 
 ## 2、git配置
 

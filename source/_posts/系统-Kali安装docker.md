@@ -1,9 +1,11 @@
 ---
 title: Kali安装docker
 date: 2021-02-15 21:11:55
+categories:
+- 系统
 tags:
-	- docker
-	- Kali
+- docker
+- Kali
 typora-root-url: ./
 ---
 
@@ -20,6 +22,8 @@ apt-get install -y apt-transport-https ca-certificates
  
 apt-get install dirmngr
 ```
+
+<!-- more -->
 
 **2.添加GPG密钥并添加更新源**
 

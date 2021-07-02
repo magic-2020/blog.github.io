@@ -1,9 +1,10 @@
 ---
 title: 自动化-python学习
 date: 2020-03-25 21:11:55
+categories:
+- 自动化
 tags:
-	- 自动化
-	- python
+- python
 typora-root-url: ./
 ---
 
@@ -16,6 +17,8 @@ typora-root-url: ./
 2、新建项目，并设置选择exciting interpreter
 
 ![image-20200616214237415](/blog.github.io/images/image-20200616214237415.png)
+
+<!-- more -->
 
 ## 环境
 

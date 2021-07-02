@@ -1,8 +1,10 @@
 ---
 title: win7虚拟机安装
 date: 2020-03-25 21:11:55
+categories:
+- 环境
 tags:
-	- 部署
+- 部署
 typora-root-url: ./
 ---
 
@@ -11,6 +13,8 @@ typora-root-url: ./
 1. 登入微pe官网，下载win10pe，选择64位版本下载
 
    [![虚拟机安装Win7 GHOST系统教程](/blog.github.io/images/d31b0ef41bd5ad6ee9a5c4ef8ccb39dbb6fd3c52.jpg)](http://jingyan.baidu.com/album/bea41d43d2b21eb4c51be6b5.html?picindex=1)
+
+   <!-- more -->
 
 2. 2
 

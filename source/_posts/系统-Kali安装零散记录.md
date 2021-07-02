@@ -1,9 +1,10 @@
 ---
 title: Kali安装相关问题
 date: 2020-04-15 21:11:55
+categories:
+- 系统
 tags:
-	- 安全
-	- Kali
+- Kali
 typora-root-url: ./
 ---
 
@@ -35,6 +36,8 @@ VERSION_ID="2018.3"
 或
 
 root@kali:~# uname -a
+
+<!-- more -->
 
 # 附其它更新源：
 

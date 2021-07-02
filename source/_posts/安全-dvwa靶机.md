@@ -1,9 +1,10 @@
 ---
 title: dvwa靶机练习
 date: 2021-02-20 21:11:55
+categories:
+- 安全
 tags:
-	- dvwa
-	- 安全
+- dvwa
 typora-root-url: ./
 ---
 
@@ -22,6 +23,8 @@ gordonb/abc123
 pablo/letmein
 
 smithy/password
+
+<!-- more -->
 
 **获取用户名密码：**
 

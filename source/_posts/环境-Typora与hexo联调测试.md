@@ -1,8 +1,10 @@
 ---
 title: Typora与hexo联调测试
 date: 2020-03-21 20:11:55
+categories:
+- 环境
 tags:
-	- 部署
+- 部署
 typora-root-url: ./
 ---
 
@@ -15,6 +17,8 @@ typora-root-url: ./
 2）对通用设置中的启动选项、保存&恢复进行设置；设置如下图，可以打开文件时，打开的路径是常用的路径，而不需要每次都要寻找文件
 
 ![image-20210525165752513](/blog.github.io/images/image-20210525165752513.png)
+
+<!-- more -->
 
 ### 图片插入
 

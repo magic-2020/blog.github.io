@@ -1,8 +1,10 @@
 ---
 title: hexo+GitHub的blog搭建
 date: 2020-03-22 21:11:55
+categories:
+- 环境
 tags:
-	- 部署
+- 部署
 typora-root-url: ./
 ---
 
@@ -17,6 +19,8 @@ typora-root-url: ./
 3） 查看hexo是否安装成功，输入 `hexo -v`
 
 4） 注册github账号，并建立repository，注意一定要是公共的
+
+<!-- more -->
 
 ## 2、 hexo搭建
 

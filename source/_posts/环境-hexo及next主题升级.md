@@ -1,8 +1,10 @@
 ---
 title: hexo及next主题升级
 date: 2021-05-28 21:11:55
+categories:
+- 环境
 tags:
-	- 部署
+- 部署
 typora-root-url: ./
 ---
 
@@ -23,5 +25,7 @@ typora-root-url: ./
 7、更新 Hexo CLI ，先查看版本`npm outdated -g`并更新`npm install hexo-cli -g`
 
 8、hexo在5.0之后把swig给删除了需要自己手动安装`npm i hexo-renderer-swig`
+
+<!-- more -->
 
 之后，如果之前能够正常运行，升级完以后，大概了是可以正常使用了，如果不行，那就是next主题有问题，需要根据问题解决问题

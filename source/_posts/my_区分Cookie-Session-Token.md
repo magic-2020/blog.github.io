@@ -1,16 +1,19 @@
 ---
 title: 区分Cookie-Session-Token
 date: 2021-06-17 21:11:55
+categories:
+- MY
+- 基础
 tags:
-	- HTTP
-	- 基础
-	- 孟岩
+- HTTP
 typora-root-url: ./
 ---
 
 # 区分Cookie-Session-Token
 
 首先要讲session和cookie，就必须先了解HTTP协议，因为这两个名词诞生于HTTP协议。
+
+<!-- more -->
 
 ## 一、HTTP协议-Cookie和Session的来源
 

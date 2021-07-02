@@ -1,12 +1,16 @@
 ---
 title: git预览部署脚本
 date: 2020-03-25 21:11:55
+categories:
+- 环境
 tags:
-	- 部署
+- 部署
 typora-root-url: ./
 ---
 
 # git预览部署脚本
+
+<!-- more -->
 
 1）预览脚本：
 

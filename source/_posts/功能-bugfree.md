@@ -1,9 +1,10 @@
 ---
 title: bugfree
 date: 2021-02-23 21:11:55
+categories:
+- 功能
 tags:
-	- 功能
-	- bugfree
+- bugfree
 typora-root-url: ./
 
 ---
@@ -13,6 +14,8 @@ typora-root-url: ./
 1、官网下载地址：https://www.zentao.net/download.html
 
 2、官网下载安装包，建议Windows一键安装包下载
+
+<!-- more -->
 
 ![image-20210202224127838](/blog.github.io/images/image-20210202224127838.png)
 

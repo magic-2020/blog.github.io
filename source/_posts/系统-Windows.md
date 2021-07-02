@@ -1,8 +1,10 @@
 ---
 title: 系统-Windows
 date: 2020-06-3 21:11:55
+categories:
+- 系统
 tags:
-    - Windows
+- Windows
 typora-root-url: ./
 ---
 
@@ -18,7 +20,7 @@ cmd 中输入： netstat -ano|findstr 8080
 
 ![img](http://note.youdao.com/yws/res/755/664BBF58B3EF422185F0D6B09EBA7525)
 
-
+<!-- more -->
 
 # 多版本火狐共存方案及火狐配置文档高级管理技巧
 

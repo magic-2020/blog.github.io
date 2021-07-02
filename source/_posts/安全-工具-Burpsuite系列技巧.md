@@ -1,9 +1,11 @@
 ---
 title: Burpsuite系列技巧
 date: 2020-03-23 21:11:55
+categories:
+- 安全
 tags:
-	- 工具
-	- burp
+- 工具
+- burp
 typora-root-url: ./
 ---
 
@@ -20,6 +22,8 @@ chrom浏览器 - chrome://extensions/，打开开发者选项
 将crx拖过去就可以。 
 
 3 如果安装包不可用，将下载的文件的后缀名称由crx改为zip。然后再次拖进去即可。
+
+<!-- more -->
 
 # Burpsuite系列技巧 | 基础技巧（一）
 
