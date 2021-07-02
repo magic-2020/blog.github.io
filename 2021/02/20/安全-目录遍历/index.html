@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="安全,渗透," />
+  <meta name="keywords" content="渗透," />
 
 
 
@@ -103,9 +103,8 @@
 <meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122150430950-1173938752.png">
 <meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122150717616-874695890.png">
 <meta property="article:published_time" content="2021-02-20T13:11:55.000Z">
-<meta property="article:modified_time" content="2021-06-24T09:13:22.912Z">
+<meta property="article:modified_time" content="2021-07-02T07:02:16.569Z">
 <meta property="article:author" content="magic">
-<meta property="article:tag" content="安全">
 <meta property="article:tag" content="渗透">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://github.com/blog.github.io/images/image-20200902215534791.png">
@@ -321,6 +320,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -348,7 +369,9 @@
       
 
       
-        <h1 id="目录遍历漏洞概述"><a href="#目录遍历漏洞概述" class="headerlink" title="目录遍历漏洞概述"></a>目录遍历漏洞概述</h1><p> 在web功能设计中,很多时候我们会要将需要访问的文件定义成变量，从而让前端的功能便的更加灵活。当用户发起一个前端的请求时，便会将请求的这个文件的值(比如文件名称)传递到后台，后台再执行其对应的文件。 在这个过程中，如果后台没有对前端传进来的值进行严格的安全考虑，则攻击者可能会通过“../”这样的手段让后台打开或者执行一些其他的文件。从而导致后台服务器上其他目录的文件结果被遍历出来，形成目录遍历漏洞。                      </p>
+        <h1 id="目录遍历漏洞概述"><a href="#目录遍历漏洞概述" class="headerlink" title="目录遍历漏洞概述"></a>目录遍历漏洞概述</h1><p> 在web功能设计中,很多时候我们会要将需要访问的文件定义成变量，从而让前端的功能便的更加灵活。当用户发起一个前端的请求时，便会将请求的这个文件的值(比如文件名称)传递到后台，后台再执行其对应的文件。 在这个过程中，如果后台没有对前端传进来的值进行严格的安全考虑，则攻击者可能会通过“../”这样的手段让后台打开或者执行一些其他的文件。从而导致后台服务器上其他目录的文件结果被遍历出来，形成目录遍历漏洞。   </p>
+<span id="more"></span>                   
+
 <p>看到这里,你可能会觉得目录遍历漏洞和不安全的文件下载，甚至文件包含漏洞有差不多的意思，是的，目录遍历漏洞形成的最主要的原因跟这两者一样，都是在功能设计中将要操作的文件使用变量的方式传递给了后台，而又没有进行严格的安全考虑而造成的，只是出现的位置所展现的现象不一样，因此，这里还是单独拿出来定义一下。                    </p>
 <p>需要区分一下的是,如果你通过不带参数的url（比如：<a target="_blank" rel="noopener" href="http://xxxx/doc%EF%BC%89%E5%88%97%E5%87%BA%E4%BA%86doc%E6%96%87%E4%BB%B6%E5%A4%B9%E9%87%8C%E9%9D%A2%E6%89%80%E6%9C%89%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%8C%E8%BF%99%E7%A7%8D%E6%83%85%E5%86%B5%EF%BC%8C%E6%88%91%E4%BB%AC%E6%88%90%E4%B8%BA%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E3%80%82">http://xxxx/doc）列出了doc文件夹里面所有的文件，这种情况，我们成为敏感信息泄露。</a> 而并不归为目录遍历漏洞。（关于敏感信息泄露你你可以在”i can see you ABC”中了解更多）你可以通过“../../”对应的测试栏目，来进一步的了解该漏洞。 </p>
 <h2 id="pikaqiu靶机实践"><a href="#pikaqiu靶机实践" class="headerlink" title="pikaqiu靶机实践"></a>pikaqiu靶机实践</h2><p><img src="/blog.github.io/images/image-20200902215534791.png" alt="image-20200902215534791"></p>
@@ -476,9 +499,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog.github.io/tags/%E5%AE%89%E5%85%A8/" rel="tag"># 安全</a>
-          
-            <a href="/blog.github.io/tags/%E6%B8%97%E9%80%8F/" rel="tag"># 渗透</a>
+            <a href="/blog.github.io/tags/%E6%B8%97%E9%80%8F/" rel="tag"><i class="fa fa-tag"></i> 渗透</a>
           
         </div>
       
@@ -491,8 +512,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog.github.io/2021/02/15/%E7%B3%BB%E7%BB%9F-Kali%E5%AE%89%E8%A3%85docker/" rel="next" title="Kali安装docker">
-                <i class="fa fa-chevron-left"></i> Kali安装docker
+              <a href="/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" rel="next" title="文件上传漏洞">
+                <i class="fa fa-chevron-left"></i> 文件上传漏洞
               </a>
             
           </div>
@@ -582,24 +603,34 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog.github.io/archives/%7C%7C%20archive">
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
             
               
               
               <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">29</span>
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
-                
+                </a>
               </div>
             
 
@@ -717,7 +748,12 @@
   
 
 
+  
 
+
+
+  
+  
 
 
 
@@ -755,6 +791,21 @@
   
   
     <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/three/three-waves.min.js"></script>
   
 
 
@@ -841,9 +892,6 @@
   
 
   
-  <script type="text/javascript" src="/blog.github.io/js/src/js.cookie.js?v=5.1.4"></script>
-  <script type="text/javascript" src="/blog.github.io/js/src/scroll-cookie.js?v=5.1.4"></script>
-
 
   
 

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="安全,部署," />
+  <meta name="keywords" content="部署," />
 
 
 
@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="渗透思路HackInOS来自： https:&#x2F;&#x2F;bbs.pediy.com&#x2F;thread-252599.htm 简介HackinOS是一个渗透靶机，模拟真实的渗透环境，方便我们练习渗透方法，靶机下载地址…攻击者：kali受害者：HackInOS 渗透步骤1.获取目标机器ip因为我的靶机在虚拟机中网络用的NAT模式，所以靶机IP肯定和kali在同一个网络下，先利用nmap来扫描一波：很明显，我们找到">
+<meta name="description" content="渗透思路HackInOS来自： https:&#x2F;&#x2F;bbs.pediy.com&#x2F;thread-252599.htm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="渗透思路HackInOS">
 <meta property="og:url" content="https://github.com/magic-2020/blog.github.io/2020/04/14/%E7%8E%AF%E5%A2%83-%E6%B8%97%E9%80%8F%E6%80%9D%E8%B7%AFHackInOS/index.html">
 <meta property="og:site_name" content="Magic">
-<meta property="og:description" content="渗透思路HackInOS来自： https:&#x2F;&#x2F;bbs.pediy.com&#x2F;thread-252599.htm 简介HackinOS是一个渗透靶机，模拟真实的渗透环境，方便我们练习渗透方法，靶机下载地址…攻击者：kali受害者：HackInOS 渗透步骤1.获取目标机器ip因为我的靶机在虚拟机中网络用的NAT模式，所以靶机IP肯定和kali在同一个网络下，先利用nmap来扫描一波：很明显，我们找到">
+<meta property="og:description" content="渗透思路HackInOS来自： https:&#x2F;&#x2F;bbs.pediy.com&#x2F;thread-252599.htm">
 <meta property="og:locale">
 <meta property="og:image" content="https://github.com/blog.github.io/images/818602_UV22EB2MF76SZ48.png">
 <meta property="og:image" content="https://github.com/blog.github.io/images/818602_SQJK8T83VP53HP9.png">
@@ -106,9 +106,8 @@
 <meta property="og:image" content="https://github.com/blog.github.io/images/818602_E4QQPF2ZCAUU27Y.png">
 <meta property="og:image" content="https://github.com/blog.github.io/images/818602_7R2C4QTNKTCMFF7.png">
 <meta property="article:published_time" content="2020-04-14T13:11:55.000Z">
-<meta property="article:modified_time" content="2021-06-24T09:13:22.920Z">
+<meta property="article:modified_time" content="2021-07-02T07:02:16.580Z">
 <meta property="article:author" content="magic">
-<meta property="article:tag" content="安全">
 <meta property="article:tag" content="部署">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://github.com/blog.github.io/images/818602_UV22EB2MF76SZ48.png">
@@ -324,6 +323,39 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/%E7%8E%AF%E5%A2%83/" itemprop="url" rel="index">
+                    <span itemprop="name">环境</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -352,6 +384,8 @@
 
       
         <h1 id="渗透思路HackInOS"><a href="#渗透思路HackInOS" class="headerlink" title="渗透思路HackInOS"></a>渗透思路HackInOS</h1><p>来自： <a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-252599.htm">https://bbs.pediy.com/thread-252599.htm</a></p>
+<span id="more"></span>
+
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>HackinOS是一个渗透靶机，模拟真实的渗透环境，方便我们练习渗透方法，靶机下载<a target="_blank" rel="noopener" href="https://www.vulnhub.com/entry/hackinos-1,295/#download">地址</a>…<br>攻击者：kali<br>受害者：HackInOS</p>
 <h2 id="渗透步骤"><a href="#渗透步骤" class="headerlink" title="渗透步骤"></a>渗透步骤</h2><h3 id="1-获取目标机器ip"><a href="#1-获取目标机器ip" class="headerlink" title="1.获取目标机器ip"></a>1.获取目标机器ip</h3><p>因为我的靶机在虚拟机中网络用的NAT模式，所以靶机IP肯定和kali在同一个网络下，先利用nmap来扫描一波：<br><img src="/blog.github.io/images/818602_UV22EB2MF76SZ48.png" alt="818602_UV22EB2MF76SZ48"><br><img src="/blog.github.io/images/818602_SQJK8T83VP53HP9.png" alt="818602_SQJK8T83VP53HP9"><br>很明显，我们找到了目标机器的ip：192.168.88.133，并且发现开启了22和8000端口，在8000端口下面是一个http服务，而且有一个upload.php文件，猜测这里有一个上传文件漏洞….</p>
 <h3 id="2-利用文件上传漏洞"><a href="#2-利用文件上传漏洞" class="headerlink" title="2.利用文件上传漏洞"></a>2.利用文件上传漏洞</h3><p>访问这个地址，确实发现有文件上传的功能：<br><img src="/blog.github.io/images/818602_ZE9KRDY6J2Q7NY5.png" alt="818602_ZE9KRDY6J2Q7NY5"><br>然后我们右键查看源码，发现了一个hint：<br><img src="/blog.github.io/images/818602_WTZ4NMUU6G2CP6Z.png" alt="818602_WTZ4NMUU6G2CP6Z"><br>给了我们一个guthub的<a href="https://github.com/fatihhcelik/Vulnerable-Machine---Hint">连接</a>，我们访问发现：</p>
@@ -426,9 +460,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog.github.io/tags/%E5%AE%89%E5%85%A8/" rel="tag"># 安全</a>
-          
-            <a href="/blog.github.io/tags/%E9%83%A8%E7%BD%B2/" rel="tag"># 部署</a>
+            <a href="/blog.github.io/tags/%E9%83%A8%E7%BD%B2/" rel="tag"><i class="fa fa-tag"></i> 部署</a>
           
         </div>
       
@@ -532,24 +564,34 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog.github.io/archives/%7C%7C%20archive">
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
             
               
               
               <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">29</span>
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
-                
+                </a>
               </div>
             
 
@@ -667,7 +709,12 @@
   
 
 
+  
 
+
+
+  
+  
 
 
 
@@ -705,6 +752,21 @@
   
   
     <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/three/three-waves.min.js"></script>
   
 
 
@@ -791,9 +853,6 @@
   
 
   
-  <script type="text/javascript" src="/blog.github.io/js/src/js.cookie.js?v=5.1.4"></script>
-  <script type="text/javascript" src="/blog.github.io/js/src/scroll-cookie.js?v=5.1.4"></script>
-
 
   
 

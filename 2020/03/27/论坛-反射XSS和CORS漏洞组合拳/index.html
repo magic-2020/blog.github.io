@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="安全,web渗透," />
+  <meta name="keywords" content="web渗透," />
 
 
 
@@ -95,9 +95,8 @@
 <meta property="og:image" content="https://github.com/blog.github.io/images/708977_2M649ZKVA78MX94.jpg">
 <meta property="og:image" content="https://github.com/blog.github.io/images/708977_G2CMKDHMHZJHKGW.jpg">
 <meta property="article:published_time" content="2020-03-27T13:11:55.000Z">
-<meta property="article:modified_time" content="2021-06-24T09:13:22.923Z">
+<meta property="article:modified_time" content="2021-07-02T07:02:16.586Z">
 <meta property="article:author" content="magic">
-<meta property="article:tag" content="安全">
 <meta property="article:tag" content="web渗透">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://github.com/blog.github.io/images/708977_AQPRA4GB74BTE4D.jpg">
@@ -313,6 +312,39 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/%E8%AE%BA%E5%9D%9B/" itemprop="url" rel="index">
+                    <span itemprop="name">论坛</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -343,6 +375,8 @@
         <h1 id="反射XSS和CORS漏洞组合拳"><a href="#反射XSS和CORS漏洞组合拳" class="headerlink" title="反射XSS和CORS漏洞组合拳"></a>反射XSS和CORS漏洞组合拳</h1><h2 id="1-反射型XSS"><a href="#1-反射型XSS" class="headerlink" title="1. 反射型XSS"></a>1. 反射型XSS</h2><p>反射型XSS一般存在于可直接将外部输入在浏览器输出的功能之中，例如搜索、文章分类、选择时间等参数直接输出在URL中。</p>
 <p>一般来说小厂商对反射型XSS的关注并不多，早些年反射XSS很多平台都是不收的。只有一些大厂商对反射XSS还有一定关注度，但是因为反射XSS需要用户配合点击构造后的URL才可以实现攻击，利用手法上和危害都有限，所以一般都是按低危处理。反射XSS被用的最多的基本就是获取cookie，通过cookie欺骗登录受害者账号，一般也都是拿来钓鱼。</p>
 <p>另外反射XSS和CSRF配合也是比较常见的组合拳打法，漏洞危害同样不小。</p>
+<span id="more"></span>
+
 <h2 id="2-CORS漏洞-这个漏洞有点少"><a href="#2-CORS漏洞-这个漏洞有点少" class="headerlink" title="2. CORS漏洞(这个漏洞有点少)"></a>2. CORS漏洞(这个漏洞有点少)</h2><h3 id="2-1原理分析"><a href="#2-1原理分析" class="headerlink" title="2.1原理分析"></a>2.1原理分析</h3><p>CORS，跨域资源共享（Cross-origin resource sharing），是H5提供的一种机制，WEB应用程序可以通过在HTTP增加字段来告诉浏览器，哪些不同来源的服务器是有权访问本站资源的，当不同域的请求发生时，就出现了跨域的现象。</p>
 <p>CORS漏洞存在的原因主要在于Access-Control-Allow-Origin参数配置失误，允许非同域站点访问本站资源。</p>
 <h3 id="2-2漏洞特征"><a href="#2-2漏洞特征" class="headerlink" title="2.2漏洞特征"></a>2.2漏洞特征</h3><p>利用burpsuite可以很方便的帮助我们测试网站是否可能存在CORS跨域漏洞。</p>
@@ -404,9 +438,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog.github.io/tags/%E5%AE%89%E5%85%A8/" rel="tag"># 安全</a>
-          
-            <a href="/blog.github.io/tags/web%E6%B8%97%E9%80%8F/" rel="tag"># web渗透</a>
+            <a href="/blog.github.io/tags/web%E6%B8%97%E9%80%8F/" rel="tag"><i class="fa fa-tag"></i> web渗透</a>
           
         </div>
       
@@ -510,24 +542,34 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog.github.io/archives/%7C%7C%20archive">
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
             
               
               
               <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">29</span>
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
-                
+                </a>
               </div>
             
 
@@ -645,7 +687,12 @@
   
 
 
+  
 
+
+
+  
+  
 
 
 
@@ -683,6 +730,21 @@
   
   
     <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/three/three-waves.min.js"></script>
   
 
 
@@ -769,9 +831,6 @@
   
 
   
-  <script type="text/javascript" src="/blog.github.io/js/src/js.cookie.js?v=5.1.4"></script>
-  <script type="text/javascript" src="/blog.github.io/js/src/scroll-cookie.js?v=5.1.4"></script>
-
 
   
 

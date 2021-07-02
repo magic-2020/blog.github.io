@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="安全,渗透," />
+  <meta name="keywords" content="渗透," />
 
 
 
@@ -79,17 +79,16 @@
 
 
 
-<meta name="description" content="文件上传漏洞造成文件上传漏洞的原因是1、对于上传文件的后缀名（扩展名）没有做较为严格的限制 2、对于上传文件的MIMETYPE 没有做检查 3、权限上没有对于上传的文件的文件权限，（尤其是对于shebang类型的文件） 4、对于web server对于上传文件或者指定目录的行为没有做限制 漏洞上传方法：IIS6.0 的解析漏洞 ：1.jpg%00.php 1.asp;.jpg 1.asp&#x2F;1.jp">
+<meta name="description" content="文件上传漏洞造成文件上传漏洞的原因是1、对于上传文件的后缀名（扩展名）没有做较为严格的限制 2、对于上传文件的MIMETYPE 没有做检查 3、权限上没有对于上传的文件的文件权限，（尤其是对于shebang类型的文件） 4、对于web server对于上传文件或者指定目录的行为没有做限制">
 <meta property="og:type" content="article">
 <meta property="og:title" content="文件上传漏洞">
 <meta property="og:url" content="https://github.com/magic-2020/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/index.html">
 <meta property="og:site_name" content="Magic">
-<meta property="og:description" content="文件上传漏洞造成文件上传漏洞的原因是1、对于上传文件的后缀名（扩展名）没有做较为严格的限制 2、对于上传文件的MIMETYPE 没有做检查 3、权限上没有对于上传的文件的文件权限，（尤其是对于shebang类型的文件） 4、对于web server对于上传文件或者指定目录的行为没有做限制 漏洞上传方法：IIS6.0 的解析漏洞 ：1.jpg%00.php 1.asp;.jpg 1.asp&#x2F;1.jp">
+<meta property="og:description" content="文件上传漏洞造成文件上传漏洞的原因是1、对于上传文件的后缀名（扩展名）没有做较为严格的限制 2、对于上传文件的MIMETYPE 没有做检查 3、权限上没有对于上传的文件的文件权限，（尤其是对于shebang类型的文件） 4、对于web server对于上传文件或者指定目录的行为没有做限制">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-02-20T13:11:55.000Z">
-<meta property="article:modified_time" content="2021-06-24T09:13:22.911Z">
+<meta property="article:modified_time" content="2021-07-02T07:02:16.567Z">
 <meta property="article:author" content="magic">
-<meta property="article:tag" content="安全">
 <meta property="article:tag" content="渗透">
 <meta name="twitter:card" content="summary">
 
@@ -304,6 +303,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -335,6 +356,8 @@
 <p>2、对于上传文件的MIMETYPE 没有做检查</p>
 <p>3、权限上没有对于上传的文件的文件权限，（尤其是对于shebang类型的文件）</p>
 <p>4、对于web server对于上传文件或者指定目录的行为没有做限制</p>
+<span id="more"></span>
+
 <h2 id="漏洞上传方法："><a href="#漏洞上传方法：" class="headerlink" title="漏洞上传方法："></a>漏洞上传方法：</h2><p>IIS6.0 的解析漏洞 ：1.jpg%00.php 1.asp;.jpg 1.asp/1.jpg</p>
 <p>IIS 7.0/IIS 7.5/ Nginx &lt;8.03 畸形解析 1.jpg/.php</p>
 <p>Nginx &lt;8.03 空字节代码执行漏洞 1.jpg%00.php</p>
@@ -508,9 +531,7 @@ do_something();
       
         <div class="post-tags">
           
-            <a href="/blog.github.io/tags/%E5%AE%89%E5%85%A8/" rel="tag"># 安全</a>
-          
-            <a href="/blog.github.io/tags/%E6%B8%97%E9%80%8F/" rel="tag"># 渗透</a>
+            <a href="/blog.github.io/tags/%E6%B8%97%E9%80%8F/" rel="tag"><i class="fa fa-tag"></i> 渗透</a>
           
         </div>
       
@@ -523,8 +544,8 @@ do_something();
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-%E7%9A%AE%E5%8D%A1%E4%B8%98%E9%9D%B6%E6%9C%BA/" rel="next" title="皮卡丘靶机练习">
-                <i class="fa fa-chevron-left"></i> 皮卡丘靶机练习
+              <a href="/blog.github.io/2021/02/15/%E7%B3%BB%E7%BB%9F-Kali%E5%AE%89%E8%A3%85docker/" rel="next" title="Kali安装docker">
+                <i class="fa fa-chevron-left"></i> Kali安装docker
               </a>
             
           </div>
@@ -533,8 +554,8 @@ do_something();
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-dvwa%E9%9D%B6%E6%9C%BA/" rel="prev" title="dvwa靶机练习">
-                dvwa靶机练习 <i class="fa fa-chevron-right"></i>
+              <a href="/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/" rel="prev" title="目录遍历">
+                目录遍历 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -614,24 +635,34 @@ do_something();
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog.github.io/archives/%7C%7C%20archive">
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
             
               
               
               <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">29</span>
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
-                
+                </a>
               </div>
             
 
@@ -749,7 +780,12 @@ do_something();
   
 
 
+  
 
+
+
+  
+  
 
 
 
@@ -787,6 +823,21 @@ do_something();
   
   
     <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/three/three-waves.min.js"></script>
   
 
 
@@ -873,9 +924,6 @@ do_something();
   
 
   
-  <script type="text/javascript" src="/blog.github.io/js/src/js.cookie.js?v=5.1.4"></script>
-  <script type="text/javascript" src="/blog.github.io/js/src/scroll-cookie.js?v=5.1.4"></script>
-
 
   
 

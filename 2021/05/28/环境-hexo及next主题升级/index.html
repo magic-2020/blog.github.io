@@ -87,7 +87,7 @@
 <meta property="og:description" content="hexo及next主题升级1、进入blog文件夹 2、打开git bash 3、升级过时的依赖 npm outdated 4、修改文件加下的package.json文件版本，并删除  node_modules文件夹 5、在git中执行npm install --save 6、检查一下版本信息hexo version 7、更新 Hexo CLI ，先查看版本npm outdated -g并更新npm">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-05-28T13:11:55.000Z">
-<meta property="article:modified_time" content="2021-06-24T09:13:22.916Z">
+<meta property="article:modified_time" content="2021-07-02T07:02:16.575Z">
 <meta property="article:author" content="magic">
 <meta property="article:tag" content="部署">
 <meta name="twitter:card" content="summary">
@@ -303,6 +303,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E7%8E%AF%E5%A2%83/" itemprop="url" rel="index">
+                    <span itemprop="name">环境</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -338,6 +360,8 @@
 <p>6、检查一下版本信息<code>hexo version</code></p>
 <p>7、更新 Hexo CLI ，先查看版本<code>npm outdated -g</code>并更新<code>npm install hexo-cli -g</code></p>
 <p>8、hexo在5.0之后把swig给删除了需要自己手动安装<code>npm i hexo-renderer-swig</code></p>
+<span id="more"></span>
+
 <p>之后，如果之前能够正常运行，升级完以后，大概了是可以正常使用了，如果不行，那就是next主题有问题，需要根据问题解决问题</p>
 
       
@@ -356,7 +380,7 @@
       
         <div class="post-tags">
           
-            <a href="/blog.github.io/tags/%E9%83%A8%E7%BD%B2/" rel="tag"># 部署</a>
+            <a href="/blog.github.io/tags/%E9%83%A8%E7%BD%B2/" rel="tag"><i class="fa fa-tag"></i> 部署</a>
           
         </div>
       
@@ -460,24 +484,34 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog.github.io/archives/%7C%7C%20archive">
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
             
               
               
               <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">29</span>
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
-                
+                </a>
               </div>
             
 
@@ -595,7 +629,12 @@
   
 
 
+  
 
+
+
+  
+  
 
 
 
@@ -633,6 +672,21 @@
   
   
     <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/three/three-waves.min.js"></script>
   
 
 
@@ -719,9 +773,6 @@
   
 
   
-  <script type="text/javascript" src="/blog.github.io/js/src/js.cookie.js?v=5.1.4"></script>
-  <script type="text/javascript" src="/blog.github.io/js/src/scroll-cookie.js?v=5.1.4"></script>
-
 
   
 

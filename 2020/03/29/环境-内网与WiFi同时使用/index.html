@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="安全,部署," />
+  <meta name="keywords" content="部署," />
 
 
 
@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="Web安全在线练习平台大家平台在学习web安全的时候是不是苦于寻找练手平台？是不是苦于搭建各种环境？《网络安全法》出台，更不能随意的拿网上的站点去学习。没关系，我们看雪WEB安全小组与比格云合作，为大家提供了线上练习平台。 这个平台主要包括：DVWA、OWASP Bricks、OWASP WebGoat、SQLi-Labs 简单介绍一下这几个平台： 1.DVWADVWA是著名的OWASP开放出来的">
+<meta name="description" content="Web安全在线练习平台大家平台在学习web安全的时候是不是苦于寻找练手平台？是不是苦于搭建各种环境？《网络安全法》出台，更不能随意的拿网上的站点去学习。没关系，我们看雪WEB安全小组与比格云合作，为大家提供了线上练习平台。 这个平台主要包括：DVWA、OWASP Bricks、OWASP WebGoat、SQLi-Labs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="渗透靶机及安装">
 <meta property="og:url" content="https://github.com/magic-2020/blog.github.io/2020/03/29/%E7%8E%AF%E5%A2%83-%E5%86%85%E7%BD%91%E4%B8%8EWiFi%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="Magic">
-<meta property="og:description" content="Web安全在线练习平台大家平台在学习web安全的时候是不是苦于寻找练手平台？是不是苦于搭建各种环境？《网络安全法》出台，更不能随意的拿网上的站点去学习。没关系，我们看雪WEB安全小组与比格云合作，为大家提供了线上练习平台。 这个平台主要包括：DVWA、OWASP Bricks、OWASP WebGoat、SQLi-Labs 简单介绍一下这几个平台： 1.DVWADVWA是著名的OWASP开放出来的">
+<meta property="og:description" content="Web安全在线练习平台大家平台在学习web安全的时候是不是苦于寻找练手平台？是不是苦于搭建各种环境？《网络安全法》出台，更不能随意的拿网上的站点去学习。没关系，我们看雪WEB安全小组与比格云合作，为大家提供了线上练习平台。 这个平台主要包括：DVWA、OWASP Bricks、OWASP WebGoat、SQLi-Labs">
 <meta property="og:locale">
 <meta property="og:image" content="https://github.com/blog.github.io/images/50431400425310.png">
 <meta property="og:image" content="https://github.com/blog.github.io/images/48311400425312.png">
@@ -92,9 +92,8 @@
 <meta property="og:image" content="https://github.com/blog.github.io/images/98591400425318.png">
 <meta property="og:image" content="https://github.com/blog.github.io/images/64181400425320.png">
 <meta property="article:published_time" content="2020-03-29T13:11:55.000Z">
-<meta property="article:modified_time" content="2021-06-24T09:13:22.917Z">
+<meta property="article:modified_time" content="2021-07-02T07:02:16.577Z">
 <meta property="article:author" content="magic">
-<meta property="article:tag" content="安全">
 <meta property="article:tag" content="部署">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://github.com/blog.github.io/images/50431400425310.png">
@@ -310,6 +309,39 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/%E7%8E%AF%E5%A2%83/" itemprop="url" rel="index">
+                    <span itemprop="name">环境</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -339,6 +371,8 @@
       
         <h1 id="Web安全在线练习平台"><a href="#Web安全在线练习平台" class="headerlink" title="Web安全在线练习平台"></a>Web安全在线练习平台</h1><p>大家平台在学习web安全的时候是不是苦于寻找练手平台？是不是苦于搭建各种环境？《网络安全法》出台，更不能随意的拿网上的站点去学习。没关系，我们看雪WEB安全小组与比格云合作，为大家提供了线上练习平台。</p>
 <p>这个平台主要包括：<strong>DVWA、OWASP Bricks、OWASP WebGoat、SQLi-Labs</strong></p>
+<span id="more"></span>
+
 <p>简单介绍一下这几个平台：</p>
 <h2 id="1-DVWA"><a href="#1-DVWA" class="headerlink" title="1.DVWA"></a>1.DVWA</h2><p>DVWA是著名的OWASP开放出来的一个在线web安全教、学平台。提供了：暴力破解、命令执行、CSRF、文件包含、SQL注入、XSS学习环境，并且分：low、medium、high三种不同的安全等级，等级越高难度也越大。同时每一个漏洞可以直接在页面选择查看源码进行源码对比学习。</p>
 <p>地址：<a target="_blank" rel="noopener" href="http://43.247.91.228:81/">http://43.247.91.228:81</a></p>
@@ -441,7 +475,7 @@
 <p>root@ubuntu:~# <strong>mount -t nfs 192.168.99.131:/ /tmp/r00t/</strong></p>
 <p>root@ubuntu:~# <strong>cat ~/.ssh/id_rsa.pub &gt;&gt; /tmp/r00t/root/.ssh/authorized_keys</strong> </p>
 <p>root@ubuntu:~# <strong>umount /tmp/r00t</strong> </p>
-<p>root@ubuntu:~# <strong>ssh <a href="mailto:&#114;&#111;&#111;&#116;&#x40;&#x31;&#x39;&#x32;&#46;&#49;&#54;&#x38;&#46;&#57;&#x39;&#x2e;&#49;&#51;&#49;">&#114;&#111;&#111;&#116;&#x40;&#x31;&#x39;&#x32;&#46;&#49;&#54;&#x38;&#46;&#57;&#x39;&#x2e;&#49;&#51;&#49;</a></strong></p>
+<p>root@ubuntu:~# <strong>ssh <a href="mailto:&#x72;&#111;&#111;&#116;&#64;&#49;&#x39;&#x32;&#46;&#49;&#54;&#56;&#46;&#x39;&#57;&#46;&#49;&#x33;&#49;">&#x72;&#111;&#111;&#116;&#64;&#49;&#x39;&#x32;&#46;&#49;&#54;&#56;&#46;&#x39;&#57;&#46;&#49;&#x33;&#49;</a></strong></p>
 <p>Last login: Fri Jun 1 00:29:33 2012 from 192.168.99.128</p>
 <p>Linux metasploitable 2.6.24-16-server #1 SMP Thu Apr 10 13:58:00 UTC 2008 i686</p>
 <p><strong>服务：后门</strong></p>
@@ -838,9 +872,7 @@ dav (WebDav)
       
         <div class="post-tags">
           
-            <a href="/blog.github.io/tags/%E5%AE%89%E5%85%A8/" rel="tag"># 安全</a>
-          
-            <a href="/blog.github.io/tags/%E9%83%A8%E7%BD%B2/" rel="tag"># 部署</a>
+            <a href="/blog.github.io/tags/%E9%83%A8%E7%BD%B2/" rel="tag"><i class="fa fa-tag"></i> 部署</a>
           
         </div>
       
@@ -944,24 +976,34 @@ dav (WebDav)
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog.github.io/archives/%7C%7C%20archive">
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
             
               
               
               <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">29</span>
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
-                
+                </a>
               </div>
             
 
@@ -1079,7 +1121,12 @@ dav (WebDav)
   
 
 
+  
 
+
+
+  
+  
 
 
 
@@ -1117,6 +1164,21 @@ dav (WebDav)
   
   
     <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/three/three-waves.min.js"></script>
   
 
 
@@ -1203,9 +1265,6 @@ dav (WebDav)
   
 
   
-  <script type="text/javascript" src="/blog.github.io/js/src/js.cookie.js?v=5.1.4"></script>
-  <script type="text/javascript" src="/blog.github.io/js/src/scroll-cookie.js?v=5.1.4"></script>
-
 
   
 
