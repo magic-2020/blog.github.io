@@ -121,7 +121,7 @@ timezone: Asia/Shanghai
 
 3）设置语言为：`简体中文：zh-Hans`
 
-4）页面翻页显示出错：
+4）**页面翻页显示出错**：
 
 \themes\next\layout\_partials\pagination.swig中内容改为如下情况：
 
@@ -139,27 +139,152 @@ timezone: Asia/Shanghai
 {% endif %}
 `````
 
-5）主页点击进去后报错：
+5）**主页点击进去后报错**：
 
 将配置文件\themes\next\layout\_partials\_config.yml里菜单设置中的 ||之前所有的空格删掉
 
 ![20200314090351328.PNG](/blog.github.io/images/20200314090351328.PNG)
 
-主题配置参考网站：
+6）**添加分类模块**：
 
-https://www.jianshu.com/p/208f2c4e3a16
+​	1、新建一个分类页面
 
-https://www.jianshu.com/p/f054333ac9e6
+```cpp
+$ hexo new page categories
+```
 
-https://www.jianshu.com/p/b520b49562b2
+​	2、你会发现你的`source`文件夹下有了`categorcies/index.md`，打开`index.md`文件将title设置为`title: 分类`
 
-6）tags设置格式：
+​	3、把文章归入分类只需在文章的顶部标题下方添加`categories`字段，即可自动创建分类名并加入对应的分类中
+
+````
+title: hexo+GitHub的blog搭建
+date: 2020-03-22 21:11:55
+categories:
+- 环境
+````
+
+7）**添加标签模块**
+
+​	1、新建一个标签页面
+
+```cpp
+$ hexo new page tags
+```
+
+​	2、你会发现你的`source`文件夹下有了`tags/index.md`，打开`index.md`文件将title设置为`title: 标签`
+​	3、把文章添加标签只需在文章的顶部标题下方添加`tags`字段，即可自动创建标签名并归入对应的标签中
+
+tags设置格式：
 
 ````
 title: hexo+GitHub的blog搭建（一）
 date: 2020-03-22 21:11:55
 tags:
-	（tab）- 部署
+- 部署
 typora-root-url: ./
 ````
+
+8)**添加关于模块**
+
+​	1、新建一个关于页面
+
+```cpp
+$ hexo new page about
+```
+
+​	2、你会发现你的`source`文件夹下有了`about/index.md`，打开`index.md`文件即可编辑关于你的信息，可以随便编辑。
+
+## 7、添加阅读全文按钮
+
+因为在你的博客主页会有多篇文章，如果你想让你的文章只显示一部分，多余的可以点击阅读全文来查看，那么你需要在你的文章中添加
+
+```xml
+<!--more-->
+```
+
+其后面的部分就不会显示了，只能点击阅读全文才能看
+
+## 8、 显示当前浏览进度
+
+修改`themes/next/_config.yml`，把 `false` 改为 `true`：
+
+```yaml
+# Back to top in sidebar
+b2t: true
+
+# Scroll percent label in b2t button
+scrollpercent: true
+```
+
+## 9、 设置动态背景
+
+在主题配置文件中找到`canvas_nest`，设置成`ture`就可以啦，当然假如你想要其他样式，那么只要设置该样式为`true`即可。
+
+```yaml
+# Canvas-nest
+canvas_nest: true
+
+# three_waves
+three_waves: false
+
+# canvas_lines
+canvas_lines: false
+
+# canvas_sphere
+canvas_sphere: false
+
+# Only fit scheme Pisces
+# Canvas-ribbon
+canvas_ribbon: false
+```
+
+##10、边栏头像下面日志链接错误
+
+在\themes\next\layout\_macro\sidebar.swig中，
+原代码49行：
+
+````
+<a href="{{ url_for(theme.menu.archives).split('||')[0] | trim }}">
+````
+修改为：
+````
+<a href="{{ url_for(config.archive_dir) | trim }}">
+````
+
+## 11、Next主题中文锚点失效
+
+themes\next\source\js\src\post-details.js 文件中targetSelector 解析 UTF8 有问题
+
+    var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+    <!-- 添加下面这行代码, 重新解析 URL ->
+    targetSelector = decodeURI(this.getAttribute('href'))
+    var offset = $(targetSelector).offset().top;
+##12、主页文章添加阴影效果
+
+打开`.\themes\next\source\css\_custom\custom.styl`，添加以下代码：
+
+```css
+// 主页文章添加阴影效果
+.post {
+    margin-top: 20px;
+    padding: 20px;
+    -webkit-box-shadow: 0 0 5px rgba(202, 203, 203, .5);
+    -moz-box-shadow: 0 0 5px rgba(202, 203, 204, .5);
+}
+```
+
+##13、修改底部标签样式
+
+修改`.\themes\next\layout\_macro\post.swig`中文件，搜索`rel="tag">#`，将`#`替换成`<i class="fa fa-tag"></i>`。
+
+![img](/blog.github.io/images/v2-81502a3337a5cbdd9905a03a5fb29160_720w.png)
+
+
+
+效果如下
+
+
+
+![img](/blog.github.io/images/v2-7d95c3799ee55a560af396f3eae14929_720w.jpg)
 
