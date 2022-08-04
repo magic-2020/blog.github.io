@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog.github.io/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog.github.io/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog.github.io/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog.github.io/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog.github.io/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="HTTP," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="区分Cookie-Session-Token首先要讲session和cookie，就必须先了解HTTP协议，因为这两个名词诞生于HTTP协议。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="区分Cookie-Session-Token">
+<meta property="og:url" content="https://github.com/magic-2020/blog.github.io/2021/06/17/my_%E5%8C%BA%E5%88%86Cookie-Session-Token/index.html">
+<meta property="og:site_name" content="Magic">
+<meta property="og:description" content="区分Cookie-Session-Token首先要讲session和cookie，就必须先了解HTTP协议，因为这两个名词诞生于HTTP协议。">
+<meta property="og:locale">
+<meta property="og:image" content="https://github.com/blog.github.io/images/wps1.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/wps2.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/wps3.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/wps4.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/wps5.jpg">
+<meta property="article:published_time" content="2021-06-17T13:11:55.000Z">
+<meta property="article:modified_time" content="2022-08-04T02:51:31.441Z">
+<meta property="article:author" content="magic">
+<meta property="article:tag" content="HTTP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/blog.github.io/images/wps1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/magic-2020/blog.github.io/2021/06/17/my_区分Cookie-Session-Token/"/>
+
+
+
+
+
+  <title>区分Cookie-Session-Token | Magic</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Magic</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">try everyday</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blog.github.io/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog.github.io/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog.github.io/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/magic-2020/blog.github.io/blog.github.io/2021/06/17/my_%E5%8C%BA%E5%88%86Cookie-Session-Token/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Magic">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">区分Cookie-Session-Token</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-06-17T21:11:55+08:00">
+                2021-06-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/MY/" itemprop="url" rel="index">
+                    <span itemprop="name">MY</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/MY/%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index">
+                    <span itemprop="name">基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="区分Cookie-Session-Token"><a href="#区分Cookie-Session-Token" class="headerlink" title="区分Cookie-Session-Token"></a>区分Cookie-Session-Token</h1><p>首先要讲session和cookie，就必须先了解HTTP协议，因为这两个名词诞生于HTTP协议。</p>
+<span id="more"></span>
+
+<h2 id="一、HTTP协议-Cookie和Session的来源"><a href="#一、HTTP协议-Cookie和Session的来源" class="headerlink" title="一、HTTP协议-Cookie和Session的来源"></a>一、HTTP协议-Cookie和Session的来源</h2><p>HTTP协议是一个无状态的协议，无状态协议是指无登录状态，即服务器并不知道登录的人是谁，那么这一次请求和上一次请求没有任何关系，也没有任何的关联，只要客户端和服务器之间的数据交换完毕，就会断开连接，再次请求，会重新连接，因此协议对于交互性场景而言是没有记忆力的。</p>
+<p>例如：</p>
+<p>我们登录淘宝购买商品时，需要请求/login接口（用户信息），找到喜欢的商品加入购物车/cart接口中（用户信息，商品信息），购买支付/pay接口（用户信息，商品信息，金额信息），无状态的http协议，就会导致这样一个问题：</p>
+<p>（1）在我们第一步给服务器发送/login接口请求后，服务器验证身份正确，返回成功后，就忘记你是谁了。</p>
+<p>（2）所以在第二步我们添加商品发送/cart接口请求后，还需要将我们的用户信息和商品信息一起发送给服务器，服务器再对其进行验证，验证成功后，又不会记得你是谁添加了什么商品</p>
+<p>（3）到了第三步请求/pay时，就需要将前边的信息都写上，才会返回相对应的信息。</p>
+<p>因此这个小例子中，我们可以看出若是缺少状态，我们就需要多次提供一些相同的信息，重新传递之前所有的信息，这样的话每次传递的数据量都很大，会使得服务器响应速度低，用户体验感变差。</p>
+<p>通过这个例子，我们知道的是，登录自己的信息之后，第二次的选择商品是和用户所关联的，第三次又和第二次有关联。所以为了保持http的连接状态，支持客户端和服务端的交互，就需要通过Cookie和Session的技术为交互存储一下状态。</p>
+<h2 id="二、Cookie"><a href="#二、Cookie" class="headerlink" title="二、Cookie"></a>二、Cookie</h2><h3 id="1-Cookie的原理"><a href="#1-Cookie的原理" class="headerlink" title="1.Cookie的原理"></a>1.Cookie的原理</h3><p>服务器单纯从网络连接上是无法知道用户身份。因此每次新的用户进行请求时，便会给客户端们颁发一个通行证，此通行证是独一无二的，无论是谁访问都必须携带自己通行证。这样服务器就能从通行证上确认客户身份了，这就是Cookie的工作原理。</p>
+<h3 id="2-Cookie的含义"><a href="#2-Cookie的含义" class="headerlink" title="2.Cookie的含义"></a>2.Cookie的含义</h3><p>Cookie是在1993 年，网景公司雇员 Lou Montulli 为了让用户在访问某网站时，进一步提高访问速度，同时也为了进一步实现个人化网络而发明的。Cookie还有一个很广泛的用途就是记住用户的账号和密码，这样当用户再次登录同一个网站或系统的时候就不需要再次填写账号和密码了，直接点击“登录”按钮就可以。</p>
+<p>Cookie 在计算机中是个存储在浏览器目录中的文本文件，当浏览器运行时，存储在 RAM 中发挥作用 （此种 Cookies 称作 Session Cookies），一旦用户从该网站或服务器退出，Cookie 可存储在用户的本地硬盘上 （此种 Cookies 称作 Persistent Cookies）。</p>
+<p>其实Cookie实际上是一小段的纯文本信息。客户端请求服务器，如果服务器需要记录该用户状态，就使用response向客户端浏览器颁发一个Cookie。客户端浏览器会把Cookie保存起来。当浏览器再请求该网站时，浏览器把请求的网址和此Cookie一同提交给服务器。服务器检查该Cookie，以此来辨认用户状态。服务器还可以根据需要修改Cookie的内容。</p>
+<table>
+<thead>
+<tr>
+<th><img src="/blog.github.io/images/wps1.jpg" alt="img"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="/blog.github.io/images/wps2.png" alt="img"></td>
+</tr>
+</tbody></table>
+<p>网站实例：  </p>
+<p>a. 在界面上登录时保存登录状态</p>
+<p>b. 查看网页返回的set-cookie</p>
+<p><img src="/blog.github.io/images/wps3.jpg" alt="img"> </p>
+<p>c. 在浏览器中查看刚才返回的cookie，与response中设置的一样， 有效期是14天。（从中可以看出Cookie是有时效性的，目前有些 Cookie 是临时的，有些则是持续的。临时的 Cookie 只在浏览器上保存一段规定的时间，超过规定的时间，该 Cookie 就会被系统清除。）</p>
+<p><img src="/blog.github.io/images/wps4.jpg" alt="img"> </p>
+<p>d. 再次访问时，无需登录就可直接进入界面，而是将之前存储在浏览器中的Cookie设置到请求头中的Cookie中了</p>
+<p><img src="/blog.github.io/images/wps5.jpg" alt="img"> </p>
+<h3 id="3-Cookie的特性"><a href="#3-Cookie的特性" class="headerlink" title="3.Cookie的特性"></a>3.Cookie的特性</h3><ol>
+<li>Cookie的不可跨域名性</li>
+</ol>
+<p> 很多网站都会使用Cookie。例如，Google会向客户端颁发Cookie，Baidu也会向客户端颁发Cookie。那浏览器访问Google会不会也携带上Baidu颁发的Cookie呢？或者Google能不能修改Baidu颁发的Cookie呢？</p>
+<p>答案是否定的。Cookie具有不可跨域名性。根据Cookie规范，浏览器访问Google只会携带Google的Cookie，而不会携带Baidu的Cookie。Google也只能操作Google的Cookie，而不能操作Baidu的Cookie。</p>
+<p>Cookie在客户端是由浏览器来管理的。浏览器能够保证Google只会操作Google的Cookie而不会操作Baidu的Cookie，从而保证用户的隐私安全。浏览器判断一个网站是否能操作另一个网站Cookie的依据是域名。Google与Baidu的域名不一样，因此Google不能操作Baidu的Cookie。</p>
+<ol start="2">
+<li>Cookie的限制性</li>
+</ol>
+<p>Cookie 必须在 HTML 文件的内容输出之前设置；不同的浏览器 (Netscape Navigator、Internet Explorer) 对 Cookie 的处理不一致，使用时一定要考虑；客户端用户如果设置禁止 Cookie，则 Cookie 不能建立。 并且在客户端，一个浏览器能创建的 Cookie 数量最多为 300个，并且每个不能超过 4KB，每个 Web 站点能设置的 Cookie 总数不能超过 20 个。</p>
+<h2 id="三、Session"><a href="#三、Session" class="headerlink" title="三、Session"></a>三、Session</h2><h3 id="1-session的原理"><a href="#1-session的原理" class="headerlink" title="1.session的原理"></a>1.session的原理</h3><p>Session是对于服务端来说的，客户端是没有Session的。Session是服务器在和客户端建立连接时添加客户端连接的标志，最终会在服务器软件（Apache、Tomcat、JBoss）转化为一个临时Cookie发送给给客户端，当客户端第一请求时服务器会检查是否携带了这个Session（临时Cookie），如果没有则会添加Session，如果有就拿出这个Session来做相关操作。</p>
+<h3 id="2．Session的含义"><a href="#2．Session的含义" class="headerlink" title="2．Session的含义"></a>2．Session的含义</h3><p>在网络应用中，Session称为“会话控制”。Session 对象存储特定用户会话所需的属性及配置信息。这样，当用户在应用程序的 Web 页之间跳转时，存储在 Session 对象中的变量将不会丢失，而是在整个用户会话中一直存在下去。当用户请求来自应用程序的 Web 页时，如果该用户还没有会话，则 Web 服务器将自动创建一个 Session 对象。当会话过期或被放弃后，服务器将终止该会话。</p>
+<p>简单来说，客户端浏览服务端的时候，服务端把客户端信息以某种形式记录在服务器上，这种记录就是Session，客户端浏览器再次访问时只需要从该Session中查找该客户的状态就可以了。如果说Cookie机制是通过检查客户身上的“通行证”来确定客户身份的话，那么Session机制就是通过检查服务器上的“客户明细表”来确认客户身份。</p>
+<h3 id="3-Session和Cookie的关系"><a href="#3-Session和Cookie的关系" class="headerlink" title="3. Session和Cookie的关系"></a>3. Session和Cookie的关系</h3><p>Cookie 是一个实际存在的、具体的东西，HTTP 协议中定义在 header 中的字段。</p>
+<p>Session 是一个抽象概念、开发者为了实现中断和继续等操作，将client和server之间一对一的交互，抽象为“会话”，进而衍生出“会话状态”，即Session描述的是一种通讯会话机制，而Cookie只是目前实现这种机制的主流方案里面的一个参与者，它一般是用于保存Session ID。</p>
+<h2 id="四、Token"><a href="#四、Token" class="headerlink" title="四、Token"></a>四、Token</h2><h3 id="1-Token的原理"><a href="#1-Token的原理" class="headerlink" title="1.Token的原理"></a>1.Token的原理</h3><p>Token是服务端生成的一串字符串，以作为客户端进行请求的一个令牌，来验证用户身份。比如当第一次登录后，服务器生成一个Token便将此Token返回给客户端，以后客户端只需带上这个Token前来请求数据即可，无需再次带上用户名和密码，或你授权（登录）一个程序时，他就是个依据判断你是否已经授权该软件。最简单的Token组成:UID(用户唯一的身份标识)、TIME(当前时间的时间戳)、SIGN(签名)。、</p>
+<p>应用场景：</p>
+<p>A：当用户首次登录成功之后, 服务器端生成一个 Token 值，这个值会在服务器保存Token值(保存在数据库中)，再将这个Token值返回给客户端。</p>
+<p>B：客户端拿到 Token 值之后，进行本地保存。</p>
+<p>C：当客户端再次发送网络请求(一般不是登录请求)的时候,就会将这个 Token 值附带到参数中发送给服务器。</p>
+<p>D：服务器接收到客户端的请求之后，会取出Token值与保存在本地的(数据库)Token值作对比。</p>
+<p>对比一：如果两个 Token 值相同， 说明用户登录成功，当前用户处于登录状态。</p>
+<p>对比二：如果没有这个 Token 值, 则说明没有登录成功。</p>
+<p>对比三：如果 Token 值不同：说明原来的登录信息已经失效，让用户重新登录。</p>
+<h3 id="2-Token的目的"><a href="#2-Token的目的" class="headerlink" title="2.Token的目的"></a>2.Token的目的</h3><p>Token的目的是为了减轻服务器的压力，减少频繁的查询数据库，使服务器更加健壮。</p>
+<h2 id="五、Cookie、Session、Token的区别"><a href="#五、Cookie、Session、Token的区别" class="headerlink" title="五、Cookie、Session、Token的区别"></a>五、Cookie、Session、Token的区别</h2><p>（1）Cookie数据存放在客户的浏览器上，Session数据放在服务器上，客户端只有Session id，Token数据是存储在客户端。</p>
+<p>（2）Cookie不是很安全，别人可以分析存放在本地的Cookie并进行Cookie欺骗(CSRF跨站请求伪造)，Session相对于Cookie来说更安全些，所以重要信息最好存放在Session中，其他的信息可以放在你Cookie中，但是作为身份认证Token安全性比Session好，因为每个请求都有签名还能防止监听以及重放攻击，而Session就必须靠链路层来保障通讯安全了。</p>
+<p>（3）Session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能，考虑到减轻服务器性能方面，应当使用Cookie。</p>
+<p>（4）单个Cookie保存的数据不能超过4K，很多浏览器都限制一个站点最多保存20个Cookie。Session在用户量大时，可能会造成一些拥堵。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog.github.io/tags/HTTP/" rel="tag"><i class="fa fa-tag"></i> HTTP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog.github.io/2021/05/28/%E7%8E%AF%E5%A2%83-hexo%E5%8F%8Anext%E4%B8%BB%E9%A2%98%E5%8D%87%E7%BA%A7/" rel="next" title="hexo及next主题升级">
+                <i class="fa fa-chevron-left"></i> hexo及next主题升级
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog.github.io/images/avatar.gif"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8C%BA%E5%88%86Cookie-Session-Token"><span class="nav-number">1.</span> <span class="nav-text">区分Cookie-Session-Token</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81HTTP%E5%8D%8F%E8%AE%AE-Cookie%E5%92%8CSession%E7%9A%84%E6%9D%A5%E6%BA%90"><span class="nav-number">1.1.</span> <span class="nav-text">一、HTTP协议-Cookie和Session的来源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Cookie"><span class="nav-number">1.2.</span> <span class="nav-text">二、Cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Cookie%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.Cookie的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Cookie%E7%9A%84%E5%90%AB%E4%B9%89"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.Cookie的含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Cookie%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.Cookie的特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Session"><span class="nav-number">1.3.</span> <span class="nav-text">三、Session</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-session%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.session的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%BC%8ESession%E7%9A%84%E5%90%AB%E4%B9%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">2．Session的含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Session%E5%92%8CCookie%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. Session和Cookie的关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Token"><span class="nav-number">1.4.</span> <span class="nav-text">四、Token</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Token%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.Token的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Token%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.Token的目的</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81Cookie%E3%80%81Session%E3%80%81Token%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.5.</span> <span class="nav-text">五、Cookie、Session、Token的区别</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">magic</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog.github.io/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog.github.io/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

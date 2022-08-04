@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog.github.io/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog.github.io/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog.github.io/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog.github.io/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog.github.io/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="web渗透," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="反射XSS和CORS漏洞组合拳1. 反射型XSS反射型XSS一般存在于可直接将外部输入在浏览器输出的功能之中，例如搜索、文章分类、选择时间等参数直接输出在URL中。 一般来说小厂商对反射型XSS的关注并不多，早些年反射XSS很多平台都是不收的。只有一些大厂商对反射XSS还有一定关注度，但是因为反射XSS需要用户配合点击构造后的URL才可以实现攻击，利用手法上和危害都有限，所以一般都是按低危处理。反">
+<meta property="og:type" content="article">
+<meta property="og:title" content="反射XSS和CORS漏洞组合拳">
+<meta property="og:url" content="https://github.com/magic-2020/blog.github.io/2020/03/27/%E8%AE%BA%E5%9D%9B-%E5%8F%8D%E5%B0%84XSS%E5%92%8CCORS%E6%BC%8F%E6%B4%9E%E7%BB%84%E5%90%88%E6%8B%B3/index.html">
+<meta property="og:site_name" content="Magic">
+<meta property="og:description" content="反射XSS和CORS漏洞组合拳1. 反射型XSS反射型XSS一般存在于可直接将外部输入在浏览器输出的功能之中，例如搜索、文章分类、选择时间等参数直接输出在URL中。 一般来说小厂商对反射型XSS的关注并不多，早些年反射XSS很多平台都是不收的。只有一些大厂商对反射XSS还有一定关注度，但是因为反射XSS需要用户配合点击构造后的URL才可以实现攻击，利用手法上和危害都有限，所以一般都是按低危处理。反">
+<meta property="og:locale">
+<meta property="og:image" content="https://github.com/blog.github.io/images/708977_AQPRA4GB74BTE4D.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/708977_T9MVQPJMP3M35V4.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/708977_DWBGTZJV6UUJE2R.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/708977_YJR3X28YDYH53CB.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/708977_8GP7MHW6REY765P.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/708977_UB2FZNK4MP6X9UN.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/708977_2M649ZKVA78MX94.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/708977_G2CMKDHMHZJHKGW.jpg">
+<meta property="article:published_time" content="2020-03-27T13:11:55.000Z">
+<meta property="article:modified_time" content="2022-08-04T02:51:31.450Z">
+<meta property="article:author" content="magic">
+<meta property="article:tag" content="web渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/blog.github.io/images/708977_AQPRA4GB74BTE4D.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/magic-2020/blog.github.io/2020/03/27/论坛-反射XSS和CORS漏洞组合拳/"/>
+
+
+
+
+
+  <title>反射XSS和CORS漏洞组合拳 | Magic</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Magic</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">try everyday</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blog.github.io/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog.github.io/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog.github.io/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/magic-2020/blog.github.io/blog.github.io/2020/03/27/%E8%AE%BA%E5%9D%9B-%E5%8F%8D%E5%B0%84XSS%E5%92%8CCORS%E6%BC%8F%E6%B4%9E%E7%BB%84%E5%90%88%E6%8B%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Magic">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">反射XSS和CORS漏洞组合拳</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-27T21:11:55+08:00">
+                2020-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/%E8%AE%BA%E5%9D%9B/" itemprop="url" rel="index">
+                    <span itemprop="name">论坛</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="反射XSS和CORS漏洞组合拳"><a href="#反射XSS和CORS漏洞组合拳" class="headerlink" title="反射XSS和CORS漏洞组合拳"></a>反射XSS和CORS漏洞组合拳</h1><h2 id="1-反射型XSS"><a href="#1-反射型XSS" class="headerlink" title="1. 反射型XSS"></a>1. 反射型XSS</h2><p>反射型XSS一般存在于可直接将外部输入在浏览器输出的功能之中，例如搜索、文章分类、选择时间等参数直接输出在URL中。</p>
+<p>一般来说小厂商对反射型XSS的关注并不多，早些年反射XSS很多平台都是不收的。只有一些大厂商对反射XSS还有一定关注度，但是因为反射XSS需要用户配合点击构造后的URL才可以实现攻击，利用手法上和危害都有限，所以一般都是按低危处理。反射XSS被用的最多的基本就是获取cookie，通过cookie欺骗登录受害者账号，一般也都是拿来钓鱼。</p>
+<p>另外反射XSS和CSRF配合也是比较常见的组合拳打法，漏洞危害同样不小。</p>
+<span id="more"></span>
+
+<h2 id="2-CORS漏洞-这个漏洞有点少"><a href="#2-CORS漏洞-这个漏洞有点少" class="headerlink" title="2. CORS漏洞(这个漏洞有点少)"></a>2. CORS漏洞(这个漏洞有点少)</h2><h3 id="2-1原理分析"><a href="#2-1原理分析" class="headerlink" title="2.1原理分析"></a>2.1原理分析</h3><p>CORS，跨域资源共享（Cross-origin resource sharing），是H5提供的一种机制，WEB应用程序可以通过在HTTP增加字段来告诉浏览器，哪些不同来源的服务器是有权访问本站资源的，当不同域的请求发生时，就出现了跨域的现象。</p>
+<p>CORS漏洞存在的原因主要在于Access-Control-Allow-Origin参数配置失误，允许非同域站点访问本站资源。</p>
+<h3 id="2-2漏洞特征"><a href="#2-2漏洞特征" class="headerlink" title="2.2漏洞特征"></a>2.2漏洞特征</h3><p>利用burpsuite可以很方便的帮助我们测试网站是否可能存在CORS跨域漏洞。</p>
+<p><strong>a.为每个请求自动加上Origin头</strong></p>
+<p><img src="/blog.github.io/images/708977_AQPRA4GB74BTE4D.jpg" alt="708977_AQPRA4GB74BTE4D"> </p>
+<p>重放后可以看到靶机返回<code>Access-Control-Allow-Origin: foo.example.org</code>，且成功获取到数据，则证明存在CORS跨域</p>
+<p><img src="/blog.github.io/images/708977_T9MVQPJMP3M35V4.jpg" alt="708977_T9MVQPJMP3M35V4"></p>
+<p><strong>b.在HTTP history中筛选可能存在CORS跨域的请求。</strong></p>
+<p>只需在过滤条件中输入：</p>
+<ol>
+<li><p>Access-Control-Allow-Origin: foo.example.org </p>
+</li>
+<li><p>Access-Control-Allow-Credentials: true </p>
+</li>
+</ol>
+<p><img src="/blog.github.io/images/708977_DWBGTZJV6UUJE2R.jpg" alt="708977_DWBGTZJV6UUJE2R"> </p>
+<p>另外需要注意的是如果服务器配置为：</p>
+<ol>
+<li><p>Access-Control-Allow-Origin: * </p>
+</li>
+<li><p>Access-Control-Allow-Credentials: true </p>
+</li>
+</ol>
+<p>不能证明漏洞存在，因为浏览器会自动拦截掉非认证域的请求。</p>
+<h3 id="2-3漏洞利用"><a href="#2-3漏洞利用" class="headerlink" title="2.3漏洞利用"></a>2.3漏洞利用</h3><p>假设用户在网站foo.com处于登录状态，同时用户又点击了我们配置好的链接evil.com。</p>
+<p>evil.com的网站向foo.com这个网站发起请求获取敏感数据，那么浏览器能否获取到foo.com中的敏感数据完全取决于foo.com配置</p>
+<p>如果foo.com配置了Access-Control-Allow-Origin为允许接受跨域请求，则我们的evil.com就能获取到敏感数据，否则浏览器会因为同源策略接收不到敏感数据。</p>
+<p>关于CORS漏洞，可使用开源工具CrossSiteContentHijacking验证</p>
+<p><img src="/blog.github.io/images/708977_YJR3X28YDYH53CB.jpg" alt="708977_YJR3X28YDYH53CB"></p>
+<p> <img src="/blog.github.io/images/708977_8GP7MHW6REY765P.jpg" alt="708977_8GP7MHW6REY765P"></p>
+<h2 id="3-鸡肋XSS和CORS组合拳"><a href="#3-鸡肋XSS和CORS组合拳" class="headerlink" title="3. 鸡肋XSS和CORS组合拳"></a>3. 鸡肋XSS和CORS组合拳</h2><p>以KEY师傅的Dorabox靶场<span style='color:red'>（注意这个靶场会被win10判断为病毒，在虚拟机中运行）</span>&gt;模拟漏洞利用，首先验证反射型XSS存在。</p>
+<p><img src="/blog.github.io/images/708977_UB2FZNK4MP6X9UN.jpg" alt="708977_UB2FZNK4MP6X9UN"> </p>
+<p>然后CORS也同时存在，假设传递了敏感参数</p>
+<p><img src="/blog.github.io/images/708977_2M649ZKVA78MX94.jpg" alt="708977_2M649ZKVA78MX94"> </p>
+<p>因为CORS跨域资源获取漏洞存在，那么我们可以通过让用户点击我们自己服务器上搭建的payload环境，获取到敏感数据，但是很明显这样的漏洞利用姿势成功的概率太小，这年头隔壁卖烤红薯的大爷都知道不要点陌生链接了，所以我们需要反射XSS的配合。</p>
+<p>首先我们构造能够通过CORS跨域获取到敏感数据的JavaScript代码，类似于这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;  </span><br><span class="line">function cors() &#123;    </span><br><span class="line">	var xhttp = new XMLHttpRequest();    </span><br><span class="line">	xhttp.onreadystatechange = function() &#123;      </span><br><span class="line">		if (this.status == 200) &#123;      </span><br><span class="line">			alert(this.responseText);       </span><br><span class="line">			document.body.innerHTML = this.responseText;      </span><br><span class="line">		&#125;    </span><br><span class="line">	&#125;;     </span><br><span class="line">	xhttp.open(&quot;GET&quot;, &quot;http://localhost:801/DoraBox/csrf/userinfo.php&quot;, true);    </span><br><span class="line">	xhttp.withCredentials = true;    </span><br><span class="line">	xhttp.send();  </span><br><span class="line">&#125;  </span><br><span class="line">cors();  </span><br><span class="line">&lt;/script&gt;  </span><br></pre></td></tr></table></figure>
+
+<p>简单分析一下，首先创建了一个cors()函数，这个函数首先判断当前的访问状态，如果是正常访问(即状态码为200)，则获取<a target="_blank" rel="noopener" href="http://localhost:801/DoraBox/csrf/userinfo.php%E6%96%87%E4%BB%B6%E7%9A%84body%E4%B8%8B%E7%9A%84%E5%85%A8%E9%83%A8%E5%86%85%E5%AE%B9(%E4%B9%9F%E5%8F%AF%E4%BB%A5%E6%A0%B9%E6%8D%AEID%E8%8E%B7%E5%8F%96)%E5%B9%B6%E5%BC%B9%E6%A1%86%E5%B1%95%E7%A4%BA%E5%87%BA%E6%9D%A5%E3%80%82">http://localhost:801/DoraBox/csrf/userinfo.php文件的body下的全部内容(也可以根据ID获取)并弹框展示出来。</a><span style="color:red">(用例注意网址的正确性)</span>&gt;</p>
+<p>现在我们只需要把反射XSS的payload替换为利用CORS跨域获取敏感信息的payload即可：</p>
+<p><img src="/blog.github.io/images/708977_G2CMKDHMHZJHKGW.jpg" alt="708977_G2CMKDHMHZJHKGW"> </p>
+<p>程序成功执行。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>至此，反射XSS和CORS配合成功获取到用户敏感数据，虽然同样需要用户点击才能触发，但是漏洞危害足够大，如果是一些大厂的有敏感信息的站点，一般都会给高危。其实漏洞挖掘的乐趣就在于不断的发掘有趣的利用姿势，在遇到一些看似“鸡肋”的漏洞时，可以不用忙着提交，多思考一下是否可以和其他漏洞形成组合拳，这样技术才会有上升的空间，漏洞危害也会因此而提高，相应的白帽子能获得的收益也最大。</p>
+<p>注：本文首发自云众可信</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog.github.io/tags/web%E6%B8%97%E9%80%8F/" rel="tag"><i class="fa fa-tag"></i> web渗透</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog.github.io/2020/03/25/1.%E6%A8%A1%E6%9D%BF/" rel="next" title="模板">
+                <i class="fa fa-chevron-left"></i> 模板
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog.github.io/2020/03/28/%E5%BE%85%E6%95%B4%E7%90%86-%E5%AE%89%E5%85%A8-%E6%B8%97%E9%80%8F%E5%AD%A6%E4%B9%A0/" rel="prev" title="安全-渗透学习-待整理">
+                安全-渗透学习-待整理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog.github.io/images/avatar.gif"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84XSS%E5%92%8CCORS%E6%BC%8F%E6%B4%9E%E7%BB%84%E5%90%88%E6%8B%B3"><span class="nav-number">1.</span> <span class="nav-text">反射XSS和CORS漏洞组合拳</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%8F%8D%E5%B0%84%E5%9E%8BXSS"><span class="nav-number">1.1.</span> <span class="nav-text">1. 反射型XSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-CORS%E6%BC%8F%E6%B4%9E-%E8%BF%99%E4%B8%AA%E6%BC%8F%E6%B4%9E%E6%9C%89%E7%82%B9%E5%B0%91"><span class="nav-number">1.2.</span> <span class="nav-text">2. CORS漏洞(这个漏洞有点少)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1原理分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2%E6%BC%8F%E6%B4%9E%E7%89%B9%E5%BE%81"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2漏洞特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3漏洞利用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E9%B8%A1%E8%82%8BXSS%E5%92%8CCORS%E7%BB%84%E5%90%88%E6%8B%B3"><span class="nav-number">1.3.</span> <span class="nav-text">3. 鸡肋XSS和CORS组合拳</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.4.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">magic</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog.github.io/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog.github.io/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog.github.io/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog.github.io/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog.github.io/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog.github.io/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog.github.io/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="部署," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="自动化学习笔记1、代码不变数据变 2、学习的时候，可以从单元测试开始">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动化-环境部署">
+<meta property="og:url" content="https://github.com/magic-2020/blog.github.io/2020/03/25/%E8%87%AA%E5%8A%A8%E5%8C%96-%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:site_name" content="Magic">
+<meta property="og:description" content="自动化学习笔记1、代码不变数据变 2、学习的时候，可以从单元测试开始">
+<meta property="og:locale">
+<meta property="og:image" content="https://github.com/blog.github.io/images/image-20200425121911876.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/image-20200425122125442.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/image-20200425122211277.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/image-20200425142139907.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/image-20200425143300222.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/image-20200425150409193.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/image-20200425150420044.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/image-20200425154818564.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/image-20200425154833776.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/image-20200425163537496.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/20170817181629863">
+<meta property="og:image" content="https://github.com/blog.github.io/images/image-20200425191416984.png">
+<meta property="article:published_time" content="2020-03-25T13:11:55.000Z">
+<meta property="article:modified_time" content="2022-08-04T02:51:31.450Z">
+<meta property="article:author" content="magic">
+<meta property="article:tag" content="部署">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/blog.github.io/images/image-20200425121911876.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/magic-2020/blog.github.io/2020/03/25/自动化-环境部署/"/>
+
+
+
+
+
+  <title>自动化-环境部署 | Magic</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Magic</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">try everyday</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blog.github.io/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog.github.io/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog.github.io/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/magic-2020/blog.github.io/blog.github.io/2020/03/25/%E8%87%AA%E5%8A%A8%E5%8C%96-%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Magic">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自动化-环境部署</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-25T21:11:55+08:00">
+                2020-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/" itemprop="url" rel="index">
+                    <span itemprop="name">自动化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="自动化学习笔记"><a href="#自动化学习笔记" class="headerlink" title="自动化学习笔记"></a>自动化学习笔记</h1><p>1、代码不变数据变</p>
+<p>2、学习的时候，可以从单元测试开始</p>
+<span id="more"></span>
+
+<h1 id="环境安装（涉及自动部署）"><a href="#环境安装（涉及自动部署）" class="headerlink" title="环境安装（涉及自动部署）"></a>环境安装（涉及自动部署）</h1><p>1、python安装，安装python2</p>
+<p>2、pip install wxPython，在目录C:\Python27\Scripts下cmd安装，可以安装成功</p>
+<p>3、pip install robotframework，安装robotframework框架</p>
+<p>4、pip install robotframework-ride，安装robotframework的RIDE</p>
+<p>5、pip install robotframework-selenium2library==1.8.0  ，安装selenium2library</p>
+<p>6、安装成功后，打开RIDE界面，新建project，文件格式为TXT，添加library,字体为黑色，安装成功</p>
+<p>7、浏览器驱动适配，Google驱动下载网址为：<a target="_blank" rel="noopener" href="http://npm.taobao.org/mirrors/chromedriver/">http://npm.taobao.org/mirrors/chromedriver/</a></p>
+<p>8、下载完成后，将相关版本的驱动chromedriver.exe，放到C:\Python27目录下</p>
+<p>9、下载Jenkins并安装，安装完成后，自动打开<a target="_blank" rel="noopener" href="http://localhost:8080/%EF%BC%8C%E5%B9%B6%E8%BF%9B%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E8%AE%BE%E7%BD%AE">http://localhost:8080/，并进行初始化设置</a></p>
+<h1 id="第一个用例python执行过程中出现的问题"><a href="#第一个用例python执行过程中出现的问题" class="headerlink" title="第一个用例python执行过程中出现的问题"></a>第一个用例python执行过程中出现的问题</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding = utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">OpenFirefox</span>():</span></span><br><span class="line">  browser = webdriver.Firefox()</span><br><span class="line">  <span class="keyword">return</span> browser</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">OpenChrome</span>():</span></span><br><span class="line">  browser = webdriver.Chrome()</span><br><span class="line">  <span class="keyword">return</span> browser</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">MaxBrowser</span>():</span></span><br><span class="line">  browser.maximize_window()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GoToURL</span>(<span class="params">url</span>):</span></span><br><span class="line">  browser.get(url)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Main</span></span><br><span class="line"><span class="comment">#browser = OpenFirefox()</span></span><br><span class="line">browser = OpenChrome()</span><br><span class="line">GoToURL(<span class="string">&quot;https://www.baidu.com/&quot;</span>)</span><br><span class="line">MaxBrowser()</span><br><span class="line">time.sleep(<span class="number">3</span>)</span><br><span class="line">element = browser.find_elements_by_xpath(<span class="string">&quot;//input[@id=&#x27;kw&#x27;]&quot;</span>)</span><br><span class="line">element[<span class="number">0</span>].send_keys(<span class="string">&quot;automation&quot;</span>)</span><br><span class="line">element = browser.find_elements_by_xpath(<span class="string">&quot;//input[@id=&#x27;su&#x27;]&quot;</span>)</span><br><span class="line">element[<span class="number">0</span>].click()</span><br><span class="line">time.sleep(<span class="number">3</span>)</span><br><span class="line"><span class="keyword">if</span> browser.page_source.find(<span class="string">&quot;automation&quot;</span>)!=<span class="number">1</span>:</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&quot;pass&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&quot;fail&quot;</span>)</span><br><span class="line">browser.quit()</span><br></pre></td></tr></table></figure>
+
+<h2 id="浏览器驱动"><a href="#浏览器驱动" class="headerlink" title="浏览器驱动"></a>浏览器驱动</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">selenium.common.exceptions.WebDriverException: Message: &#x27;geckodriver&#x27; executable needs to be in PATH.</span><br></pre></td></tr></table></figure>
+
+<p>报上面的错，说明浏览器，没有配置相关驱动</p>
+<p>1、Google驱动下载网址为：<a target="_blank" rel="noopener" href="http://npm.taobao.org/mirrors/chromedriver/">http://npm.taobao.org/mirrors/chromedriver/</a></p>
+<p>2、火狐驱动下载：<a href="https://github.com/mozilla/geckodriver/releases">https://github.com/mozilla/geckodriver/releases</a></p>
+<p>3、IE驱动下载：</p>
+<p>​    edge：微软下载官网，下载<strong>Microsoft Edge Legacy</strong>的驱动</p>
+<p>4、下载完成后，将驱动放到放到C:\Python27目录下（目前仅针对python2版本）</p>
+<h2 id="Python运行报错"><a href="#Python运行报错" class="headerlink" title="Python运行报错"></a>Python运行报错</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TypeError: GoToURL() takes no arguments (1 given)</span><br></pre></td></tr></table></figure>
+
+<p>函数编写有误，没有输入函数的参数 <span style="color:red">GoToURL(url)</span></p>
+<h2 id="seleniumIDE-与-python"><a href="#seleniumIDE-与-python" class="headerlink" title="seleniumIDE 与 python"></a>seleniumIDE 与 python</h2><p>目前，已知的，IDE（最新版）录制的脚本转换成python后，是不能够直接执行的，直接执行后，没有任何反应</p>
+<h1 id="RIDE（Robot-Framework）的使用"><a href="#RIDE（Robot-Framework）的使用" class="headerlink" title="RIDE（Robot Framework）的使用"></a>RIDE（Robot Framework）的使用</h1><p>RIDE是一款python编写的功能自动化测试框架，更加简洁快速的进行自动化测试</p>
+<p>但是，语法方法，是另一套，与直接python执行不一致</p>
+<h2 id="一个简单的damo"><a href="#一个简单的damo" class="headerlink" title="一个简单的damo"></a>一个简单的damo</h2><p>1、新建项目，并设置library</p>
+<p><img src="/blog.github.io/images/image-20200425121911876.png" alt="image-20200425121911876"></p>
+<p>字体不变红，就说明没有问题</p>
+<p><strong>注：遇到的所有问题，先重启RIDE，再试一遍，可以解决大部分问题</strong></p>
+<p>2、新建case，并在case中进行编辑</p>
+<p><img src="/blog.github.io/images/image-20200425122125442.png" alt="image-20200425122125442"></p>
+<p>3、进行运行</p>
+<p><img src="/blog.github.io/images/image-20200425122211277.png" alt="image-20200425122211277"></p>
+<h2 id="运行中出现的pybot问题"><a href="#运行中出现的pybot问题" class="headerlink" title="运行中出现的pybot问题"></a>运行中出现的pybot问题</h2><p>如果在安装过程中，发现 C:\Python27\Scripts 文件夹先没有pybot.bat文件</p>
+<p>可以先：</p>
+<p>在目录下自己创建一个pybot.txt的文件，输入下面内容并保存修改为.bat后缀</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Echo off</span><br><span class="line">python -m robot.run %</span><br></pre></td></tr></table></figure>
+
+<h2 id="导入外部python文件"><a href="#导入外部python文件" class="headerlink" title="导入外部python文件"></a>导入外部python文件</h2><p>使用方式，与导入selenium2Library一致，使用library导入，F5可以查看使用的导入文件的方法</p>
+<h2 id="设置截屏"><a href="#设置截屏" class="headerlink" title="设置截屏"></a>设置截屏</h2><p>截屏方法是导入Screenshot，然后使用截屏的方法，运行过程中，可以进行截屏，图中为其中一种截屏设置方法：</p>
+<p><img src="/blog.github.io/images/image-20200425142139907.png" alt="image-20200425142139907"></p>
+<h2 id="设置打开外部文件"><a href="#设置打开外部文件" class="headerlink" title="设置打开外部文件"></a>设置打开外部文件</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#python函数为：</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span>(<span class="params">name</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;hello&quot;</span>+name)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">runcalc</span>(<span class="params">appname</span>):</span></span><br><span class="line">    os.system(appname)</span><br></pre></td></tr></table></figure>
+
+<p>导入外部文件后，使用函数runcalc(calc)，即可打开win系统自带的计算器</p>
+<p>cala是从哪里来的？</p>
+<h2 id="设置变量"><a href="#设置变量" class="headerlink" title="设置变量"></a>设置变量</h2><p><img src="/blog.github.io/images/image-20200425143300222.png" alt="image-20200425143300222"></p>
+<p>图中所示为：</p>
+<p>设置关键字与设置变量</p>
+<p>extract keyword：可以把重复的步骤，进行封装，然后在case中重复使用</p>
+<p>extract variable：可以设置动态的变量，在不改变用例语句的情况下进行变量设置</p>
+<p><strong><font style="color:red">注：每改变一次内容，都要重启一次RIDE</font></strong></p>
+<h2 id="cmd执行RIDE"><a href="#cmd执行RIDE" class="headerlink" title="cmd执行RIDE"></a>cmd执行RIDE</h2><h3 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pybot --help</span><br><span class="line">可以查看在cmd中的执行方法</span><br><span class="line">例如：</span><br><span class="line">pybot -t test1 D:\zdh\try\test.txt</span><br><span class="line">注意：cmd执行过程主管，要关闭RIDE，否则会执行失败</span><br></pre></td></tr></table></figure>
+
+<p><img src="/blog.github.io/images/image-20200425150409193.png" alt="image-20200425150409193"></p>
+<p><img src="/blog.github.io/images/image-20200425150420044.png" alt="image-20200425150420044"></p>
+<h3 id="添加tag"><a href="#添加tag" class="headerlink" title="添加tag"></a>添加tag</h3><p>1、RIDE中，edit中 <strong>add tag to select</strong> 添加tag</p>
+<p>2、在cmd中运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pybot -i browser D:\zdh\try\test.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="IE浏览器中运行"><a href="#IE浏览器中运行" class="headerlink" title="IE浏览器中运行"></a>IE浏览器中运行</h2><p>1、脚本不变，浏览器改为： <strong>ie</strong>（已经下载配置好驱动）</p>
+<p>2、如果浏览器运行时加载不出来：把浏览器的【工具】-【Internet选项】-【安全】中的多个选项卡的【启用保护模式】复选框勾上就行了</p>
+<p>3、注意浏览器分辨率要调至 <strong>100%</strong></p>
+<h2 id="火狐浏览器中运行"><a href="#火狐浏览器中运行" class="headerlink" title="火狐浏览器中运行"></a>火狐浏览器中运行</h2><p>1、脚本不变，浏览器改为：<strong>firefox</strong>（已经下载放置好驱动）</p>
+<p>2、如果加载中报错：Page should have contained text ‘本内容是使用 GET 方法请求的’ but did not</p>
+<p>3、将Page should contain 修改为：<strong>Wait Until Page Contains</strong></p>
+<p>4、在火度狐地址栏中输入about:config,然后找到 browser.tabs.loadBookmarksInTabs，原本是false，双专击这一行，改为true就可以打开链接在新标签页而非新窗口</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xieshengsen/p/6827824.html">https://www.cnblogs.com/xieshengsen/p/6827824.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.iteye.com/blog/ratlsun-1869379">https://www.iteye.com/blog/ratlsun-1869379</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.gemal.dk/mozilla/files.html">http://www.gemal.dk/mozilla/files.html</a></p>
+<p>5、打开链接在新标签页而非新窗口设置：</p>
+<p>1）user_pref(“browser.link.open_newwindow”, 3);</p>
+<p>2）分别再两处添加</p>
+<p>C:\Python27\Lib\site-packages\selenium\webdriver\firefox\webdriver_prefs.json</p>
+<p>C:\Python27\Lib\site-packages\Selenium2Library\resources\firefoxprofile\prefs.js</p>
+<h2 id="edge中运行"><a href="#edge中运行" class="headerlink" title="edge中运行"></a>edge中运行</h2><p>1、脚本不变，浏览器修改为：<strong>edge</strong>（已下载放置好驱动）</p>
+<h1 id="与jenkins联合使用"><a href="#与jenkins联合使用" class="headerlink" title="与jenkins联合使用"></a>与jenkins联合使用</h1><h2 id="一个小damo"><a href="#一个小damo" class="headerlink" title="一个小damo"></a>一个小damo</h2><p>1、打开services.msc，开启Jenkins的服务</p>
+<p>2、<a target="_blank" rel="noopener" href="http://localhost:8080/%EF%BC%8C%E6%89%93%E5%BC%80%E7%BD%91%E9%A1%B5">http://localhost:8080/，打开网页</a></p>
+<p>3、新建item</p>
+<p>4、在构建出，填写cmd命令（注意：路径使用\\表示）</p>
+<p><img src="/blog.github.io/images/image-20200425154818564.png" alt="image-20200425154818564"></p>
+<p>5、保存后，进行build</p>
+<h2 id="存在的问题："><a href="#存在的问题：" class="headerlink" title="存在的问题："></a>存在的问题：</h2><p>1、Keyword ‘Capture Page Screenshot’ could not be run on failure: No browser is open</p>
+<p><img src="/blog.github.io/images/image-20200425154833776.png" alt="image-20200425154833776"></p>
+<p>原因：浏览器路径设置不正确</p>
+<p>解决方法：</p>
+<p>在C:\Python27\Lib\site-packages\Selenium2Library\keywords\_browsermanagement.py文件中添加一下内容，注意修改路径为Google的路径</p>
+<p><img src="/blog.github.io/images/image-20200425163537496.png" alt="image-20200425163537496"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> remote_url:</span><br><span class="line">	<span class="keyword">if</span> webdriver_type == webdriver.Chrome:</span><br><span class="line">   	options = webdriver.ChromeOptions()</span><br><span class="line">	options.binary_location = <span class="string">r&quot;C:\Users\tn132\AppData\Local\Google\Chrome\Application\chrome.exe&quot;</span></span><br><span class="line">	browser = webdriver_type(chrome_options=options)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	browser = webdriver_type()</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	browser = self._create_remote_web_driver(desired_cap_type,remote_url , desired_caps)</span><br><span class="line"><span class="keyword">return</span> browser</span><br></pre></td></tr></table></figure>
+
+<p>2、报错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ WARN ] Keyword &#x27;Capture Page Screenshot&#x27; could not be run on failure: TimeoutException: Message: timeout: Timed out receiving message from renderer: 10.000</span><br><span class="line">  (Session info: chrome=80.0.3987.132)</span><br></pre></td></tr></table></figure>
+
+<p>解决方案：更新浏览器驱动</p>
+<p>3、Build step ‘Execute Windows batch command’ marked build as failure导致这个build失败。</p>
+<p>原因：jenkins执行命令，会把命令生成一个批处理文件执行，而pybot命令对于批处理来说是外部命令，所以要加call表示调用。而jenkins执行windows命令,若退出代码不为0 ,则jenkins会将构建标记为失败，所以需要加上exit 0表示执行完成退出<br>解决方法：构建命令在pybot前面加上call，最后加上exit 0</p>
+<p><img src="/blog.github.io/images/20170817181629863" alt="20170817181629863"></p>
+<h2 id="批量删除历史记录"><a href="#批量删除历史记录" class="headerlink" title="批量删除历史记录"></a>批量删除历史记录</h2><p>在script console中输入以下指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def jobName = &quot;_2jobs&quot; //这里是item的名称</span><br><span class="line">def maxNumber = 100  //删除100条以内的历史记录</span><br><span class="line">Jenkins.instance.getItemByFullName(jobName).builds.findAll &#123;it.number &lt;= maxNumber&#125;.each &#123; it.delete() &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="可用插件"><a href="#可用插件" class="headerlink" title="可用插件"></a>可用插件</h2><p>1、Build Monitor View</p>
+<p>2、Robot Framework</p>
+<p>3、Parameterized Trigger</p>
+<p>4、Build With Parameters</p>
+<p>5、Build Pipeline</p>
+<h2 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Jenkins 中文社区	https://updates.jenkins-zh.cn/update-center.json</span><br><span class="line">清华大学	https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json</span><br><span class="line">华为开源镜像站	https://mirrors.huaweicloud.com/jenkins/updates/update-center.json</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="自动化的优先级"><a href="#自动化的优先级" class="headerlink" title="自动化的优先级"></a>自动化的优先级</h1><p><img src="/blog.github.io/images/image-20200425191416984.png" alt="image-20200425191416984"></p>
+<h1 id="selenium-grid安装使用"><a href="#selenium-grid安装使用" class="headerlink" title="selenium grid安装使用"></a>selenium grid安装使用</h1><p>1、创建hub</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>2、创建node</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog.github.io/tags/%E9%83%A8%E7%BD%B2/" rel="tag"><i class="fa fa-tag"></i> 部署</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog.github.io/2020/03/25/%E8%AE%BA%E5%9D%9B-%E5%B7%A5%E6%8E%A7%E5%9C%BA%E6%99%AF%E4%B8%8B%E7%9A%84%E6%97%A0%E6%96%87%E4%BB%B6%E6%94%BB%E5%87%BB%E9%98%B2%E6%8A%A4/" rel="next" title="工控场景下的无文件攻击防护">
+                <i class="fa fa-chevron-left"></i> 工控场景下的无文件攻击防护
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog.github.io/2020/03/25/%E8%87%AA%E5%8A%A8%E5%8C%96-python%E5%AD%A6%E4%B9%A0/" rel="prev" title="自动化-python学习">
+                自动化-python学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog.github.io/images/avatar.gif"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">自动化学习笔记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%EF%BC%88%E6%B6%89%E5%8F%8A%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">环境安装（涉及自动部署）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%94%A8%E4%BE%8Bpython%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">第一个用例python执行过程中出现的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E9%A9%B1%E5%8A%A8"><span class="nav-number">3.1.</span> <span class="nav-text">浏览器驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99"><span class="nav-number">3.2.</span> <span class="nav-text">Python运行报错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#seleniumIDE-%E4%B8%8E-python"><span class="nav-number">3.3.</span> <span class="nav-text">seleniumIDE 与 python</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RIDE%EF%BC%88Robot-Framework%EF%BC%89%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">RIDE（Robot Framework）的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84damo"><span class="nav-number">4.1.</span> <span class="nav-text">一个简单的damo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E4%B8%AD%E5%87%BA%E7%8E%B0%E7%9A%84pybot%E9%97%AE%E9%A2%98"><span class="nav-number">4.2.</span> <span class="nav-text">运行中出现的pybot问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5%E5%A4%96%E9%83%A8python%E6%96%87%E4%BB%B6"><span class="nav-number">4.3.</span> <span class="nav-text">导入外部python文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%88%AA%E5%B1%8F"><span class="nav-number">4.4.</span> <span class="nav-text">设置截屏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%89%93%E5%BC%80%E5%A4%96%E9%83%A8%E6%96%87%E4%BB%B6"><span class="nav-number">4.5.</span> <span class="nav-text">设置打开外部文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%8F%98%E9%87%8F"><span class="nav-number">4.6.</span> <span class="nav-text">设置变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cmd%E6%89%A7%E8%A1%8CRIDE"><span class="nav-number">4.7.</span> <span class="nav-text">cmd执行RIDE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C"><span class="nav-number">4.7.1.</span> <span class="nav-text">执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0tag"><span class="nav-number">4.7.2.</span> <span class="nav-text">添加tag</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IE%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E8%BF%90%E8%A1%8C"><span class="nav-number">4.8.</span> <span class="nav-text">IE浏览器中运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%81%AB%E7%8B%90%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E8%BF%90%E8%A1%8C"><span class="nav-number">4.9.</span> <span class="nav-text">火狐浏览器中运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#edge%E4%B8%AD%E8%BF%90%E8%A1%8C"><span class="nav-number">4.10.</span> <span class="nav-text">edge中运行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8Ejenkins%E8%81%94%E5%90%88%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">与jenkins联合使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E5%B0%8Fdamo"><span class="nav-number">5.1.</span> <span class="nav-text">一个小damo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="nav-number">5.2.</span> <span class="nav-text">存在的问题：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%B9%E9%87%8F%E5%88%A0%E9%99%A4%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95"><span class="nav-number">5.3.</span> <span class="nav-text">批量删除历史记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E7%94%A8%E6%8F%92%E4%BB%B6"><span class="nav-number">5.4.</span> <span class="nav-text">可用插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F"><span class="nav-number">5.5.</span> <span class="nav-text">镜像</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">6.</span> <span class="nav-text">自动化的优先级</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#selenium-grid%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8"><span class="nav-number">7.</span> <span class="nav-text">selenium grid安装使用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">magic</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog.github.io/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog.github.io/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

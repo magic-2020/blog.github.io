@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog.github.io/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog.github.io/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog.github.io/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog.github.io/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog.github.io/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Kali," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="系统更新1、查看配置文件，默认设置的是官方更新源 root@kali:~# cat &#x2F;etc&#x2F;apt&#x2F;sources.listdeb http:&#x2F;&#x2F;http.kali.org&#x2F;kali kali-rolling main non-free contrib 2、更新系统 root@kali:~# apt-get update &amp;&amp; apt -y full-upgrade（2019年的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kali安装相关问题">
+<meta property="og:url" content="https://github.com/magic-2020/blog.github.io/2020/04/15/%E7%B3%BB%E7%BB%9F-Kali%E5%AE%89%E8%A3%85%E9%9B%B6%E6%95%A3%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Magic">
+<meta property="og:description" content="系统更新1、查看配置文件，默认设置的是官方更新源 root@kali:~# cat &#x2F;etc&#x2F;apt&#x2F;sources.listdeb http:&#x2F;&#x2F;http.kali.org&#x2F;kali kali-rolling main non-free contrib 2、更新系统 root@kali:~# apt-get update &amp;&amp; apt -y full-upgrade（2019年的">
+<meta property="og:locale">
+<meta property="og:image" content="https://github.com/blog.github.io/images/20200224113147596.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/20180316183425080">
+<meta property="og:image" content="https://github.com/blog.github.io/images/2038314-20200515165445349-606519698.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/2038314-20200515165453644-20904254.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/image-20210215213001984.png">
+<meta property="article:published_time" content="2020-04-15T13:11:55.000Z">
+<meta property="article:modified_time" content="2022-08-04T02:51:31.450Z">
+<meta property="article:author" content="magic">
+<meta property="article:tag" content="Kali">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/blog.github.io/images/20200224113147596.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/magic-2020/blog.github.io/2020/04/15/系统-Kali安装零散记录/"/>
+
+
+
+
+
+  <title>Kali安装相关问题 | Magic</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Magic</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">try everyday</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blog.github.io/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog.github.io/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog.github.io/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/magic-2020/blog.github.io/blog.github.io/2020/04/15/%E7%B3%BB%E7%BB%9F-Kali%E5%AE%89%E8%A3%85%E9%9B%B6%E6%95%A3%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Magic">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kali安装相关问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-15T21:11:55+08:00">
+                2020-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="系统更新"><a href="#系统更新" class="headerlink" title="系统更新"></a>系统更新</h1><p><strong>1、查看配置文件，默认设置的是官方更新源</strong></p>
+<p>root@kali:~# cat /etc/apt/sources.list<br>deb <a target="_blank" rel="noopener" href="http://http.kali.org/kali">http://http.kali.org/kali</a> kali-rolling main non-free contrib</p>
+<p><strong>2、更新系统</strong></p>
+<p>root@kali:~# apt-get update &amp;&amp; apt -y full-upgrade（2019年的命令）</p>
+<p>或者：apt-get update &amp;&amp; apt-get upgrade &amp;&amp; apt-get clean（2020年的命令）</p>
+<p>apt-get update //更新可用软件包列表</p>
+<p>apt full-upgrade //通过卸载|安装|升级等方式来更新系统</p>
+<p><strong>3、重启</strong></p>
+<p><strong>4、验证</strong></p>
+<p>root@kali:~# grep VERSION /etc/os-release<br>VERSION=”2018.3”<br>VERSION_ID=”2018.3”</p>
+<p>或</p>
+<p>root@kali:~# uname -a</p>
+<span id="more"></span>
+
+<h1 id="附其它更新源："><a href="#附其它更新源：" class="headerlink" title="附其它更新源："></a>附其它更新源：</h1><p>#中科大<br>deb <a target="_blank" rel="noopener" href="http://mirrors.ustc.edu.cn/kali">http://mirrors.ustc.edu.cn/kali</a> kali-rolling main non-free contrib<br>deb-src <a target="_blank" rel="noopener" href="http://mirrors.ustc.edu.cn/kali">http://mirrors.ustc.edu.cn/kali</a> kali-rolling main non-free contrib</p>
+<p>#阿里云<br>deb <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/kali">http://mirrors.aliyun.com/kali</a> kali-rolling main non-free contrib<br>deb-src <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/kali">http://mirrors.aliyun.com/kali</a> kali-rolling main non-free contrib</p>
+<p>#清华大学<br>deb <a target="_blank" rel="noopener" href="http://mirrors.tuna.tsinghua.edu.cn/kali">http://mirrors.tuna.tsinghua.edu.cn/kali</a> kali-rolling main contrib non-free<br>deb-src <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/kali">https://mirrors.tuna.tsinghua.edu.cn/kali</a> kali-rolling main contrib non-free</p>
+<p>#浙大<br>deb <a target="_blank" rel="noopener" href="http://mirrors.zju.edu.cn/kali">http://mirrors.zju.edu.cn/kali</a> kali-rolling main contrib non-free<br>deb-src <a target="_blank" rel="noopener" href="http://mirrors.zju.edu.cn/kali">http://mirrors.zju.edu.cn/kali</a> kali-rolling main contrib non-free</p>
+<p>#东软大学<br>deb <a target="_blank" rel="noopener" href="http://mirrors.neusoft.edu.cn/kali">http://mirrors.neusoft.edu.cn/kali</a> kali-rolling/main non-free contrib<br>deb-src <a target="_blank" rel="noopener" href="http://mirrors.neusoft.edu.cn/kali">http://mirrors.neusoft.edu.cn/kali</a> kali-rolling/main non-free contrib</p>
+<p>#官方源<br>deb <a target="_blank" rel="noopener" href="http://http.kali.org/kali">http://http.kali.org/kali</a> kali-rolling main non-free contrib<br>deb-src <a target="_blank" rel="noopener" href="http://http.kali.org/kali">http://http.kali.org/kali</a> kali-rolling main non-free contrib</p>
+<h1 id="Linux常用命令："><a href="#Linux常用命令：" class="headerlink" title="Linux常用命令："></a>Linux常用命令：</h1><p>1、查看ip： ifconfig -a</p>
+<p>2、查看安装了哪些软件： rpm -qa</p>
+<p>3、vim 的快捷使用方式</p>
+<p>​    1）在命令模式下输入set nu，展示文本行号</p>
+<p>​    2）在命令行模式下输入字符v（小写），便可以进入按字符选择模式，通过h、i、j、k键移动光标选择要进行复制的字符串。</p>
+<p>​    3）完成选择后按下y键进行复制，将鼠标移动到最后一行，按下p执行粘贴操作就完成了对选择的字符串部分完成了按字符复制与粘贴操作。</p>
+<p>4、进入root： sudo su</p>
+<h1 id="kalilinux安装中文输入法-安装fcitx-小企鹅输入法"><a href="#kalilinux安装中文输入法-安装fcitx-小企鹅输入法" class="headerlink" title="kalilinux安装中文输入法 安装fcitx,小企鹅输入法"></a>kalilinux安装中文输入法 安装fcitx,小企鹅输入法</h1><p>1、命令来安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install fcitx-table-wbpy ttf-wqy-microhei ttf-wqy-zenhei</span><br></pre></td></tr></table></figure>
+
+<p>2、启用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fcitx</span><br></pre></td></tr></table></figure>
+
+<p>3、设置环境变量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export XMODIFIERS=&quot;@im=YOUR_XIM_NAME&quot;</span><br><span class="line">vim ~/.bashrc </span><br><span class="line">其中输入：</span><br><span class="line">export XMODIFIERS=&quot;@im=fcitx&quot;</span><br><span class="line">export XIM=fcitx</span><br><span class="line">export XIM_PROGRAM=fcitx</span><br></pre></td></tr></table></figure>
+
+<h1 id="卸载输入法"><a href="#卸载输入法" class="headerlink" title="卸载输入法"></a>卸载输入法</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get  purge  sogoupinyin #卸载搜狗</span><br><span class="line">sudo apt-get purge  fcitx  #卸载fcitx</span><br><span class="line">sudo apt-get autoremove </span><br></pre></td></tr></table></figure>
+
+<h1 id="清理垃圾"><a href="#清理垃圾" class="headerlink" title="清理垃圾"></a>清理垃圾</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get autoclean               # 清理旧版本的软件缓存</span><br><span class="line">sudo apt-get clean                      # 清理所有软件缓存</span><br><span class="line">sudo apt-get autoremove           # 删除系统不再使用的孤立软件</span><br></pre></td></tr></table></figure>
+
+<h1 id="dpkg：警告：无法找到软件包-XXXX-问题解决-不一定有效"><a href="#dpkg：警告：无法找到软件包-XXXX-问题解决-不一定有效" class="headerlink" title="dpkg：警告：无法找到软件包 XXXX 问题解决(不一定有效)"></a>dpkg：警告：无法找到软件包 XXXX 问题解决(不一定有效)</h1><p>在apt-get install 安装一个新包时 先回去检查<code>/var/lib/dpkg/info/</code>目录下的已安装包的配置文件信息；如果发现有已经安装的应用 的配置文件信息不在info目录下 就会提示这个错误</p>
+<p> 所以这个时候我们 可以通过：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg --configure -a</span><br></pre></td></tr></table></figure>
+
+<p>然后通过：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -l | grep ^ii | awk &#x27;&#123;print $2&#125;&#x27; | grep -v XXX | xargs sudo aptitude reinstall </span><br></pre></td></tr></table></figure>
+
+<p>重新获取包内容配置信息 ，这样一步步重新安装下去 很快就可以解决这个问题了</p>
+<p>二.当然也还有第二种方法，那就是通过：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get --reinstall install  `dpkg --get-selections | grep &#x27;[[:space:]]install&#x27; | cut -f1`</span><br></pre></td></tr></table></figure>
+
+<p>来重新安装全部软件，会全部刷新info目录 不过这个方法就要多花点时间去等了</p>
+<h1 id="最新的kali版本为kali2020的登录密码"><a href="#最新的kali版本为kali2020的登录密码" class="headerlink" title="最新的kali版本为kali2020的登录密码"></a>最新的kali版本为kali2020的登录密码</h1><p>安装后很多用户还是直接使用之前的默认root账户</p>
+<p>账户：root 密码：toor</p>
+<p>但是最新的kali2020已经改变安全策略，默认的账户名和密码如下：</p>
+<p>账户名：kali</p>
+<p>密码：kali</p>
+<p>如果想切换为root账户模式，建议使用以下命令操作</p>
+<p>sudo su</p>
+<p>然后输入默认密码kali就切换到root账户了。</p>
+<p><img src="/blog.github.io/images/20200224113147596.png" alt="img"></p>
+<h1 id="解决kali-linux出现正在设定软件包-无法操作的问题"><a href="#解决kali-linux出现正在设定软件包-无法操作的问题" class="headerlink" title="解决kali linux出现正在设定软件包 无法操作的问题"></a>解决kali linux出现正在设定软件包 无法操作的问题</h1><p>出现正在设定软件包什么鬼</p>
+<p>直接tab+enter即可</p>
+<p><img src="/blog.github.io/images/20180316183425080" alt="img"></p>
+<h1 id="设置语言"><a href="#设置语言" class="headerlink" title="设置语言"></a>设置语言</h1><p>1)默认语言选择</p>
+<p>dpkg-reconfigure locales　　　　 //命令注意：如果是root用户可直接执行dpkg-reconfigure locales命令，如果是kali用户则需先切换成root用户登陆再进行执行</p>
+<p>进入选择语言的图形化界面之后，（空格是选择，Tab是切换）<br>使用空格键将zh_CN.GBK_GBK 和 zh-CN.UTF-8.UTF-8其两项勾选上，勾选后用Tab键把光标移动到在&lt;0k&gt;处按下空格</p>
+<p><img src="/blog.github.io/images/2038314-20200515165445349-606519698.png" alt="img"></p>
+<p>在此处选择zh_CN.UTF-8字符编码，在&lt;0k&gt; 处按空格键进行确认 ，并完成相关配置操作</p>
+<p><img src="/blog.github.io/images/2038314-20200515165453644-20904254.png" alt="img"></p>
+<p>(2)更新一下系统，并重新启动，界面字体转为中文</p>
+<h1 id="安装ibus中文输入法"><a href="#安装ibus中文输入法" class="headerlink" title="安装ibus中文输入法"></a>安装ibus中文输入法</h1><p>Ctrl+alt+t 调出命令行，输入：apt install ibus ibus-pinyin<br>必须安装：zenity<br>接着输入：apt install zenity<br>再输入：im-config<br>安装完成后：ibus-setup<br>如果输入法没有及时切换，先重启系统，然后在试，如果依旧不行，再根据提示进行文件配置</p>
+<p>super键基本上就在键盘左下方Ctrl键和Alt键中间，大都为Windows标志，又被称为Windows键</p>
+<h1 id="kali最新的系统任务栏调节"><a href="#kali最新的系统任务栏调节" class="headerlink" title="kali最新的系统任务栏调节"></a>kali最新的系统任务栏调节</h1><p>选择水平模式，不锁定面板，然后拖动任务栏到页面最下方，再锁定面板，kali系统的任务栏和win系统的位置即可一样都在页面下方</p>
+<p><img src="/blog.github.io/images/image-20210215213001984.png" alt="image-20210215213001984"></p>
+<h1 id="修改系统时间"><a href="#修改系统时间" class="headerlink" title="修改系统时间"></a>修改系统时间</h1><p>(1) 在终端输入命令tzselect<br>(2) 然后再依次选择：Asia–&gt;China–&gt;Beijing Time–Yes（此处根据提示选择相应的数字）<br>(3)2、修改配置文件<br>在终端中依次输入以下命令,然后重启</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;ZONE=Asia/Shanghai&quot; &gt;&gt; /etc/sysconfig</span><br><span class="line">rm -f /etc/localtime # 链接到上海时区文件</span><br><span class="line">ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog.github.io/tags/Kali/" rel="tag"><i class="fa fa-tag"></i> Kali</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog.github.io/2020/04/14/%E7%8E%AF%E5%A2%83-%E6%B8%97%E9%80%8F%E6%80%9D%E8%B7%AFHackInOS/" rel="next" title="渗透思路HackInOS">
+                <i class="fa fa-chevron-left"></i> 渗透思路HackInOS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog.github.io/2020/06/03/%E7%B3%BB%E7%BB%9F-Windows/" rel="prev" title="系统-Windows">
+                系统-Windows <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog.github.io/images/avatar.gif"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%9B%B4%E6%96%B0"><span class="nav-number">1.</span> <span class="nav-text">系统更新</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%84%E5%85%B6%E5%AE%83%E6%9B%B4%E6%96%B0%E6%BA%90%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">附其它更新源：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">Linux常用命令：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kalilinux%E5%AE%89%E8%A3%85%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95-%E5%AE%89%E8%A3%85fcitx-%E5%B0%8F%E4%BC%81%E9%B9%85%E8%BE%93%E5%85%A5%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">kalilinux安装中文输入法 安装fcitx,小企鹅输入法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BD%E8%BE%93%E5%85%A5%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">卸载输入法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%85%E7%90%86%E5%9E%83%E5%9C%BE"><span class="nav-number">6.</span> <span class="nav-text">清理垃圾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dpkg%EF%BC%9A%E8%AD%A6%E5%91%8A%EF%BC%9A%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E8%BD%AF%E4%BB%B6%E5%8C%85-XXXX-%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3-%E4%B8%8D%E4%B8%80%E5%AE%9A%E6%9C%89%E6%95%88"><span class="nav-number">7.</span> <span class="nav-text">dpkg：警告：无法找到软件包 XXXX 问题解决(不一定有效)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E6%96%B0%E7%9A%84kali%E7%89%88%E6%9C%AC%E4%B8%BAkali2020%E7%9A%84%E7%99%BB%E5%BD%95%E5%AF%86%E7%A0%81"><span class="nav-number">8.</span> <span class="nav-text">最新的kali版本为kali2020的登录密码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3kali-linux%E5%87%BA%E7%8E%B0%E6%AD%A3%E5%9C%A8%E8%AE%BE%E5%AE%9A%E8%BD%AF%E4%BB%B6%E5%8C%85-%E6%97%A0%E6%B3%95%E6%93%8D%E4%BD%9C%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">9.</span> <span class="nav-text">解决kali linux出现正在设定软件包 无法操作的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%AF%AD%E8%A8%80"><span class="nav-number">10.</span> <span class="nav-text">设置语言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85ibus%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95"><span class="nav-number">11.</span> <span class="nav-text">安装ibus中文输入法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kali%E6%9C%80%E6%96%B0%E7%9A%84%E7%B3%BB%E7%BB%9F%E4%BB%BB%E5%8A%A1%E6%A0%8F%E8%B0%83%E8%8A%82"><span class="nav-number">12.</span> <span class="nav-text">kali最新的系统任务栏调节</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%97%B4"><span class="nav-number">13.</span> <span class="nav-text">修改系统时间</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">magic</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog.github.io/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog.github.io/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

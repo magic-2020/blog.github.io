@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog.github.io/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog.github.io/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog.github.io/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog.github.io/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog.github.io/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="渗透," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="文件上传漏洞造成文件上传漏洞的原因是1、对于上传文件的后缀名（扩展名）没有做较为严格的限制 2、对于上传文件的MIMETYPE 没有做检查 3、权限上没有对于上传的文件的文件权限，（尤其是对于shebang类型的文件） 4、对于web server对于上传文件或者指定目录的行为没有做限制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件上传漏洞">
+<meta property="og:url" content="https://github.com/magic-2020/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/index.html">
+<meta property="og:site_name" content="Magic">
+<meta property="og:description" content="文件上传漏洞造成文件上传漏洞的原因是1、对于上传文件的后缀名（扩展名）没有做较为严格的限制 2、对于上传文件的MIMETYPE 没有做检查 3、权限上没有对于上传的文件的文件权限，（尤其是对于shebang类型的文件） 4、对于web server对于上传文件或者指定目录的行为没有做限制">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-02-20T13:11:55.000Z">
+<meta property="article:modified_time" content="2022-08-04T02:51:31.441Z">
+<meta property="article:author" content="magic">
+<meta property="article:tag" content="渗透">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/magic-2020/blog.github.io/2021/02/20/安全-文件上传漏洞/"/>
+
+
+
+
+
+  <title>文件上传漏洞 | Magic</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Magic</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">try everyday</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blog.github.io/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog.github.io/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog.github.io/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/magic-2020/blog.github.io/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Magic">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">文件上传漏洞</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-20T21:11:55+08:00">
+                2021-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h1><h2 id="造成文件上传漏洞的原因是"><a href="#造成文件上传漏洞的原因是" class="headerlink" title="造成文件上传漏洞的原因是"></a>造成文件上传漏洞的原因是</h2><p>1、对于上传文件的后缀名（扩展名）没有做较为严格的限制</p>
+<p>2、对于上传文件的MIMETYPE 没有做检查</p>
+<p>3、权限上没有对于上传的文件的文件权限，（尤其是对于shebang类型的文件）</p>
+<p>4、对于web server对于上传文件或者指定目录的行为没有做限制</p>
+<span id="more"></span>
+
+<h2 id="漏洞上传方法："><a href="#漏洞上传方法：" class="headerlink" title="漏洞上传方法："></a>漏洞上传方法：</h2><p>IIS6.0 的解析漏洞 ：1.jpg%00.php 1.asp;.jpg 1.asp/1.jpg</p>
+<p>IIS 7.0/IIS 7.5/ Nginx &lt;8.03 畸形解析 1.jpg/.php</p>
+<p>Nginx &lt;8.03 空字节代码执行漏洞 1.jpg%00.php</p>
+<p>Apache 解析漏洞 .php.一个无效后缀</p>
+<p>还有就是 Windows 下的各种截断了，因为 win 环境下不允许一些符号命名文件，所以可以造成截断文件名的效果，不过恕我直言，用 Windows 当服务器就是 sb…</p>
+<h3 id="1、前端绕过，上传可上传文件后，截包修改后缀"><a href="#1、前端绕过，上传可上传文件后，截包修改后缀" class="headerlink" title="1、前端绕过，上传可上传文件后，截包修改后缀"></a>1、前端绕过，上传可上传文件后，截包修改后缀</h3><h3 id="2、在一些-webserver-中，存在解析漏洞"><a href="#2、在一些-webserver-中，存在解析漏洞" class="headerlink" title="2、在一些 webserver 中，存在解析漏洞"></a>2、在一些 webserver 中，存在解析漏洞</h3><p>1）老版本的IIS中的目录解析漏洞，如果网站目录中有一个 /.asp/目录，那么此目录下面的一切内容都会被当作asp脚本来解析</p>
+<p>2）老板本的IIS中的分号漏洞：IIS在解析文件名的时候可能将分号后面的内容丢弃，那么我们可以在上传的时候给后面加入分号内容来避免黑名单过滤，如 a.asp;jpg</p>
+<p>3）旧版Windows Server中存在空格和dot漏洞类似于 a.php. 和 a.php[空格] 这样的文件名存储后会被windows去掉点和空格，从而使得加上这两个东西可以突破过滤，成功上传，并且被当作php代码来执行</p>
+<p>4）nginx空字节漏洞 xxx.jpg%00.php 这样的文件名会被解析为php代码运行</p>
+<p>5）apache的解析漏洞，上传如a.php.rar a.php.gif 类型的文件名，可以避免对于php文件的过滤机制，但是由于apache在解析文件名的时候是从右向左读，如果遇到不能识别的扩展名则跳过，rar等扩展名是apache不能识别的，因此就会直接将类型识别为php，从而达到了注入php代码的目的</p>
+<h3 id="3、检查HTTP-Header中的Content-Type"><a href="#3、检查HTTP-Header中的Content-Type" class="headerlink" title="3、检查HTTP Header中的Content-Type"></a>3、检查HTTP Header中的Content-Type</h3><p>使用各种各样的工具（如burpsuite）强行篡改Header就可以，太容易将header中的</p>
+<p>Content-Type: application/php</p>
+<p>或者其他类型</p>
+<p>Content-Type: image/jpg</p>
+<p>Content-Type: image/png</p>
+<p>Content-Type: text/plain</p>
+<p>等这些web程序允许的泪洗改附上常用的MIMETYPE表</p>
+<p>text/plain（纯文本）</p>
+<p>text/html（HTML文档）</p>
+<p>text/javascript（js代码）</p>
+<p>application/xhtml+xml（XHTML文档）</p>
+<p>image/gif（GIF图像）</p>
+<p>image/jpeg（JPEG图像）</p>
+<p>image/png（PNG图像）</p>
+<p>video/mpeg（MPEG动画）</p>
+<p>application/octet-stream（二进制数据）</p>
+<p>application/pdf（PDF文档）</p>
+<p>application/(编程语言) 该种语言的代码</p>
+<p>application/msword（Microsoft Word文件）</p>
+<p>message/rfc822（RFC 822形式）</p>
+<p>multipart/alternative（HTML邮件的HTML形式和纯文本形式，相同内容使用不同形式表示）</p>
+<p>application/x-www-form-urlencoded（POST方法提交的表单）</p>
+<p>multipart/form-data（POST提交时伴随文件上传的表单）</p>
+<h3 id="4、图片文件通常有称作幻数的头字节，我们来看一下几种图片文件的幻数："><a href="#4、图片文件通常有称作幻数的头字节，我们来看一下几种图片文件的幻数：" class="headerlink" title="4、图片文件通常有称作幻数的头字节，我们来看一下几种图片文件的幻数："></a>4、图片文件通常有称作幻数的头字节，我们来看一下几种图片文件的幻数：</h3><p>（注意！下面是二进制而不是文本格式的数据）</p>
+<p>JPG</p>
+<p>FF D8 FF E0 00 10 4A 46 49 46</p>
+<p>GIF</p>
+<p>47 49 46 38 39 61</p>
+<p>(相当于文本的GIF89a)</p>
+<p>PNG</p>
+<p>89 50 4E 47</p>
+<p>通过检查头几位字节，可以分辨是否是图片文件</p>
+<p>如果是其他类型的二进制文件，也有响应的头字节，如下表</p>
+<p>反制</p>
+<p>给上传脚本加上相应的幻数头字节就可以，php引擎会将 &lt;?之前的内容当作html文本，不解释而跳过之，后面的代码仍然能够得到执行比如下面：</p>
+<p>（一般不限制图片文件格式的时候使用GIF的头比较方便，因为全都是文本可打印字符。）</p>
+<p>GIF89a</p>
+<?php
+
+do_something();
+
+?>
+
+<p>如果是其他类型的二进制文件，也有响应的头字节，如下表</p>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>文件头</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TIFF (tif)</td>
+<td>49492A00</td>
+</tr>
+<tr>
+<td>Windows Bitmap (bmp)</td>
+<td>424D</td>
+</tr>
+<tr>
+<td>CAD (dwg)</td>
+<td>41433130</td>
+</tr>
+<tr>
+<td>Adobe Photoshop (psd)</td>
+<td>38425053</td>
+</tr>
+<tr>
+<td>Rich Text Format (rtf)</td>
+<td>7B5C727466</td>
+</tr>
+<tr>
+<td>MS Word/Excel (xls.or.doc)</td>
+<td>D0CF11E0</td>
+</tr>
+<tr>
+<td>MS Access (mdb)</td>
+<td>5374616E64617264204A</td>
+</tr>
+<tr>
+<td>ZIP Archive (zip)，</td>
+<td>504B0304</td>
+</tr>
+<tr>
+<td>RAR Archive (rar)，</td>
+<td>52617221</td>
+</tr>
+<tr>
+<td>Wave (wav)，</td>
+<td>57415645</td>
+</tr>
+<tr>
+<td>AVI (avi)，</td>
+<td>41564920</td>
+</tr>
+<tr>
+<td>Real Media (rm)，</td>
+<td>2E524D46</td>
+</tr>
+<tr>
+<td>MPEG (mpg)，</td>
+<td>000001BA</td>
+</tr>
+<tr>
+<td>MPEG (mpg)，</td>
+<td>000001B3</td>
+</tr>
+<tr>
+<td>Quicktime (mov)，</td>
+<td>6D6F6F76</td>
+</tr>
+<tr>
+<td>Adobe Acrobat (pdf)，</td>
+<td>255044462D312E</td>
+</tr>
+<tr>
+<td>Windows Media (asf)，</td>
+<td>3026B2758E66CF11</td>
+</tr>
+<tr>
+<td>MIDI (mid)，</td>
+<td>4D546864</td>
+</tr>
+</tbody></table>
+<h3 id="5-限制Web-Server对于特定类型文件的行为"><a href="#5-限制Web-Server对于特定类型文件的行为" class="headerlink" title="5.限制Web Server对于特定类型文件的行为"></a>5.限制Web Server对于特定类型文件的行为</h3><p>通过 move_uploaded_file 函数把自己写的.htaccess 文件上传，覆盖掉服务器上的文件，来定义文件类型和执行权限如果做到了这一点，将获得相当大的权限。</p>
+<h2 id="一句话木马上传常见的几种方法"><a href="#一句话木马上传常见的几种方法" class="headerlink" title="一句话木马上传常见的几种方法"></a>一句话木马上传常见的几种方法</h2><p>1，利用00截断，brupsuite上传</p>
+<p>利用00截断就是利用程序员在写程序时对文件的上传路径过滤不严格，产生0X00上传截断漏洞。 </p>
+<p>假设文件的上传路径为<a target="_blank" rel="noopener" href="http://xx.xx.xx.xx/upfiles/lubr.php.jpg">http://xx.xx.xx.xx/upfiles/lubr.php.jpg</a> ,通过Burpsuite抓包截断将lubr.php后面的“.”换成“0X00”。在上传的时候，当文件系统读到”0X00″时，会认为文件已经结束，从而将lubr.php.jpg 的内容写到lubr.php中，从而达到攻击的目的。</p>
+<p>2，构造服务器端扩展名检测上传</p>
+<p>当浏览器将文件提交到服务器端的时候，服务器端会根据设定的黑名单对浏览器提交上来的文件扩展名进行检测，如果上传的文件扩展名不符合黑名单的限制，则不予上传，否则上传成功。 </p>
+<p>本例讲解，将一句话木马的文件名lubr.php改成lubr.php.abc。首先，服务器验证文件扩展名的时候，验证的是.abc，只要改扩展名符合服务器端黑名单规则，即可上传。另外，当在浏览器端访问该文件时，Apache如果解析不了.abc扩展名，会向前寻找可解析的扩展名，即”.php”。一句话木马可以被解析，即可通过中国菜刀连接。</p>
+<p>3，绕过Content-Type检测文件类型上传</p>
+<p>当浏览器在上传文件到服务器端的时候，服务器对上传的文件Content-Type类型进行检测，如果是白名单允许的，则可以正常上传，否则上传失效。绕过Content-Type文件类型检测，就是用Burpsuite截取并修改数据包中文件的Content-Type类型，使其符合白名单的规则，达到上传的目的。</p>
+<p>4，构造图片木马，绕过文件内容检测上传Shell</p>
+<p>一般文件内容验证使用getimeagesize()函数检测，会判断文件是否一个有效的文件图片，如果是，则允许上传，否则的话不允许上传。</p>
+<p>制作图片木马： copy 1.jpg/b+2.php/a 3.jpg</p>
+<h2 id="pikaqiu靶机上传漏洞"><a href="#pikaqiu靶机上传漏洞" class="headerlink" title="pikaqiu靶机上传漏洞"></a>pikaqiu靶机上传漏洞</h2><p>1、客户端check：仅做了前台校验</p>
+<p>方法：</p>
+<p>1）上传PHP修改过后缀的文件（phpinfo.php 1.jpg），burp截包，修改文件名为：phpinfo.php，修改成功</p>
+<p>2）修改hex中phpinfo.php 1.jpg中的值，将空格（20）修改为（00），进行截断，上传成功</p>
+<p>2、服务端check（仅MIME type校验）</p>
+<p>方法：</p>
+<p>1）同问题1解决方法</p>
+<p>2）由于前台无校验，直接上传php文件（phpinfo.php），burp截包，修改Content-Type类型为Content-Type: image/jpeg，上传成功</p>
+<p>3、getimagesize()</p>
+<p>方法：初步估计，采用制作木马图片</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog.github.io/tags/%E6%B8%97%E9%80%8F/" rel="tag"><i class="fa fa-tag"></i> 渗透</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-%E7%9A%AE%E5%8D%A1%E4%B8%98%E9%9D%B6%E6%9C%BA/" rel="next" title="皮卡丘靶机练习">
+                <i class="fa fa-chevron-left"></i> 皮卡丘靶机练习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-dvwa%E9%9D%B6%E6%9C%BA/" rel="prev" title="dvwa靶机练习">
+                dvwa靶机练习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog.github.io/images/avatar.gif"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.</span> <span class="nav-text">文件上传漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%A0%E6%88%90%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%8E%9F%E5%9B%A0%E6%98%AF"><span class="nav-number">1.1.</span> <span class="nav-text">造成文件上传漏洞的原因是</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%B8%8A%E4%BC%A0%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">漏洞上传方法：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%89%8D%E7%AB%AF%E7%BB%95%E8%BF%87%EF%BC%8C%E4%B8%8A%E4%BC%A0%E5%8F%AF%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%90%8E%EF%BC%8C%E6%88%AA%E5%8C%85%E4%BF%AE%E6%94%B9%E5%90%8E%E7%BC%80"><span class="nav-number">1.2.1.</span> <span class="nav-text">1、前端绕过，上传可上传文件后，截包修改后缀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%9C%A8%E4%B8%80%E4%BA%9B-webserver-%E4%B8%AD%EF%BC%8C%E5%AD%98%E5%9C%A8%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.2.2.</span> <span class="nav-text">2、在一些 webserver 中，存在解析漏洞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E6%A3%80%E6%9F%A5HTTP-Header%E4%B8%AD%E7%9A%84Content-Type"><span class="nav-number">1.2.3.</span> <span class="nav-text">3、检查HTTP Header中的Content-Type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6%E9%80%9A%E5%B8%B8%E6%9C%89%E7%A7%B0%E4%BD%9C%E5%B9%BB%E6%95%B0%E7%9A%84%E5%A4%B4%E5%AD%97%E8%8A%82%EF%BC%8C%E6%88%91%E4%BB%AC%E6%9D%A5%E7%9C%8B%E4%B8%80%E4%B8%8B%E5%87%A0%E7%A7%8D%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6%E7%9A%84%E5%B9%BB%E6%95%B0%EF%BC%9A"><span class="nav-number">1.2.4.</span> <span class="nav-text">4、图片文件通常有称作幻数的头字节，我们来看一下几种图片文件的幻数：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E9%99%90%E5%88%B6Web-Server%E5%AF%B9%E4%BA%8E%E7%89%B9%E5%AE%9A%E7%B1%BB%E5%9E%8B%E6%96%87%E4%BB%B6%E7%9A%84%E8%A1%8C%E4%B8%BA"><span class="nav-number">1.2.5.</span> <span class="nav-text">5.限制Web Server对于特定类型文件的行为</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC%E4%B8%8A%E4%BC%A0%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">一句话木马上传常见的几种方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pikaqiu%E9%9D%B6%E6%9C%BA%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.4.</span> <span class="nav-text">pikaqiu靶机上传漏洞</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">magic</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog.github.io/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog.github.io/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

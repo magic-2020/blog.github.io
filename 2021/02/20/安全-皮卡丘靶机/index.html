@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog.github.io/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog.github.io/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog.github.io/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog.github.io/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog.github.io/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="pikachu," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="皮卡丘靶机练习登录爆破（爆破出正确的用户名密码，并且完成登录，提示login success，并截图展示爆破过程）地址：http:&#x2F;&#x2F;127.0.0.1&#x2F;pikachu-master&#x2F;vul&#x2F;burteforce&#x2F;bf_client.php 1、burp截包，判断出验证码没有做后台校验，只用爆破用户名密码 2、选clusterbomb类型，payload用户名密码字段，进行爆破 3、爆破结果中le">
+<meta property="og:type" content="article">
+<meta property="og:title" content="皮卡丘靶机练习">
+<meta property="og:url" content="https://github.com/magic-2020/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-%E7%9A%AE%E5%8D%A1%E4%B8%98%E9%9D%B6%E6%9C%BA/index.html">
+<meta property="og:site_name" content="Magic">
+<meta property="og:description" content="皮卡丘靶机练习登录爆破（爆破出正确的用户名密码，并且完成登录，提示login success，并截图展示爆破过程）地址：http:&#x2F;&#x2F;127.0.0.1&#x2F;pikachu-master&#x2F;vul&#x2F;burteforce&#x2F;bf_client.php 1、burp截包，判断出验证码没有做后台校验，只用爆破用户名密码 2、选clusterbomb类型，payload用户名密码字段，进行爆破 3、爆破结果中le">
+<meta property="og:locale">
+<meta property="og:image" content="https://github.com/blog.github.io/images/clip_image002-1597935172324.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/clip_image004-1597935172325.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/clip_image006-1597935172325.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/clip_image008-1597935172325.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/clip_image010.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/clip_image012.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/clip_image014.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/clip_image016.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/clip_image018.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/clip_image020.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/clip_image022.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/clip_image024.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/clip_image026.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/clip_image028.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/clip_image030.jpg">
+<meta property="article:published_time" content="2021-02-20T13:11:55.000Z">
+<meta property="article:modified_time" content="2022-08-04T02:51:31.441Z">
+<meta property="article:author" content="magic">
+<meta property="article:tag" content="pikachu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/blog.github.io/images/clip_image002-1597935172324.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/magic-2020/blog.github.io/2021/02/20/安全-皮卡丘靶机/"/>
+
+
+
+
+
+  <title>皮卡丘靶机练习 | Magic</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Magic</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">try everyday</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blog.github.io/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog.github.io/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog.github.io/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/magic-2020/blog.github.io/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-%E7%9A%AE%E5%8D%A1%E4%B8%98%E9%9D%B6%E6%9C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Magic">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">皮卡丘靶机练习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-20T21:11:55+08:00">
+                2021-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="皮卡丘靶机练习"><a href="#皮卡丘靶机练习" class="headerlink" title="皮卡丘靶机练习"></a>皮卡丘靶机练习</h1><h2 id="登录爆破（爆破出正确的用户名密码，并且完成登录，提示login-success，并截图展示爆破过程）"><a href="#登录爆破（爆破出正确的用户名密码，并且完成登录，提示login-success，并截图展示爆破过程）" class="headerlink" title="登录爆破（爆破出正确的用户名密码，并且完成登录，提示login success，并截图展示爆破过程）"></a>登录爆破（爆破出正确的用户名密码，并且完成登录，提示login success，并截图展示爆破过程）</h2><p>地址：<a target="_blank" rel="noopener" href="http://127.0.0.1:8099/pikachu-master/vul/burteforce/bf_client.php">http://127.0.0.1/pikachu-master/vul/burteforce/bf_client.php</a></p>
+<p>1、burp截包，判断出验证码没有做后台校验，只用爆破用户名密码</p>
+<p>2、选clusterbomb类型，payload用户名密码字段，进行爆破</p>
+<p>3、爆破结果中length不一样的有可能是正确的用户名密码</p>
+<span id="more"></span>
+
+<p>4、页面进行验证</p>
+<p><img src="/blog.github.io/images/clip_image002-1597935172324.jpg" alt="img"></p>
+<p><img src="/blog.github.io/images/clip_image004-1597935172325.jpg" alt="img"></p>
+<p><img src="/blog.github.io/images/clip_image006-1597935172325.jpg" alt="img"></p>
+<h2 id="XSS（得到弹框效果，并截图展示）"><a href="#XSS（得到弹框效果，并截图展示）" class="headerlink" title="XSS（得到弹框效果，并截图展示）"></a>XSS（得到弹框效果，并截图展示）</h2><p>地址：<a target="_blank" rel="noopener" href="http://127.0.0.1/pikachu-master/vul/xss/xss_reflected_get.php">http://127.0.0.1/pikachu-master/vul/xss/xss_reflected_get.php</a></p>
+<script>alert(‘123’)</script>
+
+<p>1、输入<script>alert(‘123’)</script>，输入不完整</p>
+<p>2、F12，修改可输入字段长度</p>
+<p>3、重新输入，xss成功</p>
+<p><img src="/blog.github.io/images/clip_image008-1597935172325.jpg" alt="img"></p>
+<p><img src="/blog.github.io/images/clip_image010.jpg" alt="img"></p>
+<h2 id="XSS（获取cookie，并截图展示）"><a href="#XSS（获取cookie，并截图展示）" class="headerlink" title="XSS（获取cookie，并截图展示）"></a>XSS（获取cookie，并截图展示）</h2><p>地址：<a target="_blank" rel="noopener" href="http://127.0.0.1/pikachu-master/vul/xss/xss_stored.php">http://127.0.0.1/pikachu-master/vul/xss/xss_stored.php</a></p>
+<p>1、F12，在控制台输入javascript:alert(document.cookie)</p>
+<p><img src="/blog.github.io/images/clip_image012.jpg" alt="img"></p>
+<h2 id="SQL注入（截图展示SQL注入的结果）"><a href="#SQL注入（截图展示SQL注入的结果）" class="headerlink" title="SQL注入（截图展示SQL注入的结果）"></a>SQL注入（截图展示SQL注入的结果）</h2><p>地址：<a target="_blank" rel="noopener" href="http://127.0.0.1/pikachu-master/vul/sqli/sqli_str.php">http://127.0.0.1/pikachu-master/vul/sqli/sqli_str.php</a></p>
+<p>1、输入 1’，报错，显示有注入漏洞</p>
+<p><img src="/blog.github.io/images/clip_image014.jpg" alt="img"></p>
+<h2 id="SQL注入（截图展示SQL注入的结果：可以展示系统全部的email）"><a href="#SQL注入（截图展示SQL注入的结果：可以展示系统全部的email）" class="headerlink" title="SQL注入（截图展示SQL注入的结果：可以展示系统全部的email）"></a>SQL注入（截图展示SQL注入的结果：可以展示系统全部的email）</h2><p>地址：<a target="_blank" rel="noopener" href="http://127.0.0.1/pikachu-master/vul/sqli/sqli_id.php">http://127.0.0.1/pikachu-master/vul/sqli/sqli_id.php</a></p>
+<p>1、截包</p>
+<p>2、输入1 and 1=1，判断是字符型sql注入</p>
+<p>3、输入 1 or 1=1，或者1 and 1=2得到结果</p>
+<p><img src="/blog.github.io/images/clip_image016.jpg" alt="img"></p>
+<p><img src="/blog.github.io/images/clip_image018.jpg" alt="img"></p>
+<h2 id="利用本地文件包含漏洞，读出phpinfo-php文件"><a href="#利用本地文件包含漏洞，读出phpinfo-php文件" class="headerlink" title="利用本地文件包含漏洞，读出phpinfo.php文件"></a>利用本地文件包含漏洞，读出phpinfo.php文件</h2><p>地址：<a target="_blank" rel="noopener" href="http://127.0.0.1/pikachu-master/vul/fileinclude/fi_local.php">http://127.0.0.1/pikachu-master/vul/fileinclude/fi_local.php</a></p>
+<p>1、截包，并判断存在本地文件包含漏洞</p>
+<p>2、修改如图，显示本地文件</p>
+<p><img src="/blog.github.io/images/clip_image020.jpg" alt="img"></p>
+<h2 id="利用文件下载漏洞，获取phpinfo-php文件"><a href="#利用文件下载漏洞，获取phpinfo-php文件" class="headerlink" title="利用文件下载漏洞，获取phpinfo.php文件"></a>利用文件下载漏洞，获取phpinfo.php文件</h2><p>地址：<a target="_blank" rel="noopener" href="http://127.0.0.1/pikachu-master/vul/unsafedownload/down_nba.php">http://127.0.0.1/pikachu-master/vul/unsafedownload/down_nba.php</a></p>
+<p>1、截包，判断存在文件下载漏洞</p>
+<p>2、修改如图所示，可以下载服务器文件</p>
+<p><img src="/blog.github.io/images/clip_image022.jpg" alt="img"></p>
+<p><img src="/blog.github.io/images/clip_image024.jpg" alt="img"></p>
+<h2 id="利用文件上传漏洞，上传不合规的文件（服务端校验）"><a href="#利用文件上传漏洞，上传不合规的文件（服务端校验）" class="headerlink" title="利用文件上传漏洞，上传不合规的文件（服务端校验）"></a>利用文件上传漏洞，上传不合规的文件（服务端校验）</h2><p>地址：<a target="_blank" rel="noopener" href="http://127.0.0.1/pikachu-master/vul/unsafeupload/servercheck.php">http://127.0.0.1/pikachu-master/vul/unsafeupload/servercheck.php</a></p>
+<p>1、截包，修改content-type，不合规文件上传成功</p>
+<p><img src="/blog.github.io/images/clip_image026.jpg" alt="img"></p>
+<h2 id="敏感信息泄露（找到隐含信息并登录）"><a href="#敏感信息泄露（找到隐含信息并登录）" class="headerlink" title="敏感信息泄露（找到隐含信息并登录）"></a>敏感信息泄露（找到隐含信息并登录）</h2><p>地址：<a target="_blank" rel="noopener" href="http://127.0.0.1/pikachu-master/vul/infoleak/findabc.php">http://127.0.0.1/pikachu-master/vul/infoleak/findabc.php</a></p>
+<p>1、Ctrl+u,找到代码注释的用户名密码</p>
+<p><img src="/blog.github.io/images/clip_image028.jpg" alt="img"></p>
+<p><img src="/blog.github.io/images/clip_image030.jpg" alt="img"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog.github.io/tags/pikachu/" rel="tag"><i class="fa fa-tag"></i> pikachu</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86/" rel="next" title="目录遍历">
+                <i class="fa fa-chevron-left"></i> 目录遍历
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" rel="prev" title="文件上传漏洞">
+                文件上传漏洞 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog.github.io/images/avatar.gif"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9A%AE%E5%8D%A1%E4%B8%98%E9%9D%B6%E6%9C%BA%E7%BB%83%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">皮卡丘靶机练习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E7%88%86%E7%A0%B4%EF%BC%88%E7%88%86%E7%A0%B4%E5%87%BA%E6%AD%A3%E7%A1%AE%E7%9A%84%E7%94%A8%E6%88%B7%E5%90%8D%E5%AF%86%E7%A0%81%EF%BC%8C%E5%B9%B6%E4%B8%94%E5%AE%8C%E6%88%90%E7%99%BB%E5%BD%95%EF%BC%8C%E6%8F%90%E7%A4%BAlogin-success%EF%BC%8C%E5%B9%B6%E6%88%AA%E5%9B%BE%E5%B1%95%E7%A4%BA%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">登录爆破（爆破出正确的用户名密码，并且完成登录，提示login success，并截图展示爆破过程）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSS%EF%BC%88%E5%BE%97%E5%88%B0%E5%BC%B9%E6%A1%86%E6%95%88%E6%9E%9C%EF%BC%8C%E5%B9%B6%E6%88%AA%E5%9B%BE%E5%B1%95%E7%A4%BA%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">XSS（得到弹框效果，并截图展示）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSS%EF%BC%88%E8%8E%B7%E5%8F%96cookie%EF%BC%8C%E5%B9%B6%E6%88%AA%E5%9B%BE%E5%B1%95%E7%A4%BA%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">XSS（获取cookie，并截图展示）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL%E6%B3%A8%E5%85%A5%EF%BC%88%E6%88%AA%E5%9B%BE%E5%B1%95%E7%A4%BASQL%E6%B3%A8%E5%85%A5%E7%9A%84%E7%BB%93%E6%9E%9C%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">SQL注入（截图展示SQL注入的结果）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL%E6%B3%A8%E5%85%A5%EF%BC%88%E6%88%AA%E5%9B%BE%E5%B1%95%E7%A4%BASQL%E6%B3%A8%E5%85%A5%E7%9A%84%E7%BB%93%E6%9E%9C%EF%BC%9A%E5%8F%AF%E4%BB%A5%E5%B1%95%E7%A4%BA%E7%B3%BB%E7%BB%9F%E5%85%A8%E9%83%A8%E7%9A%84email%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">SQL注入（截图展示SQL注入的结果：可以展示系统全部的email）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%EF%BC%8C%E8%AF%BB%E5%87%BAphpinfo-php%E6%96%87%E4%BB%B6"><span class="nav-number">1.6.</span> <span class="nav-text">利用本地文件包含漏洞，读出phpinfo.php文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%BC%8F%E6%B4%9E%EF%BC%8C%E8%8E%B7%E5%8F%96phpinfo-php%E6%96%87%E4%BB%B6"><span class="nav-number">1.7.</span> <span class="nav-text">利用文件下载漏洞，获取phpinfo.php文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%EF%BC%8C%E4%B8%8A%E4%BC%A0%E4%B8%8D%E5%90%88%E8%A7%84%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%88%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A0%A1%E9%AA%8C%EF%BC%89"><span class="nav-number">1.8.</span> <span class="nav-text">利用文件上传漏洞，上传不合规的文件（服务端校验）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%EF%BC%88%E6%89%BE%E5%88%B0%E9%9A%90%E5%90%AB%E4%BF%A1%E6%81%AF%E5%B9%B6%E7%99%BB%E5%BD%95%EF%BC%89"><span class="nav-number">1.9.</span> <span class="nav-text">敏感信息泄露（找到隐含信息并登录）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">magic</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog.github.io/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog.github.io/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

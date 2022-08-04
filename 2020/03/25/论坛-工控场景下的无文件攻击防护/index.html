@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog.github.io/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog.github.io/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog.github.io/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog.github.io/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog.github.io/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="渗透," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="工控场景下的无文件攻击防护来源：工业互联网安全应急响应中心  什么是无文件攻击无文件攻击是什么意思，是不是真的没有文件？这个概念让人很疑惑，没有文件怎么能够攻击计算机，没有文件又怎么能够检测到攻击，病毒防护软件又怎么能够防护这样的攻击？由于终端安全防护技术不断成熟，传统的杀毒软件很容易检测和防护磁盘文件的各种病毒攻击，黑客为了绕过各种终端防护软件的保护，利用无文件攻击技术，把待执行的程序直接放到内">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工控场景下的无文件攻击防护">
+<meta property="og:url" content="https://github.com/magic-2020/blog.github.io/2020/03/25/%E8%AE%BA%E5%9D%9B-%E5%B7%A5%E6%8E%A7%E5%9C%BA%E6%99%AF%E4%B8%8B%E7%9A%84%E6%97%A0%E6%96%87%E4%BB%B6%E6%94%BB%E5%87%BB%E9%98%B2%E6%8A%A4/index.html">
+<meta property="og:site_name" content="Magic">
+<meta property="og:description" content="工控场景下的无文件攻击防护来源：工业互联网安全应急响应中心  什么是无文件攻击无文件攻击是什么意思，是不是真的没有文件？这个概念让人很疑惑，没有文件怎么能够攻击计算机，没有文件又怎么能够检测到攻击，病毒防护软件又怎么能够防护这样的攻击？由于终端安全防护技术不断成熟，传统的杀毒软件很容易检测和防护磁盘文件的各种病毒攻击，黑客为了绕过各种终端防护软件的保护，利用无文件攻击技术，把待执行的程序直接放到内">
+<meta property="og:locale">
+<meta property="og:image" content="https://github.com/blog.github.io/images/640.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/640.jfif">
+<meta property="og:image" content="https://github.com/blog.github.io/images/640.jfif">
+<meta property="og:image" content="https://github.com/blog.github.io/images/640-1585099536973.jfif">
+<meta property="og:image" content="https://github.com/blog.github.io/images/640.jfif">
+<meta property="og:image" content="https://github.com/blog.github.io/images/640.jfif">
+<meta property="article:published_time" content="2020-03-25T13:11:55.000Z">
+<meta property="article:modified_time" content="2022-08-04T02:51:31.450Z">
+<meta property="article:author" content="magic">
+<meta property="article:tag" content="渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/blog.github.io/images/640.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/magic-2020/blog.github.io/2020/03/25/论坛-工控场景下的无文件攻击防护/"/>
+
+
+
+
+
+  <title>工控场景下的无文件攻击防护 | Magic</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Magic</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">try everyday</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blog.github.io/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog.github.io/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog.github.io/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/magic-2020/blog.github.io/blog.github.io/2020/03/25/%E8%AE%BA%E5%9D%9B-%E5%B7%A5%E6%8E%A7%E5%9C%BA%E6%99%AF%E4%B8%8B%E7%9A%84%E6%97%A0%E6%96%87%E4%BB%B6%E6%94%BB%E5%87%BB%E9%98%B2%E6%8A%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Magic">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">工控场景下的无文件攻击防护</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-25T21:11:55+08:00">
+                2020-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/%E8%AE%BA%E5%9D%9B/" itemprop="url" rel="index">
+                    <span itemprop="name">论坛</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="工控场景下的无文件攻击防护"><a href="#工控场景下的无文件攻击防护" class="headerlink" title="工控场景下的无文件攻击防护"></a>工控场景下的无文件攻击防护</h1><p>来源：工业互联网安全应急响应中心 </p>
+<h2 id="什么是无文件攻击"><a href="#什么是无文件攻击" class="headerlink" title="什么是无文件攻击"></a>什么是无文件攻击</h2><p>无文件攻击是什么意思，是不是真的没有文件？这个概念让人很疑惑，没有文件怎么能够攻击计算机，没有文件又怎么能够检测到攻击，病毒防护软件又怎么能够防护这样的攻击？由于终端安全防护技术不断成熟，传统的杀毒软件很容易检测和防护磁盘文件的各种病毒攻击，黑客为了绕过各种终端防护软件的保护，利用无文件攻击技术，把待执行的程序直接放到内存中执行。后来，随着技术的发展，也常常把通过其他非恶意文件激活恶意代码的攻击和恶意脚本攻击归到这类攻击中。因此，<strong>我们说的无文件攻击并不是真的没有文件，而是终端防护软件无法直接通过磁盘文件检测到的攻击</strong>。</p>
+<span id="more"></span>
+
+<h2 id="攻击技术"><a href="#攻击技术" class="headerlink" title="攻击技术"></a>攻击技术</h2><p>无文件攻击利用操作系统和应用程序的漏洞及反病毒无法防护的缺陷，通过内存溢出相关漏洞及文档类漏洞攻击，然后利用操作系统内置的工具实施进一步的攻击。</p>
+<blockquote>
+<p><strong>内存溢出攻击</strong></p>
+</blockquote>
+<p>最早出现的无文件攻击是内存溢出攻击，内存溢出攻击包括两类：</p>
+<p>◇ 操作系统内存溢出攻击，在工业控制场景，由于操作系统比较老旧，而且不大升级，所以在工业控制现场大量系统内存溢出漏洞一直都存在，如在Stuxnet攻击中使用的<strong>MS08-067内存溢出漏洞</strong>、<strong>永恒之蓝远程缓冲区溢出漏洞</strong>在工业现场比比皆是。</p>
+<p>◇ 工控应用软件内存溢出攻击，工业控制应用软件使用技术比较老，安全机制不完善，通讯协议许多都不存在加密和认证机制。很多工控应用软件存在大量内存溢出漏洞，且很少通过升级来解决其安全问题，所以在工业控制现场存在非常多应用级内存溢出漏洞，CNVD上检索到的工控漏洞，将近20%%u7684漏洞都是内存溢出漏洞。</p>
+<blockquote>
+<p><strong>文档攻击</strong></p>
+</blockquote>
+<p>文档攻击是黑客会利用社会工程师学原理给被攻击者<strong>发送邮件或通过其他手段引诱被攻击者下载并打开文档</strong>，当文档被打开时，恶意软件就被释放并执行，尽管下载的文档已经存在终端的磁盘上，但是恶意代码不必存放在本地磁盘，只需要在内存中执行。著名的APT黑客组织GreyEnergy的恶意软件攻击的对象主要是工业基础设施，该组织就是采用鱼叉式钓鱼攻击，向被攻击对象发送带有恶意附件的邮件来实现入侵。</p>
+<blockquote>
+<p><strong>系统工具攻击</strong></p>
+</blockquote>
+<p>黑客使用内存溢出攻击和文档攻击之后，会使用系统一些内置的工具实现更深层次的功能。操作系统内置了许多工具性的可执行程序，如Windows操作系统内存了<strong>wmi.exe、msiexec.exe、schtasks.exe、regsvr32.exe、rundll32.exe、certutil.exe、csc.exe、installutil.exe</strong>等工具，可以被黑客作为攻击的跳板从而达到深层次的攻击。通过这些内置的工具可以下载任意的程序，定期执行程序和脚本，以达到利用计算机资源、窃取计算机上保密数据、横向传播病毒等目的。工业级超级病毒Duqu2.0中就使用了Windows Installer的MSI安装包加载恶意代码然后直接在内存中运行来实现攻击的。</p>
+<blockquote>
+<p><strong>恶意脚本攻击</strong></p>
+</blockquote>
+<p>黑客使用系统内置工具无法达到预期效果，就会使用脚本解析程序执行恶意脚本来实现更深层次的功能，如Windows系统上的脚本解析程序有<strong>powershell.exe、cscript.exe、cmd.exe 、 mshta.exe、Python.exe、lua.exe等</strong> 。利用这些脚本解析程序可以屏蔽各类应用程序的检测和限制，如WORD对VBS宏的限制。脚本程序无需编译，纯粹就是一些文本，杀毒软件很难识别，而且脚本程序可以使用编码和特征识别混淆技术，有效地规避的防病毒软件。同时，为了应对各类杀毒软件的行为检测，还可以把一个功能脚本分成多个子功能脚本，这样就可以分解到多个进程分阶段执行。<strong>工业控制攻击病毒火焰（Flame）</strong>中mssecmgr.ocx模块就是使用Lua脚本把一个功能拆分成多个子功能模块来实现攻击；另一个工业控制攻击知名恶意软件Triton同样使用了大量python脚本来实现攻击。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>近些年来，随着无文件攻击的比率也越来越高，防护的难度越来越大，单纯靠某一种防护技术已经无法解决问题，因此，终端安全防护出现了安全技术融合的趋势。为了解决无文件攻击，结合工控场景的特点，<strong>威努特白名单一体化防护解决方案</strong>提出了可信用户、可信程序、可信网络、可信设备理念，最小化地限制操作系统及应用的操作权限，最大化系统安全。终端防护软件集成了网络白名单、程序白名单、注册表保护、强制访问控制、外设控制、非法外联检测、日志审计等功能，同时结合生产集中监测系统的资产管理、漏洞管理及威胁事件关联分析功能，形成了一个完整的无文件攻击解决方案。</p>
+<blockquote>
+<p><strong>网络白名单</strong></p>
+</blockquote>
+<p>针对工业控制操作系统存在的大量漏洞，同时考虑到工控应用开放的端口较少，威努特主机卫士实现了网络白名单功能。网络白名单功能启动之后屏蔽系统上所有的对外开放端口，用户根据要求配置应用程序和端口来实现网络白名单。如果应用程序配置成网络白名单，则该程序打开的所有的端口将放行。一般情况下，建议用户屏蔽掉系统上默认开放的高危的端口，保留工业应用程序必须使用的端口，以Windows为例，建议关闭下表中系统默认开放的端口。</p>
+<p><img src="/blog.github.io/images/640.png" alt="img"></p>
+<blockquote>
+<p><strong>外设控制</strong></p>
+</blockquote>
+<p>威努特主机卫士实现了安全U盘和普通U盘控制，<strong>安全U盘和普通U盘可以配置“禁用、只读、可读写”权限</strong>。配套的安全U盘解决了企业内部数据交换问题，并且只有该企业专有的安全U盘才能在企业内部实现数据交换，同时通过禁止普通USB存储设备，保障企业内部不会受到企业外部病毒的感染。光驱控制和无线控制功能禁止光驱和无线网络的访问，从而避免光驱和无线上网引起的无文件攻击。</p>
+<blockquote>
+<p><strong>程序白名单</strong></p>
+</blockquote>
+<p>在工业控制网络环境下，由于受保护的操作系统和软件比较固定，更新的频率非常低，而且工业控制系统对稳定性和可用性有及其严格的要求，为了防止杀毒软件查杀过程影响工控应用的可用性，程序白名单替代传统杀毒软件成为工业控制现场终端防护的最佳方案。所谓程序白名单就是只允许受信的程序在工控系统上运行，程序白名单通常通过软件的唯一标识来受信，软件唯一标识一半采用程序的哈希值来表示。</p>
+<p>威努特主机卫士的程序白名单提供白名单管理、系统完整性检查、程序白名单控制、白名单程序审计等功能。</p>
+<p>◇ 白名单管理支持Windows操作的所有的PE文件、Linux操作系统的所有elf文件，并且支持系统大部分内置的脚本和非内置主流脚本防护功能。如下图所示，系统会把可信程序、可信脚本解析程序及相应的可信脚本放到白名单中（如下图中绿色区域），而把非可信的排除在白名单之外（如下图中黄色区域）。</p>
+<p><img src="/blog.github.io/images/640.jfif" alt="img"></p>
+<p>◇ 系统完整性检查检测程序白名单控制驱动启动前执行程序是否被篡改，如果被篡改则会实时告警并产生日志。</p>
+<p>◇ 程序白名单控制对非白名单中执行的程序进行阻断告警并产生日志，同样可以对不在白名单中脚本的执行进行阻断告警并产生日志。</p>
+<p>◇ 进程审计功能能够对在白名单中但风险较高的程序产生运行审计日志，以实时了解这些程序运行的安全性。</p>
+<p>为了保障操作系统和应用的安全，我们建议控制系统内置危险系数较高的可执行程序，审计中等危险系数的可执行程序。根据经验，下表为Windows操作系统默认应该控制的程序列表。</p>
+<p><img src="/blog.github.io/images/640.jfif" alt="img"></p>
+<blockquote>
+<p><strong>强制访问控制</strong></p>
+</blockquote>
+<p>强制访问控制是一种强制控制主体对客体操作的控制策略，操作系统默认的自主访问控制策略是由用户自己定义访问策略，强制访问控制是由安全管理员定义主体对客体的访问策略，用户无法更改强制访问控制的策略，一切用户访问必须遵循强制控制策略。威努特主机卫士强制访问控制策略默认支持BLP模型、Biba模型及独特的自定义安全域模型。这三种模型的主体支持用户和进程，客体支持文件和文件夹，可以根据客户的要求方便地定义主体对客体的访问权限，访问权限包括读、写、完全访问、拒绝。</p>
+<p>◇ BLP模型强制访问控制规则是“上读下写”，如下图所示。 </p>
+<p><img src="/blog.github.io/images/640-1585099536973.jfif" alt="img"></p>
+<p>◇ Biba模型强制访问控制规则正好相反，是“上写下读”。</p>
+<p>◇ 自定义安全域模型的强制访问控制策略则通过定义域间的访问规则和域外的访问规则实现强制访问控制策略。 </p>
+<p><img src="/blog.github.io/images/640.jfif" alt="img"></p>
+<p>一般使用情况下，强制访问控制策略优先设置操作系统的系统级主体（SYSTEM用户、System、smss.exe等系统进程）的访问策略，然后再设置工业应用的强制访问控制策略。对一些程序白名单不支持的脚本解析程序，则可以通过强制访问控制来限制其访问的范围，如Windows下的ruby.exe执行脚本，我们通过强制访问控制限制ruby.exe允许读写的脚本文件，非授权的脚本文件不允许读写，这样就完整地保护未知脚本程序的执行。</p>
+<blockquote>
+<p><strong>注册表保护</strong></p>
+</blockquote>
+<p>注册表是操作系统重要的数据库，存储着系统和应用程序的关键配置，防止注册表的被恶意篡改或破坏是操作系统安全的重要组成部分，注册表保护可以防止攻击扩散和持续。注册表涉及非常多的内容，注册表保护配置错误可能会导致系统崩溃。因此，注册表配置过程需要格外谨慎，根据我们多年的安全经验，针对无文件攻击相关技术，建议对以下注册表项进行保护。</p>
+<p><strong>◇ 禁止程序自启动</strong></p>
+<p>HKLM\Software\Microsoft\Windows\CurrentVersion\Run</p>
+<p>HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce</p>
+<p>HKCU\Software\Microsoft\Windows\CurrentVersion\Ru</p>
+<p>HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce</p>
+<p><strong>◇ 禁止服务启动</strong></p>
+<p>HKCU\Software\Microsoft\Windows\CurrentVersion\RunServic</p>
+<p>HKCU\Software\Microsoft\Windows\CurrentVersion\RunServiceOnce</p>
+<p><strong>◇ 浏览器相关</strong></p>
+<p>HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\run\ </p>
+<p>HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\run\</p>
+<p>HKCU\Software\Policies\Microsoft\Internet Explorer\Control panel\homepage</p>
+<blockquote>
+<p><strong>日志审计</strong></p>
+</blockquote>
+<p>威努特终端日志审计产品监控用户登录日志、用户权限变更日志、进程启动日志、文件的变更日志、开放端口日志、主机对外通讯连接日志、USB插拔日志、Wifi连接日志、非法外联日志，把这些日志上报到生产集中监测中心，然后在生产集中监测中心采用关联分析算法实现“感知”特定终端的异常行为。</p>
+<blockquote>
+<p><strong>整体解决方案</strong></p>
+</blockquote>
+<p>前面介绍了无文件攻击的相关技术及防护使用的相关技术，按照攻击场景和相应的解决方案进行汇总，整体解决方案的思路如下表：</p>
+<p><img src="/blog.github.io/images/640.jfif" alt="img"></p>
+<h2 id="总-结"><a href="#总-结" class="headerlink" title="总 结"></a>总 结</h2><p>威努特无文件攻击解决方案涉及主机卫士、主机加固、日志审计、生产监测平台等系统，形成了一个完整的防护体系，随着国家要求和安全技术进一步发展，我们将持续引入一些新的技术改善当前的防护能力。</p>
+<p>◇ 引入EDR方法，EDR方法可以更加有效防护无文件型内存溢出、恶意软件及恶意脚本攻击。它的目的是用来跟踪攻击者在攻击过程中使用的技术、攻击策略，并实现还原攻击的过程，让你了解攻击者是怎样一步步入侵你的系统，还可以还原你的攻击活动路径，让你了解当前网络中的攻击及攻击转移过程。</p>
+<p>◇ 网络白名单联动，后续结合网络监视和审计产品可以学习到主机和其他系统的完整通讯连接信息，这样可以更快捷地学习到网络白名单并能够小力度地控制网络的访问。</p>
+<p>◇ 和工业漏洞扫描系统联动，利用工业漏洞扫描信息识别操作系统和工控软件高危漏洞，自动屏蔽高位漏洞的服务。</p>
+<p>◇ 及时操作系统补丁，有些客户需要使用一些系统高危端口，为了保障系统安全，需要针对严重的操作系统漏洞提供实时补丁，甚至在无法安装操作系统补丁的情况下实现虚拟补丁。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog.github.io/tags/%E6%B8%97%E9%80%8F/" rel="tag"><i class="fa fa-tag"></i> 渗透</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog.github.io/2020/03/23/%E5%AE%89%E5%85%A8-%E5%B7%A5%E5%85%B7-Burpsuite%E7%B3%BB%E5%88%97%E6%8A%80%E5%B7%A7/" rel="next" title="Burpsuite系列技巧">
+                <i class="fa fa-chevron-left"></i> Burpsuite系列技巧
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog.github.io/2020/03/25/%E8%87%AA%E5%8A%A8%E5%8C%96-%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/" rel="prev" title="自动化-环境部署">
+                自动化-环境部署 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog.github.io/images/avatar.gif"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E6%8E%A7%E5%9C%BA%E6%99%AF%E4%B8%8B%E7%9A%84%E6%97%A0%E6%96%87%E4%BB%B6%E6%94%BB%E5%87%BB%E9%98%B2%E6%8A%A4"><span class="nav-number">1.</span> <span class="nav-text">工控场景下的无文件攻击防护</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%97%A0%E6%96%87%E4%BB%B6%E6%94%BB%E5%87%BB"><span class="nav-number">1.1.</span> <span class="nav-text">什么是无文件攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF"><span class="nav-number">1.2.</span> <span class="nav-text">攻击技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.3.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB-%E7%BB%93"><span class="nav-number">1.4.</span> <span class="nav-text">总 结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">magic</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog.github.io/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog.github.io/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

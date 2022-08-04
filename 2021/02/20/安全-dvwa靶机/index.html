@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog.github.io/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog.github.io/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog.github.io/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog.github.io/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog.github.io/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="dvwa," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="dvwa靶机练习密码DVWA默认的用户有5个，用户名密码如下（一个足以）： admin&#x2F;password gordonb&#x2F;abc123 1337&#x2F;charley pablo&#x2F;letmein smithy&#x2F;password">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dvwa靶机练习">
+<meta property="og:url" content="https://github.com/magic-2020/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-dvwa%E9%9D%B6%E6%9C%BA/index.html">
+<meta property="og:site_name" content="Magic">
+<meta property="og:description" content="dvwa靶机练习密码DVWA默认的用户有5个，用户名密码如下（一个足以）： admin&#x2F;password gordonb&#x2F;abc123 1337&#x2F;charley pablo&#x2F;letmein smithy&#x2F;password">
+<meta property="og:locale">
+<meta property="og:image" content="https://github.com/blog.github.io/images/832604-20191121154110169-1762395477.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/832604-20191121155432052-1363568961.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/832604-20191121155802522-780541502.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/832604-20191121160947698-1523102346.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/832604-20191121160805243-2090309796.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/832604-20191121161608362-449770532.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/832604-20191121161958219-1406589924.png">
+<meta property="article:published_time" content="2021-02-20T13:11:55.000Z">
+<meta property="article:modified_time" content="2022-08-04T02:51:31.441Z">
+<meta property="article:author" content="magic">
+<meta property="article:tag" content="dvwa">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/blog.github.io/images/832604-20191121154110169-1762395477.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/magic-2020/blog.github.io/2021/02/20/安全-dvwa靶机/"/>
+
+
+
+
+
+  <title>dvwa靶机练习 | Magic</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Magic</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">try everyday</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blog.github.io/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog.github.io/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog.github.io/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/magic-2020/blog.github.io/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-dvwa%E9%9D%B6%E6%9C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Magic">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">dvwa靶机练习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-20T21:11:55+08:00">
+                2021-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="dvwa靶机练习"><a href="#dvwa靶机练习" class="headerlink" title="dvwa靶机练习"></a>dvwa靶机练习</h1><h2 id="密码"><a href="#密码" class="headerlink" title="密码"></a>密码</h2><p>DVWA默认的用户有5个，用户名密码如下（一个足以）：</p>
+<p>admin/password</p>
+<p>gordonb/abc123</p>
+<p>1337/charley</p>
+<p>pablo/letmein</p>
+<p>smithy/password</p>
+<span id="more"></span>
+
+<p><strong>获取用户名密码：</strong></p>
+<p>sql盲注：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_37865996/article/details/85564334">https://blog.csdn.net/qq_37865996/article/details/85564334</a></p>
+<p><strong>dvwa用户名密码重置：</strong>Database Setup重置数据库</p>
+<h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sallyzhang/p/11906217.html">https://www.cnblogs.com/sallyzhang/p/11906217.html</a></p>
+<p>我用DVWA的文件上传来做练习，low模式没有任何验证，随便上传任意大小和类型的文件，现实中一般不会存在，故跳过，从medium模式开始。</p>
+<p>进入页面后，我尝试传一个php文件上去(文件中有一段代码，用来列出上级目录的所有文件)，下图说明medium模式对文件类型进行了限制(在做这个练习此之前，我觉得做了类型限制就很安全了，反正其他类型都传不上去嘛~)，其实有一些方法可以绕过这种检测。</p>
+<p><img src="/blog.github.io/images/832604-20191121154110169-1762395477.png" alt="img"></p>
+<h3 id="修改Content-Type绕过文件类型检测-medium模式"><a href="#修改Content-Type绕过文件类型检测-medium模式" class="headerlink" title="修改Content-Type绕过文件类型检测(medium模式)"></a>修改Content-Type绕过文件类型检测(medium模式)</h3><p>用Burp Suite抓包如下，content-type的类型是octet-stream。根据页面的报错，这个页面只能传jpg和png格式的图片。</p>
+<p><img src="/blog.github.io/images/832604-20191121155432052-1363568961.png" alt="img"></p>
+<p>尝试把请求中content-type改为image/jpeg，再次发送请求，上传成功。说明medium模式只验证了Mime-Type，并没有验证文件本身(我传的还是php文件)</p>
+<p><img src="/blog.github.io/images/832604-20191121155802522-780541502.png" alt="img"></p>
+<p>上传成功后访问3.php，代码被执行（<strong>恶意代码被执行的风险有多大不用多说了</strong>。。。）</p>
+<p><img src="/blog.github.io/images/832604-20191121160947698-1523102346.png" alt="img"></p>
+<h3 id="利用图片马绕过-high模式"><a href="#利用图片马绕过-high模式" class="headerlink" title="利用图片马绕过(high模式)"></a>利用图片马绕过(high模式)</h3><p>将security level修改为high，再次使用修改content-type的方法上传，发现上传失败，也就是说，high模式校验了上传文件本身到底是不是图片。接下来尝试用图片马来绕过。什么是图片马，简单来说就是在图片中嵌入了代码。。。步骤如下：</p>
+<p>\1. 合成图片马</p>
+<p>  找到一张货真价实的图片，然后将图片和php文件合成另一张图片，在命令行使用如下命令：</p>
+<p>  copy 3.png /b + test.php /a y.png  (y.png就是图片马)</p>
+<p>\2. 上传图片马</p>
+<p>  用Burp Suite抓包看到我们的代码已经隐藏在图片里了，然后直接上传即可(因为文件格式是符合要求的)</p>
+<p>  <img src="/blog.github.io/images/832604-20191121160805243-2090309796.png" alt="img"></p>
+<h3 id="利用GIF89a绕过-high模式"><a href="#利用GIF89a绕过-high模式" class="headerlink" title="利用GIF89a绕过(high模式)"></a>利用GIF89a绕过(high模式)</h3><p>什么是GIF89a呢？先上传一张货真价实的gif图片，抓包如下图，图片的最开始几个字母就是GIF89a。个人理解GIF89a应该是gif文件的开头标志，只要有这个标志，就会被当做gif图片~</p>
+<p><img src="/blog.github.io/images/832604-20191121161608362-449770532.png" alt="img"></p>
+<p>我将本地的php文件开头加上gif89a，然后把文件重命名为.jpg，进行上传并上传成功（实际上我上传的是一段代码）</p>
+<p><strong>这里有个疑问</strong>：明明只允许上传jpeg和png，为何gif图片也上传了呢？我的理解是：文件类型和后缀名是分开校验的。校验文件类型的函数只校验了是否是图片(没管是什么类型的图片)，而jpeg和png的校验只校验了后缀名。</p>
+<p><img src="/blog.github.io/images/832604-20191121161958219-1406589924.png" alt="img"></p>
+<p>那有没有办法避免这种情况呢？有，把security level修改为impossible模式，图片马和GIF89a都不行了，因为impossible模式在high的基础上，还检测了上传文件是不是货真价实的图片~</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog.github.io/tags/dvwa/" rel="tag"><i class="fa fa-tag"></i> dvwa</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog.github.io/2021/02/20/%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" rel="next" title="文件上传漏洞">
+                <i class="fa fa-chevron-left"></i> 文件上传漏洞
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog.github.io/2021/02/23/%E5%8A%9F%E8%83%BD-bugfree/" rel="prev" title="bugfree">
+                bugfree <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog.github.io/images/avatar.gif"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dvwa%E9%9D%B6%E6%9C%BA%E7%BB%83%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">dvwa靶机练习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%86%E7%A0%81"><span class="nav-number">1.1.</span> <span class="nav-text">密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.2.</span> <span class="nav-text">文件上传漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9Content-Type%E7%BB%95%E8%BF%87%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%B5%8B-medium%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.1.</span> <span class="nav-text">修改Content-Type绕过文件类型检测(medium模式)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E5%9B%BE%E7%89%87%E9%A9%AC%E7%BB%95%E8%BF%87-high%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.2.</span> <span class="nav-text">利用图片马绕过(high模式)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8GIF89a%E7%BB%95%E8%BF%87-high%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.3.</span> <span class="nav-text">利用GIF89a绕过(high模式)</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">magic</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog.github.io/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog.github.io/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

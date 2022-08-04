@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog.github.io/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog.github.io/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog.github.io/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog.github.io/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog.github.io/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="工具,burp," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="代理工具https:&#x2F;&#x2F;github.com&#x2F;FelisCatus&#x2F;SwitchyOmega&#x2F;releases 1 下载，打开上述链接，拉到页面最下方，找到crx。 2 下载完成后  chrom浏览器 - chrome:&#x2F;&#x2F;extensions&#x2F;，打开开发者选项 将crx拖过去就可以。  3 如果安装包不可用，将下载的文件的后缀名称由crx改为zip。然后再次拖进去即可。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Burpsuite系列技巧">
+<meta property="og:url" content="https://github.com/magic-2020/blog.github.io/2020/03/23/%E5%AE%89%E5%85%A8-%E5%B7%A5%E5%85%B7-Burpsuite%E7%B3%BB%E5%88%97%E6%8A%80%E5%B7%A7/index.html">
+<meta property="og:site_name" content="Magic">
+<meta property="og:description" content="代理工具https:&#x2F;&#x2F;github.com&#x2F;FelisCatus&#x2F;SwitchyOmega&#x2F;releases 1 下载，打开上述链接，拉到页面最下方，找到crx。 2 下载完成后  chrom浏览器 - chrome:&#x2F;&#x2F;extensions&#x2F;，打开开发者选项 将crx拖过去就可以。  3 如果安装包不可用，将下载的文件的后缀名称由crx改为zip。然后再次拖进去即可。">
+<meta property="og:locale">
+<meta property="og:image" content="https://github.com/blog.github.io/images/main.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/search1.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/search2.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/Comments1.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/Comments2.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/script1.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/script2.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/references1.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/references2.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/Analyze1.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/Analyze2.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/Analyze3.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/Analyze4.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/eff8945b-a523-413a-951b-645552b448a3.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/43951031-06ef-4dc9-bfc2-b0b00cede03a.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/42332280-aad3-436d-9f14-7bd8adadcdc4.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1c7bdd51-7f22-4aae-b4d3-d3182c7a79f9.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/e16ed5cd-e230-4251-932f-c5dead9b9924.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/1da2ca8b-ee53-46e8-aa3c-97d3f77d9985.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/0a2b7646-d46e-4d15-9854-1ab5f2740fd1.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/5b4eca82-88dd-4c19-bf1e-f44986131d9c.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/2fb555a0-a4d9-4c34-8d2b-d4dc9e4a683e.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/d354e20c-8b49-49e3-9706-210dc440689f.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/02d3d5c9-89e5-4ca4-96e2-68d36f1f062d.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/a0e1fe7b-10c3-4288-8398-7684a17590a7.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/4e84215b-6f57-434d-8943-766a49cfe1d6.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/010baabc-e71c-45b6-a34f-0263fd70699f.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/Schedule2.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/Schedule1.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/Simulate1.png">
+<meta property="og:image" content="https://github.com/blog.github.io/images/15784875614943.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/15784875896360.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/15784876498364.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/15784879498028.jpg">
+<meta property="og:image" content="https://github.com/blog.github.io/images/15784879702356.jpg">
+<meta property="article:published_time" content="2020-03-23T13:11:55.000Z">
+<meta property="article:modified_time" content="2022-08-04T02:51:31.441Z">
+<meta property="article:author" content="magic">
+<meta property="article:tag" content="工具">
+<meta property="article:tag" content="burp">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/blog.github.io/images/main.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/magic-2020/blog.github.io/2020/03/23/安全-工具-Burpsuite系列技巧/"/>
+
+
+
+
+
+  <title>Burpsuite系列技巧 | Magic</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Magic</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">try everyday</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog.github.io/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blog.github.io/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog.github.io/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog.github.io/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog.github.io/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/magic-2020/blog.github.io/blog.github.io/2020/03/23/%E5%AE%89%E5%85%A8-%E5%B7%A5%E5%85%B7-Burpsuite%E7%B3%BB%E5%88%97%E6%8A%80%E5%B7%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Magic">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Burpsuite系列技巧</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-23T21:11:55+08:00">
+                2020-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog.github.io/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="代理工具"><a href="#代理工具" class="headerlink" title="代理工具"></a>代理工具</h1><p><a href="https://github.com/FelisCatus/SwitchyOmega/releases">https://github.com/FelisCatus/SwitchyOmega/releases</a></p>
+<p>1 下载，打开上述链接，拉到页面最下方，找到crx。</p>
+<p>2 下载完成后 </p>
+<p>chrom浏览器 - chrome://extensions/，打开开发者选项</p>
+<p>将crx拖过去就可以。 </p>
+<p>3 如果安装包不可用，将下载的文件的后缀名称由crx改为zip。然后再次拖进去即可。</p>
+<span id="more"></span>
+
+<h1 id="Burpsuite系列技巧-基础技巧（一）"><a href="#Burpsuite系列技巧-基础技巧（一）" class="headerlink" title="Burpsuite系列技巧 | 基础技巧（一）"></a>Burpsuite系列技巧 | 基础技巧（一）</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Author：CoolCat&amp;key</span><br></pre></td></tr></table></figure>
+
+<h2 id="浅析Burpsuite作战工具"><a href="#浅析Burpsuite作战工具" class="headerlink" title="浅析Burpsuite作战工具"></a>浅析Burpsuite作战工具</h2><p>burp的<code>target</code>的sitemap中右键菜单中的Engagement tools，中文翻译为作战工具。</p>
+<p><img src="/blog.github.io/images/main.png" alt="main"></p>
+<p>从上往下依次为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Search                        搜索</span><br><span class="line">Find Comments                 查找注释</span><br><span class="line">Find scripts                  查找js代码</span><br><span class="line">Find references               查找引用</span><br><span class="line">Analyze target                分析目标</span><br><span class="line">Discover content              内容勘测</span><br><span class="line">Schedule task                 定时任务</span><br><span class="line">Simulate manual testing       人工模拟</span><br></pre></td></tr></table></figure>
+
+<h3 id="0x01-Search-搜索-这个方法棒棒哒"><a href="#0x01-Search-搜索-这个方法棒棒哒" class="headerlink" title="0x01 Search 搜索(这个方法棒棒哒)"></a>0x01 Search 搜索(这个方法棒棒哒)</h3><p>在选定的上右键打开后默认如下：</p>
+<p><img src="/blog.github.io/images/search1.png" alt="search1"></p>
+<p>search强大的功能是使用<strong>正则</strong>进行搜索查询自己想要的内容。</p>
+<p>贴一个很有用的正则：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(.user|pass|accessKeyId|accessKeySecret|secretToken|callback|admin|config|key|access|token?)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/blog.github.io/images/search2.png" alt="search2"></p>
+<p>擅用该功能，在SRC捡洞可能可能只是一个习惯而已。（<strong>比如每次准备关Burp之前考虑全选site map中所有的站点，再拿正则去尝试一下。</strong>）</p>
+<h3 id="0x02-Find-Comments-查找注释（Seach的一种）"><a href="#0x02-Find-Comments-查找注释（Seach的一种）" class="headerlink" title="0x02 Find Comments 查找注释（Seach的一种）"></a>0x02 Find Comments 查找注释（Seach的一种）</h3><p>选择目标右键打开后如下图：</p>
+<p><img src="/blog.github.io/images/Comments1.png" alt="Comments1"></p>
+<p><img src="/blog.github.io/images/Comments2.png" alt="Comments2"></p>
+<p>可以理解为<u>Search功能的正则</u>写为:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--(.*?)--&gt;</span><br></pre></td></tr></table></figure>
+
+<p><span style="color:red">不同语言的注释不一样，burp内置的正则更为全面</span>。测试过程中适当看一下注释内容，没准一个未授权就出来了。</p>
+<h3 id="0x03-Find-scripts-查找js代码"><a href="#0x03-Find-scripts-查找js代码" class="headerlink" title="0x03 Find scripts 查找js代码"></a>0x03 Find scripts 查找js代码</h3><p>该功能处理<code>.js后缀</code>的文件之外，页面中script标签的内容也会<u>自动匹配</u>出来。<span style="color:red">等同于右键看完当前页面的js逻辑后在接着Ctrl F 搜.js然后继续看代码，在Burp里相对方便得多。</span>&gt;</p>
+<p>选择目标右键打开后如下图：</p>
+<p><img src="/blog.github.io/images/script1.png" alt="script1"></p>
+<p><img src="/blog.github.io/images/script2.png" alt="script2"></p>
+<h3 id="0x04-Find-references-查找引用"><a href="#0x04-Find-references-查找引用" class="headerlink" title="0x04 Find references 查找引用"></a>0x04 Find references 查找引用</h3><p>如果用过<a href="https://github.com/TheKingOfDuck/myScripts/tree/master/LinksDumper">LinksDumper</a>的话会发现Burp这个功能和它一模一样，<strong>都是匹配出页面中存在的各类链接</strong>。</p>
+<p>默认自带的功能还有不少人是去用插件或者用独立的程序跑。burp自带的它不香咩？</p>
+<p>选择目标右键打开后如下图：</p>
+<p><img src="/blog.github.io/images/references1.png" alt="references1"></p>
+<p><img src="/blog.github.io/images/references2.png" alt="references2"></p>
+<h3 id="0x05-Analyze-target-分析目标（对快速查找参数有很大帮助）"><a href="#0x05-Analyze-target-分析目标（对快速查找参数有很大帮助）" class="headerlink" title="0x05 Analyze target 分析目标（对快速查找参数有很大帮助）"></a>0x05 Analyze target 分析目标（对快速查找参数有很大帮助）</h3><p>选择目标右键打开后总共有四个页面:<span style="color:red"><strong>总结页面、动态Urls、其他（静态）Url、参数统计</strong></span></p>
+<p>1.总结页面：假设拿到100个目标，筛选软柿子的时候通过总结页面判断一下，寻找<strong>交互点多的站点/链接</strong>进行单点突破，未尝不是一个高效的选择。</p>
+<p><img src="/blog.github.io/images/Analyze1.png" alt="Analyze1"></p>
+<p>2.动态Urls：该功能可以快速筛选出<strong>带外部参数的url</strong>，并统计了参数的数量，秉着交互点越多可能存在的问题就越多的原则，筛选一下，效率++。</p>
+<p><img src="/blog.github.io/images/Analyze2.png" alt="Analyze2"></p>
+<p>3.其他（静态）Url：该功能可以理解为Find references功能遍历出来所有的连接后再去除Dynamic URLs中带交互点的Url的结果。</p>
+<p><img src="/blog.github.io/images/Analyze3.png" alt="Analyze3"></p>
+<p>4.参数统计：首先是统计了出现过那些参数，其次是这些参数在Url里面出现过次数。有了这个功能在瓶颈<strong>渗透提取本站存在的参数</strong>时根本不需要第三方插件工具辅助，直接复制name字段即可；某个参数存在漏洞后也可通过该功能查找其他可能存在相同问题的Url。</p>
+<p><img src="/blog.github.io/images/Analyze4.png" alt="Analyze4"></p>
+<h3 id="0x06-Discover-content-内容勘测（目录扫描）"><a href="#0x06-Discover-content-内容勘测（目录扫描）" class="headerlink" title="0x06 Discover content 内容勘测（目录扫描）"></a>0x06 Discover content 内容勘测（目录扫描）</h3><p>该功能秒杀一切<strong>目录扫描</strong>工具。</p>
+<p>下面是关于如何巧用它去递归扫描站点备份的：</p>
+<p>此前在米斯特<code>BurpSuite 插件生态开发组</code>里有提到想开发一款主动的备份扫描插件，寄生于<code>BurpSuite</code>强大的爬虫功能对每个目录/文件进行备份扫描。写一半发现<code>BurpSuite</code>本来就有这样的功能，只是很少有人用到罢了，本文仅对相关功能进行简要的分析以及优化。</p>
+<h4 id="0x06-1-简介"><a href="#0x06-1-简介" class="headerlink" title="0x06_1 简介"></a>0x06_1 简介</h4><p>正常访问时爬虫<strong>被动</strong>收集到的目录:</p>
+<p><img src="/blog.github.io/images/eff8945b-a523-413a-951b-645552b448a3.jpg" alt="eff8945b-a523-413a-951b-645552b448a3"></p>
+<p>下面是本文的主角：</p>
+<p><img src="/blog.github.io/images/43951031-06ef-4dc9-bfc2-b0b00cede03a.jpg" alt="43951031-06ef-4dc9-bfc2-b0b00cede03a"></p>
+<p>位于<code>Engagement tools</code> ==&gt; <code>Discover content</code></p>
+<p>看看默认配置：</p>
+<p><img src="/blog.github.io/images/42332280-aad3-436d-9f14-7bd8adadcdc4.jpg" alt="42332280-aad3-436d-9f14-7bd8adadcdc4"></p>
+<p>图中圈起来的第一部分默认勾选了burp内置的四个字典,第二个圈也是默认配置,其作用时从站点中提取各种目录并递归扫描,前面的配置可根据情况修改,后面不建议动它。</p>
+<p><img src="/blog.github.io/images/1c7bdd51-7f22-4aae-b4d3-d3182c7a79f9.jpg" alt="1c7bdd51-7f22-4aae-b4d3-d3182c7a79f9"></p>
+<p>默认配置就是这四项了，下面具体分析一下他扫描的流量，取其精华。</p>
+<h4 id="0x06-2-扫描分析（原理，非实操）"><a href="#0x06-2-扫描分析（原理，非实操）" class="headerlink" title="0x06_2 扫描分析（原理，非实操）"></a>0x06_2 扫描分析（原理，非实操）</h4><p>流程1:</p>
+<p><img src="/blog.github.io/images/e16ed5cd-e230-4251-932f-c5dead9b9924.jpg" alt="e16ed5cd-e230-4251-932f-c5dead9b9924"></p>
+<p>先去除所有文件的后缀以及提取目录名当作文件扫一遍。</p>
+<p>流程2:</p>
+<p><img src="/blog.github.io/images/1da2ca8b-ee53-46e8-aa3c-97d3f77d9985.jpg" alt="1da2ca8b-ee53-46e8-aa3c-97d3f77d9985"></p>
+<p>在所有去了后缀的文件名后面加上<code>Test these extentsions</code>配置中的所有后缀并进行扫描，在已知站点语言的情况下此处明显多了很多无效流量。</p>
+<p>流程3:</p>
+<p><img src="/blog.github.io/images/0a2b7646-d46e-4d15-9854-1ab5f2740fd1.jpg" alt="0a2b7646-d46e-4d15-9854-1ab5f2740fd1"></p>
+<p>将流程1中的所有文件名当作目录扫一遍。</p>
+<p>流程4:</p>
+<p><a target="_blank" rel="noopener" href="https://vulkey.oss-cn-hangzhou.aliyuncs.com/2020-02-13/5b4eca82-88dd-4c19-bf1e-f44986131d9c.jpg"><img src="/blog.github.io/images/5b4eca82-88dd-4c19-bf1e-f44986131d9c.jpg" alt="5b4eca82-88dd-4c19-bf1e-f44986131d9c.jpg"></a></p>
+<p>按照配置中Filenames中的字典顺序依次遍历并结合流程2的方式遍历文件。</p>
+<p>流程5:</p>
+<p>依次在每层目录执行一遍流程1-4，如果新目录或文件发现就添加到列队里面。</p>
+<h4 id="0x06-3-优化扫描（操作）"><a href="#0x06-3-优化扫描（操作）" class="headerlink" title="0x06_3 优化扫描（操作）"></a>0x06_3 优化扫描（操作）</h4><p><img src="/blog.github.io/images/2fb555a0-a4d9-4c34-8d2b-d4dc9e4a683e.png" alt="2fb555a0-a4d9-4c34-8d2b-d4dc9e4a683e"></p>
+<p>缺陷很明显，仅仅三个目录三个文件总共请求了14048次，流量超过20M。</p>
+<p>递归扫描产生的无效流量太多了。</p>
+<p>首要原因出现在:</p>
+<p><img src="/blog.github.io/images/d354e20c-8b49-49e3-9706-210dc440689f.jpg" alt="d354e20c-8b49-49e3-9706-210dc440689f"></p>
+<p>大多数时候，已知语言情况下完全没必要吧所有后缀都跑一遍，留特定语言以及相关后缀。如st2时加上.action/.do,流量去掉大半。</p>
+<p>其次出现在:</p>
+<p><img src="/blog.github.io/images/02d3d5c9-89e5-4ca4-96e2-68d36f1f062d.jpg" alt="02d3d5c9-89e5-4ca4-96e2-68d36f1f062d"></p>
+<p>此处主要针对扫备份，原生字典长这样:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">bac</span><br><span class="line">BAC</span><br><span class="line">backup</span><br><span class="line">BACKUP</span><br><span class="line">bak</span><br><span class="line">BAK</span><br><span class="line">conf</span><br><span class="line">cs</span><br><span class="line">csproj</span><br><span class="line">gz</span><br><span class="line">inc</span><br><span class="line">INC</span><br><span class="line">ini</span><br><span class="line">java</span><br><span class="line">log</span><br><span class="line">lst</span><br><span class="line">old</span><br><span class="line">OLD</span><br><span class="line">orig</span><br><span class="line">ORIG</span><br><span class="line">sav</span><br><span class="line">save</span><br><span class="line">tar</span><br><span class="line">temp</span><br><span class="line">tmp</span><br><span class="line">TMP</span><br><span class="line">vb</span><br><span class="line">vbproj</span><br><span class="line">zip</span><br><span class="line">$$$</span><br><span class="line">-OLD</span><br><span class="line">-old</span><br><span class="line">0</span><br><span class="line">1</span><br><span class="line">~1</span><br><span class="line">~bk</span><br></pre></td></tr></table></figure>
+
+<p>主要针对国外的站吧。这里提供一份。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">txt</span><br><span class="line">md</span><br><span class="line">xml</span><br><span class="line">db</span><br><span class="line">7z</span><br><span class="line">rar</span><br><span class="line">zip</span><br><span class="line">gz</span><br><span class="line">tar</span><br><span class="line">tar.gz</span><br><span class="line">sql</span><br><span class="line">bak</span><br><span class="line">swp</span><br><span class="line">old</span><br><span class="line">properties</span><br><span class="line">inc</span><br><span class="line">ini</span><br><span class="line">mdb</span><br><span class="line">mdf</span><br><span class="line">conf</span><br><span class="line">config</span><br><span class="line">log</span><br><span class="line">rar</span><br></pre></td></tr></table></figure>
+
+<p>最后是字典的选择：</p>
+<p><img src="/blog.github.io/images/a0e1fe7b-10c3-4288-8398-7684a17590a7.png" alt="a0e1fe7b-10c3-4288-8398-7684a17590a7"></p>
+<p>burp内置的4个字典内容重复率极高，比如about这个词在四个字典里都分别出现了…四个字典共3266个，去重后2265个。</p>
+<p>结果保存在：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://raw.githubusercontent.com/TheKingOfDuck/myScripts/master/burp_dir.txt</span><br></pre></td></tr></table></figure>
+
+<p>文件名方面推荐：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://raw.githubusercontent.com/TheKingOfDuck/myScripts/master/burp_filenames.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="/blog.github.io/images/4e84215b-6f57-434d-8943-766a49cfe1d6.jpg" alt="4e84215b-6f57-434d-8943-766a49cfe1d6"></p>
+<p>如此一来在扫描目录的过程也可把备份一并扫了。</p>
+<p><img src="/blog.github.io/images/010baabc-e71c-45b6-a34f-0263fd70699f.jpg" alt="010baabc-e71c-45b6-a34f-0263fd70699f"></p>
+<h3 id="0x07-Schedule-task-定时任务"><a href="#0x07-Schedule-task-定时任务" class="headerlink" title="0x07 Schedule task 定时任务"></a>0x07 Schedule task 定时任务</h3><p>选择目标右键打开后如下图：</p>
+<p><img src="/blog.github.io/images/Schedule2.png" alt="Schedule2"></p>
+<p><img src="/blog.github.io/images/Schedule1.png" alt="Schedule1"></p>
+<h3 id="0x08-Simulate-manual-testing-人工模拟"><a href="#0x08-Simulate-manual-testing-人工模拟" class="headerlink" title="0x08 Simulate manual testing 人工模拟"></a>0x08 Simulate manual testing 人工模拟</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">This function sends common test payloads to random URL s and parameters at irregular intervals, to generate traflic similar to that caused by manual penetration testing. Its only real use is to let you take a break from testing while still looking busy according to the server&#x27;s logs. Only items which you selected in the site map will be requested.</span><br><span class="line"></span><br><span class="line">此函数以不规则的间隔向随机URL和参数发送公共测试有效负载，以生成与手动渗透测试相似的流量。它唯一的真正用途是让您在根据服务器的日志看起来仍然很忙的时候暂停测试。将只请求您在站点地图中选择的项目。</span><br></pre></td></tr></table></figure>
+
+<p>正如功能描述中所说的，这是一个懒人挖洞选项。缺陷很明显，不会自动寻找并提交表单，只能依托于已有的表单/参数的基础上进行探测，相当于一款被动扫描器。结合<strong>Discover content</strong>使用，法力无边。</p>
+<p><img src="/blog.github.io/images/Simulate1.png" alt="Simulate1"></p>
+<h3 id="0x09-总结"><a href="#0x09-总结" class="headerlink" title="0x09 总结"></a>0x09 总结</h3><p>熟练使用这些作战功能，扫描器从此是路人。</p>
+<h2 id="配置Intruder预定义Payload列表"><a href="#配置Intruder预定义Payload列表" class="headerlink" title="配置Intruder预定义Payload列表"></a>配置Intruder预定义Payload列表</h2><p>预定义Payload列表在这里可以看见：</p>
+<p><img src="/blog.github.io/images/15784875614943.jpg" alt="15784875614943"></p>
+<p>在Tab栏中有选项可以配置-<code>Configure predefined payload lists</code>：</p>
+<p><img src="/blog.github.io/images/15784875896360.jpg" alt="15784875896360">](<a target="_blank" rel="noopener" href="https://vulkey.oss-cn-han/">https://vulkey.oss-cn-han</a></p>
+<p>选择Payload列表目录（注：<strong>需将常用的字典都放在一个目录里面</strong>）：</p>
+<p><img src="/blog.github.io/images/15784876498364.jpg" alt="15784876498364"></p>
+<h2 id="自定义插入点进行扫描"><a href="#自定义插入点进行扫描" class="headerlink" title="自定义插入点进行扫描"></a>自定义插入点进行扫描</h2><p>将请求报文转发至Intruder，选择扫描的插入点：<code>Add$</code></p>
+<p><img src="/blog.github.io/images/15784879498028.jpg" alt="15784879498028"></p>
+<p>右键选择<code>Scan defined insertion points</code></p>
+<p><img src="/blog.github.io/images/15784879702356.jpg" alt="15784879702356"></p>
+<h1 id="https如何监听"><a href="#https如何监听" class="headerlink" title="https如何监听"></a>https如何监听</h1>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog.github.io/tags/%E5%B7%A5%E5%85%B7/" rel="tag"><i class="fa fa-tag"></i> 工具</a>
+          
+            <a href="/blog.github.io/tags/burp/" rel="tag"><i class="fa fa-tag"></i> burp</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog.github.io/2020/03/23/%E7%8E%AF%E5%A2%83-%E5%B7%A5%E5%85%B7-hexo%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/" rel="next" title="环境-工具-Hexo的目录结构">
+                <i class="fa fa-chevron-left"></i> 环境-工具-Hexo的目录结构
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog.github.io/2020/03/25/%E8%AE%BA%E5%9D%9B-%E5%B7%A5%E6%8E%A7%E5%9C%BA%E6%99%AF%E4%B8%8B%E7%9A%84%E6%97%A0%E6%96%87%E4%BB%B6%E6%94%BB%E5%87%BB%E9%98%B2%E6%8A%A4/" rel="prev" title="工控场景下的无文件攻击防护">
+                工控场景下的无文件攻击防护 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blog.github.io/images/avatar.gif"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <!-- <a href="/blog.github.io/archives/%7C%7C%20archive"> -->
+				<a href="/blog.github.io/archives">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog.github.io/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog.github.io/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E5%B7%A5%E5%85%B7"><span class="nav-number">1.</span> <span class="nav-text">代理工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Burpsuite%E7%B3%BB%E5%88%97%E6%8A%80%E5%B7%A7-%E5%9F%BA%E7%A1%80%E6%8A%80%E5%B7%A7%EF%BC%88%E4%B8%80%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">Burpsuite系列技巧 | 基础技巧（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%85%E6%9E%90Burpsuite%E4%BD%9C%E6%88%98%E5%B7%A5%E5%85%B7"><span class="nav-number">2.1.</span> <span class="nav-text">浅析Burpsuite作战工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-Search-%E6%90%9C%E7%B4%A2-%E8%BF%99%E4%B8%AA%E6%96%B9%E6%B3%95%E6%A3%92%E6%A3%92%E5%93%92"><span class="nav-number">2.1.1.</span> <span class="nav-text">0x01 Search 搜索(这个方法棒棒哒)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-Find-Comments-%E6%9F%A5%E6%89%BE%E6%B3%A8%E9%87%8A%EF%BC%88Seach%E7%9A%84%E4%B8%80%E7%A7%8D%EF%BC%89"><span class="nav-number">2.1.2.</span> <span class="nav-text">0x02 Find Comments 查找注释（Seach的一种）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-Find-scripts-%E6%9F%A5%E6%89%BEjs%E4%BB%A3%E7%A0%81"><span class="nav-number">2.1.3.</span> <span class="nav-text">0x03 Find scripts 查找js代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-Find-references-%E6%9F%A5%E6%89%BE%E5%BC%95%E7%94%A8"><span class="nav-number">2.1.4.</span> <span class="nav-text">0x04 Find references 查找引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05-Analyze-target-%E5%88%86%E6%9E%90%E7%9B%AE%E6%A0%87%EF%BC%88%E5%AF%B9%E5%BF%AB%E9%80%9F%E6%9F%A5%E6%89%BE%E5%8F%82%E6%95%B0%E6%9C%89%E5%BE%88%E5%A4%A7%E5%B8%AE%E5%8A%A9%EF%BC%89"><span class="nav-number">2.1.5.</span> <span class="nav-text">0x05 Analyze target 分析目标（对快速查找参数有很大帮助）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x06-Discover-content-%E5%86%85%E5%AE%B9%E5%8B%98%E6%B5%8B%EF%BC%88%E7%9B%AE%E5%BD%95%E6%89%AB%E6%8F%8F%EF%BC%89"><span class="nav-number">2.1.6.</span> <span class="nav-text">0x06 Discover content 内容勘测（目录扫描）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#0x06-1-%E7%AE%80%E4%BB%8B"><span class="nav-number">2.1.6.1.</span> <span class="nav-text">0x06_1 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x06-2-%E6%89%AB%E6%8F%8F%E5%88%86%E6%9E%90%EF%BC%88%E5%8E%9F%E7%90%86%EF%BC%8C%E9%9D%9E%E5%AE%9E%E6%93%8D%EF%BC%89"><span class="nav-number">2.1.6.2.</span> <span class="nav-text">0x06_2 扫描分析（原理，非实操）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x06-3-%E4%BC%98%E5%8C%96%E6%89%AB%E6%8F%8F%EF%BC%88%E6%93%8D%E4%BD%9C%EF%BC%89"><span class="nav-number">2.1.6.3.</span> <span class="nav-text">0x06_3 优化扫描（操作）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x07-Schedule-task-%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="nav-number">2.1.7.</span> <span class="nav-text">0x07 Schedule task 定时任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x08-Simulate-manual-testing-%E4%BA%BA%E5%B7%A5%E6%A8%A1%E6%8B%9F"><span class="nav-number">2.1.8.</span> <span class="nav-text">0x08 Simulate manual testing 人工模拟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x09-%E6%80%BB%E7%BB%93"><span class="nav-number">2.1.9.</span> <span class="nav-text">0x09 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEIntruder%E9%A2%84%E5%AE%9A%E4%B9%89Payload%E5%88%97%E8%A1%A8"><span class="nav-number">2.2.</span> <span class="nav-text">配置Intruder预定义Payload列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E5%85%A5%E7%82%B9%E8%BF%9B%E8%A1%8C%E6%89%AB%E6%8F%8F"><span class="nav-number">2.3.</span> <span class="nav-text">自定义插入点进行扫描</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#https%E5%A6%82%E4%BD%95%E7%9B%91%E5%90%AC"><span class="nav-number">3.</span> <span class="nav-text">https如何监听</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">magic</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog.github.io/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog.github.io/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog.github.io/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog.github.io/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog.github.io/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
